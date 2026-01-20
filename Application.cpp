@@ -1,12 +1,12 @@
 #include <wx/image.h>
 #include "Application.h"
-#include "VentanaPrincipal.h"
+#include "VentanaLogin.h"
 
 IMPLEMENT_APP(Application)
 
 bool Application::OnInit() {
 	wxInitAllImageHandlers();
-	VentanaPrincipal *win = new VentanaPrincipal(NULL);
+	VentanaLogin *win = new VentanaLogin(NULL);
 	win->Show();
 	return true;
 }

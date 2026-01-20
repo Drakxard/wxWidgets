@@ -35,6 +35,7 @@ MyFrameInicioCorrectoBibliotecario::MyFrameInicioCorrectoBibliotecario( wxWindow
 	bSizer8 = new wxBoxSizer( wxHORIZONTAL );
 
 	m_radioBtn1 = new wxRadioButton( this, wxID_ANY, wxT("Libros"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_radioBtn1->SetValue( true );
 	bSizer8->Add( m_radioBtn1, 0, wxALL, 5 );
 
 	m_radioBtn2 = new wxRadioButton( this, wxID_ANY, wxT("Alumnos"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -195,10 +196,6 @@ MyFrameLogin::MyFrameLogin( wxWindow* parent, wxWindowID id, const wxString& tit
 	wxBoxSizer* bSizer32;
 	bSizer32 = new wxBoxSizer( wxVERTICAL );
 
-	m_staticText16 = new wxStaticText( this, wxID_ANY, wxT("Bienvenido"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText16->Wrap( -1 );
-	bSizer32->Add( m_staticText16, 0, wxALL, 5 );
-
 	wxBoxSizer* bSizer33;
 	bSizer33 = new wxBoxSizer( wxVERTICAL );
 
@@ -209,26 +206,26 @@ MyFrameLogin::MyFrameLogin( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_staticText17->Wrap( -1 );
 	bSizer34->Add( m_staticText17, 0, wxALL, 5 );
 
-	m_textCtrl7 = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer34->Add( m_textCtrl7, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
+	m_text_Bienvenido_Valor = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER );
+	bSizer34->Add( m_text_Bienvenido_Valor, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
 
 
-	bSizer33->Add( bSizer34, 1, wxEXPAND, 5 );
+	bSizer33->Add( bSizer34, 0, 0, 5 );
 
 
 	bSizer32->Add( bSizer33, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_CENTER_HORIZONTAL, 5 );
 
 
-	bSizer30->Add( bSizer32, 0, wxALIGN_CENTER_HORIZONTAL|wxEXPAND, 5 );
+	bSizer30->Add( bSizer32, 0, wxEXPAND, 5 );
 
 	wxBoxSizer* bSizer31;
 	bSizer31 = new wxBoxSizer( wxHORIZONTAL );
 
-	m_button15 = new wxButton( this, wxID_ANY, wxT("Crear Cuenta"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer31->Add( m_button15, 0, wxALL, 5 );
+	m_button_Bienvenido_CrearCuenta = new wxButton( this, wxID_ANY, wxT("Crear Cuenta"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer31->Add( m_button_Bienvenido_CrearCuenta, 0, wxALL, 5 );
 
-	m_button16 = new wxButton( this, wxID_ANY, wxT("Continuar"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer31->Add( m_button16, 0, wxALL, 5 );
+	m_button_Bienvenido_Continuar = new wxButton( this, wxID_ANY, wxT("Continuar"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer31->Add( m_button_Bienvenido_Continuar, 0, wxALL, 5 );
 
 
 	bSizer30->Add( bSizer31, 0, wxALIGN_CENTER_HORIZONTAL, 5 );
@@ -239,8 +236,85 @@ MyFrameLogin::MyFrameLogin( wxWindow* parent, wxWindowID id, const wxString& tit
 	bSizer30->Fit( this );
 
 	this->Centre( wxBOTH );
+
+	// Connect Events
+	m_text_Bienvenido_Valor->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( MyFrameLogin::onTextEnter_Bienvenido_Confirmar ), NULL, this );
+	m_button_Bienvenido_Continuar->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrameLogin::OnclikBienvenido_Iniciar ), NULL, this );
 }
 
 MyFrameLogin::~MyFrameLogin()
+{
+	// Disconnect Events
+	m_text_Bienvenido_Valor->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( MyFrameLogin::onTextEnter_Bienvenido_Confirmar ), NULL, this );
+	m_button_Bienvenido_Continuar->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrameLogin::OnclikBienvenido_Iniciar ), NULL, this );
+
+}
+
+MyFrameCrearCuenta::MyFrameCrearCuenta( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+
+	wxBoxSizer* bSizerNuevaCuenta;
+	bSizerNuevaCuenta = new wxBoxSizer( wxVERTICAL );
+
+	wxBoxSizer* bSizerNuevaCuenta_informacion;
+	bSizerNuevaCuenta_informacion = new wxBoxSizer( wxHORIZONTAL );
+
+	wxBoxSizer* bSizerNombreLogin;
+	bSizerNombreLogin = new wxBoxSizer( wxHORIZONTAL );
+
+	wxBoxSizer* bSizerNuevaCuenta_referencia;
+	bSizerNuevaCuenta_referencia = new wxBoxSizer( wxVERTICAL );
+
+	m_staticText_CrearCuenta_ref1 = new wxStaticText( this, wxID_ANY, wxT("Nombre: "), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText_CrearCuenta_ref1->Wrap( -1 );
+	bSizerNuevaCuenta_referencia->Add( m_staticText_CrearCuenta_ref1, 0, wxALL, 5 );
+
+	m_text_CrearCuenta_campo1 = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	bSizerNuevaCuenta_referencia->Add( m_text_CrearCuenta_campo1, 0, wxALL, 5 );
+
+
+	bSizerNombreLogin->Add( bSizerNuevaCuenta_referencia, 1, wxEXPAND, 5 );
+
+	wxBoxSizer* bSizerNuevaCuenta_Campos;
+	bSizerNuevaCuenta_Campos = new wxBoxSizer( wxVERTICAL );
+
+	m_staticText_CrearCuenta_ref2 = new wxStaticText( this, wxID_ANY, wxT("Dni: "), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText_CrearCuenta_ref2->Wrap( -1 );
+	bSizerNuevaCuenta_Campos->Add( m_staticText_CrearCuenta_ref2, 0, wxALL, 5 );
+
+	m_text_CrearCuenta_campo2 = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	bSizerNuevaCuenta_Campos->Add( m_text_CrearCuenta_campo2, 0, wxALL, 5 );
+
+
+	bSizerNombreLogin->Add( bSizerNuevaCuenta_Campos, 0, 0, 5 );
+
+
+	bSizerNuevaCuenta_informacion->Add( bSizerNombreLogin, 0, 0, 5 );
+
+
+	bSizerNuevaCuenta->Add( bSizerNuevaCuenta_informacion, 0, 0, 5 );
+
+	wxBoxSizer* bSizerNuevaCuenta_Botones;
+	bSizerNuevaCuenta_Botones = new wxBoxSizer( wxHORIZONTAL );
+
+	m_button10 = new wxButton( this, wxID_ANY, wxT("Cancelar"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizerNuevaCuenta_Botones->Add( m_button10, 0, wxALL, 5 );
+
+	m_button11 = new wxButton( this, wxID_ANY, wxT("Confirmar"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizerNuevaCuenta_Botones->Add( m_button11, 0, wxALL, 5 );
+
+
+	bSizerNuevaCuenta->Add( bSizerNuevaCuenta_Botones, 0, wxALIGN_CENTER_HORIZONTAL, 5 );
+
+
+	this->SetSizer( bSizerNuevaCuenta );
+	this->Layout();
+	bSizerNuevaCuenta->Fit( this );
+
+	this->Centre( wxBOTH );
+}
+
+MyFrameCrearCuenta::~MyFrameCrearCuenta()
 {
 }

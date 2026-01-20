@@ -89,17 +89,44 @@ class MyFrameLogin : public wxFrame
 	private:
 
 	protected:
-		wxStaticText* m_staticText16;
 		wxStaticText* m_staticText17;
-		wxTextCtrl* m_textCtrl7;
-		wxButton* m_button15;
-		wxButton* m_button16;
+		wxTextCtrl* m_text_Bienvenido_Valor;
+		wxButton* m_button_Bienvenido_CrearCuenta;
+		wxButton* m_button_Bienvenido_Continuar;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void onTextEnter_Bienvenido_Confirmar( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnclikBienvenido_Iniciar( wxCommandEvent& event ) { event.Skip(); }
+
 
 	public:
 
-		MyFrameLogin( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		MyFrameLogin( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Bienvenido"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~MyFrameLogin();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class MyFrameCrearCuenta
+///////////////////////////////////////////////////////////////////////////////
+class MyFrameCrearCuenta : public wxFrame
+{
+	private:
+
+	protected:
+		wxStaticText* m_staticText_CrearCuenta_ref1;
+		wxTextCtrl* m_text_CrearCuenta_campo1;
+		wxStaticText* m_staticText_CrearCuenta_ref2;
+		wxTextCtrl* m_text_CrearCuenta_campo2;
+		wxButton* m_button10;
+		wxButton* m_button11;
+
+	public:
+
+		MyFrameCrearCuenta( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Crear Nueva Cuenta"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+
+		~MyFrameCrearCuenta();
 
 };
 
