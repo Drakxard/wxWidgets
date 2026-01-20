@@ -1,8 +1,9 @@
 #ifndef VENTANAPRINCIPAL_H
 #define VENTANAPRINCIPAL_H
 #include "wxfb_project.h"
+#include "VentanaParaBibliotecario.h"
 
-class VentanaPrincipal : public MyFrame2 {
+class VentanaPrincipal : public VentanaParaBibliotecario {
 	
 private:
 	
