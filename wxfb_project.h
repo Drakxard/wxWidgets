@@ -23,6 +23,9 @@
 #include <wx/radiobut.h>
 #include <wx/stattext.h>
 #include <wx/statbmp.h>
+#include <wx/panel.h>
+#include <wx/grid.h>
+#include <wx/simplebook.h>
 #include <wx/frame.h>
 
 ///////////////////////////////////////////////////////////////////////////
@@ -37,14 +40,24 @@ class MyFrameInicioCorrectoBibliotecario : public wxFrame
 	protected:
 		wxTextCtrl* m_textCtrl2;
 		wxButton* m_button1;
-		wxRadioButton* m_radioBtn1;
-		wxRadioButton* m_radioBtn2;
-		wxRadioButton* m_radioBtn3;
+		wxRadioButton* m_radio_Libros;
+		wxRadioButton* m_radio_Alumnos;
+		wxRadioButton* m_radio_Bibliotecarios;
+		wxSimplebook* m_Bibliotecario_frameActual;
+		wxPanel* m_panel_Bibliotecario_Libros;
 		wxStaticText* m_staticText4;
 		wxStaticBitmap* m_bitmap2;
+		wxPanel* m_panel_Alumnos;
+		wxGrid* m_grid_Alumnos;
+		wxPanel* m_panel_Bibliotecarios;
+		wxGrid* m_grid3;
 		wxButton* m_button19;
 		wxStaticText* m_staticText18;
 		wxButton* m_button20;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void OnRadioButton_CambiaPestana( wxCommandEvent& event ) { event.Skip(); }
+
 
 	public:
 
@@ -64,14 +77,25 @@ class MyFrameInicioCorrectoAlumno : public wxFrame
 	protected:
 		wxTextCtrl* m_textCtrl2;
 		wxButton* m_button1;
-		wxRadioButton* m_radioBtn1;
-		wxRadioButton* m_radioBtn2;
-		wxRadioButton* m_radioBtn3;
+		wxRadioButton* m_radio_Libros;
+		wxRadioButton* m_radio_Alumnos;
+		wxRadioButton* m_radio_Bibliotecarios;
+		wxSimplebook* m_Bibliotecario_frameActual;
+		wxPanel* m_panel_Bibliotecario_Libros;
 		wxStaticText* m_staticText4;
 		wxStaticBitmap* m_bitmap2;
+		wxPanel* m_panel_Alumnos;
+		wxGrid* m_grid1;
+		wxPanel* m_panel_Bibliotecarios;
+		wxGrid* m_grid3;
 		wxButton* m_button19;
 		wxStaticText* m_staticText18;
 		wxButton* m_button20;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void OnRadioButton_CambiaPesta( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnRadioButton_CambiaPestana( wxCommandEvent& event ) { event.Skip(); }
+
 
 	public:
 
@@ -127,6 +151,33 @@ class MyFrameCrearCuenta : public wxFrame
 		MyFrameCrearCuenta( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Crear Nueva Cuenta"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~MyFrameCrearCuenta();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class CreacionAyrton
+///////////////////////////////////////////////////////////////////////////////
+class CreacionAyrton : public wxFrame
+{
+	private:
+
+	protected:
+		wxStaticText* m_staticText11;
+		wxStaticText* m_staticText12;
+		wxTextCtrl* m_textCtrl12;
+		wxButton* m_button19;
+		wxButton* m_button20;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void cancelar( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnclickButton_aceptar( wxCommandEvent& event ) { event.Skip(); }
+
+
+	public:
+
+		CreacionAyrton( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,389 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+
+		~CreacionAyrton();
 
 };
 

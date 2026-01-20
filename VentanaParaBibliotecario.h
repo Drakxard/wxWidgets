@@ -7,10 +7,13 @@ class VentanaParaBibliotecario : public MyFrameInicioCorrectoBibliotecario {
 private:
 	
 protected:
-	
+	void OnRadioButton_CambiaPestana( wxCommandEvent& event )  override;
+		
 public:
 	VentanaParaBibliotecario(wxWindow *parent=NULL);
 	~VentanaParaBibliotecario();
+	
+	
 };
 
 #endif

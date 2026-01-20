@@ -12,6 +12,8 @@ protected:
 public:
 	VentanaPrincipal(wxWindow *parent=NULL);
 	~VentanaPrincipal();
+	void OnRadioButton_CambiaPestana(wxCommandEvent& event);
+	
 };
 
 #endif

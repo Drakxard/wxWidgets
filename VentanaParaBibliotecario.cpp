@@ -8,3 +8,9 @@ VentanaParaBibliotecario::~VentanaParaBibliotecario() {
 	
 }
 
+
+
+void VentanaParaBibliotecario::OnRadioButton_CambiaPestana( wxCommandEvent& event )  {
+	event.Skip();
+}
+
