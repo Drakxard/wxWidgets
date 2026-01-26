@@ -7,6 +7,8 @@ class CrearCuenta : public MyFrameCrearCuenta {
 private:
 	
 protected:
+	void OnButtonClickCerrar( wxCommandEvent& event )  override;
+	void OnclikBienvenido_Iniciar( wxCommandEvent& event )  override;
 	
 public:
 	CrearCuenta(wxWindow *parent=NULL);
