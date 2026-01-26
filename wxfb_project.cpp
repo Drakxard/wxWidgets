@@ -250,7 +250,7 @@ MyFrameInicioCorrectoBibliotecario::MyFrameInicioCorrectoBibliotecario( wxWindow
 	bSizer45->Add( m_button14, 0, wxALL, 5 );
 
 
-	bSizerContenedorAlumnos->Add( bSizer45, 0, 0, 5 );
+	bSizerContenedorAlumnos->Add( bSizer45, 0, wxEXPAND, 5 );
 
 
 	m_panel_Alumnos->SetSizer( bSizerContenedorAlumnos );
@@ -483,7 +483,7 @@ MyFramePrestar::MyFramePrestar( wxWindow* parent, wxWindowID id, const wxString&
 	bSizerCabeceraPrestarLibro = new wxBoxSizer( wxHORIZONTAL );
 
 	wxBoxSizer* bSizer35;
-	bSizer35 = new wxBoxSizer( wxVERTICAL );
+	bSizer35 = new wxBoxSizer( wxHORIZONTAL );
 
 	m_radioBtn7 = new wxRadioButton( this, wxID_ANY, wxT("Sancionado"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer35->Add( m_radioBtn7, 0, wxALL, 5 );
@@ -496,14 +496,14 @@ MyFramePrestar::MyFramePrestar( wxWindow* parent, wxWindowID id, const wxString&
 
 	m_staticText10 = new wxStaticText( this, wxID_ANY, wxT("Dias Restantes: "), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText10->Wrap( -1 );
-	bSizer36->Add( m_staticText10, 0, wxALL|wxALIGN_RIGHT, 5 );
+	bSizer36->Add( m_staticText10, 0, wxALL, 5 );
 
 	m_staticText11 = new wxStaticText( this, wxID_ANY, wxT("N/A"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText11->Wrap( -1 );
 	bSizer36->Add( m_staticText11, 0, wxALL, 5 );
 
 
-	bSizerCabeceraPrestarLibro->Add( bSizer36, 1, wxEXPAND, 5 );
+	bSizerCabeceraPrestarLibro->Add( bSizer36, 0, wxEXPAND, 5 );
 
 
 	bSizer46->Add( bSizerCabeceraPrestarLibro, 0, wxEXPAND, 5 );
@@ -525,12 +525,6 @@ MyFramePrestar::MyFramePrestar( wxWindow* parent, wxWindowID id, const wxString&
 
 	bSizerPrestarAAlumno->Add( bSizer59, 0, 0, 5 );
 
-	wxBoxSizer* bSizer60;
-	bSizer60 = new wxBoxSizer( wxVERTICAL );
-
-
-	bSizerPrestarAAlumno->Add( bSizer60, 1, wxEXPAND, 5 );
-
 
 	bSizer46->Add( bSizerPrestarAAlumno, 0, 0, 5 );
 
@@ -541,7 +535,7 @@ MyFramePrestar::MyFramePrestar( wxWindow* parent, wxWindowID id, const wxString&
 	bSizer61 = new wxBoxSizer( wxHORIZONTAL );
 
 	wxBoxSizer* bSizer63;
-	bSizer63 = new wxBoxSizer( wxVERTICAL );
+	bSizer63 = new wxBoxSizer( wxHORIZONTAL );
 
 	m_staticText9 = new wxStaticText( this, wxID_ANY, wxT("Prestar Libro:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText9->Wrap( -1 );
@@ -557,7 +551,7 @@ MyFramePrestar::MyFramePrestar( wxWindow* parent, wxWindowID id, const wxString&
 	bSizerBuscarLibroAPrestar->Add( bSizer61, 1, wxEXPAND, 5 );
 
 	wxBoxSizer* bSizer62;
-	bSizer62 = new wxBoxSizer( wxVERTICAL );
+	bSizer62 = new wxBoxSizer( wxHORIZONTAL );
 
 	m_button15 = new wxButton( this, wxID_ANY, wxT("Confirmar"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer62->Add( m_button15, 0, wxALL, 5 );
