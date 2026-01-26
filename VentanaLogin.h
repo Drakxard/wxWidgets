@@ -7,6 +7,7 @@ class VentanaLogin : public MyFrameLogin {
 private:
 	
 protected:
+	void OnButtonClickCrearCuenta( wxCommandEvent& event )  override;
 	void onTextEnter_Bienvenido_Confirmar( wxCommandEvent& event )  override;
 	void OnclikBienvenido_Iniciar( wxCommandEvent& event )  override;
 	

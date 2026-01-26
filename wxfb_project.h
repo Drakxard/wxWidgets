@@ -27,7 +27,6 @@
 #include <wx/panel.h>
 #include <wx/listctrl.h>
 #include <wx/simplebook.h>
-#include <wx/grid.h>
 #include <wx/bmpcbox.h>
 
 ///////////////////////////////////////////////////////////////////////////
@@ -47,6 +46,7 @@ class MyFrameLogin : public wxFrame
 
 		// Virtual event handlers, override them in your derived class
 		virtual void onTextEnter_Bienvenido_Confirmar( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonClickCrearCuenta( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnclikBienvenido_Iniciar( wxCommandEvent& event ) { event.Skip(); }
 
 
@@ -72,6 +72,11 @@ class MyFrameCrearCuenta : public wxFrame
 		wxTextCtrl* m_text_CrearCuenta_campo2;
 		wxButton* m_button10;
 		wxButton* m_button11;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void OnButtonClickCerrar( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnclikBienvenido_Iniciar( wxCommandEvent& event ) { event.Skip(); }
+
 
 	public:
 
@@ -139,17 +144,20 @@ class MyFrameInicioCorrectoAlumno : public wxFrame
 		wxPanel* m_panel_Bibliotecario_Libros;
 		wxStaticText* m_staticText4;
 		wxStaticBitmap* m_bitmap2;
-		wxPanel* m_panel_Alumnos;
-		wxGrid* m_grid1;
-		wxPanel* m_panel_Bibliotecarios;
-		wxGrid* m_grid3;
 		wxButton* m_button19;
 		wxStaticText* m_staticText18;
 		wxButton* m_button20;
+		wxPanel* m_panel_Alumnos;
+		wxListCtrl* m_list_Alumnos;
+		wxButton* m_button13;
+		wxButton* m_button14;
+		wxPanel* m_panel_Bibliotecarios;
+		wxListCtrl* m_list_Bibliotecarios;
 
 		// Virtual event handlers, override them in your derived class
-		virtual void OnRadioButton_CambiaPesta( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRadioButton_CambiaPestana( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonClickPrestarLibro( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonClickHistorialAlumno( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:

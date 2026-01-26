@@ -12,7 +12,12 @@ void VentanaAlumno::OnRadioButton_CambiaPestana( wxCommandEvent& event )  {
 	event.Skip();
 }
 
-void VentanaAlumno::OnRadioButton_CambiaPesta( wxCommandEvent& event )  {
+
+void VentanaAlumno::OnButtonClickPrestarLibro( wxCommandEvent& event )  {
+	event.Skip();
+}
+
+void VentanaAlumno::OnButtonClickHistorialAlumno( wxCommandEvent& event )  {
 	event.Skip();
 }
 
