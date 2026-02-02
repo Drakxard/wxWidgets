@@ -1,8 +1,17 @@
-#include "VentanaHistorial.h"
+#include "DialogoPrestamo.h"
 #include <string>
+
 using namespace std;
 
-VentanaHistorial::VentanaHistorial(wxWindow *parent) : MyFrameHistorial(parent) {
+DialogoPrestamo::DialogoPrestamo(wxWindow *parent, Alumno alumnoSeleccionado): MyDialogPrestar(parent){
+	this-> alumnoSeleccionado = alumnoSeleccionado;
+	
+	m_staticPrestar_NombreAlumno_Valor->SetLabel(alumnoSeleccionado.VerNombre());
+	m_staticPrestar_DniAlumno_Valor->SetLabel(to_string(alumnoSeleccionado.VerDNI()));
+	
+	
+	
+	
 	///PrestamosAnteriores
 	m_list_PrestamosAnteriores->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
 	m_list_PrestamosAnteriores->InsertColumn(1, "Libro", wxLIST_FORMAT_LEFT, 200);
@@ -12,12 +21,11 @@ VentanaHistorial::VentanaHistorial(wxWindow *parent) : MyFrameHistorial(parent) 
 	CargarLista(m_list_PrestamosAnteriores);
 }
 
-VentanaHistorial::~VentanaHistorial() {
+DialogoPrestamo::~DialogoPrestamo() {
 	
 }
 
-
-void VentanaHistorial::CargarLista(wxListCtrl* lista){
+void DialogoPrestamo::CargarLista(wxListCtrl* lista){
 	//Limpiamos la tabla
 	lista->DeleteAllItems();
 	
@@ -32,7 +40,6 @@ void VentanaHistorial::CargarLista(wxListCtrl* lista){
 		
 		///CargarNombreDelAlumno
 		lista-> SetItem(index, 1, test );
-		
 	}
 	///Mostrar todo de golpe
 	lista->Thaw();

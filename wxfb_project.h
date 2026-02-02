@@ -28,6 +28,7 @@
 #include <wx/listctrl.h>
 #include <wx/simplebook.h>
 #include <wx/bmpcbox.h>
+#include <wx/dialog.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -169,34 +170,6 @@ class MyFrameInicioCorrectoAlumno : public wxFrame
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Class MyFramePrestar
-///////////////////////////////////////////////////////////////////////////////
-class MyFramePrestar : public wxFrame
-{
-	private:
-
-	protected:
-		wxRadioButton* m_radioBtn7;
-		wxStaticText* m_staticText10;
-		wxStaticText* m_staticText11;
-		wxStaticText* m_staticText21;
-		wxStaticText* m_staticText22;
-		wxStaticText* m_staticText9;
-		wxBitmapComboBox* m_bcomboBox1;
-		wxButton* m_button15;
-		wxStaticText* m_staticText23;
-		wxPanel* m_panel7;
-		wxListCtrl* m_list_PrestamosAnteriores;
-
-	public:
-
-		MyFramePrestar( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 547,362 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
-
-		~MyFramePrestar();
-
-};
-
-///////////////////////////////////////////////////////////////////////////////
 /// Class MyFrameHistorial
 ///////////////////////////////////////////////////////////////////////////////
 class MyFrameHistorial : public wxFrame
@@ -214,6 +187,60 @@ class MyFrameHistorial : public wxFrame
 		MyFrameHistorial( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Historial"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 565,388 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~MyFrameHistorial();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class MyDialogPrestar
+///////////////////////////////////////////////////////////////////////////////
+class MyDialogPrestar : public wxDialog
+{
+	private:
+
+	protected:
+		wxRadioButton* m_radioBtn7;
+		wxStaticText* m_staticText10;
+		wxStaticText* m_staticText11;
+		wxStaticText* m_staticPrestar_NombreAlumno;
+		wxStaticText* m_staticPrestar_NombreAlumno_Valor;
+		wxStaticText* m_staticPrestar_DniAlumno;
+		wxStaticText* m_staticPrestar_DniAlumno_Valor;
+		wxStaticText* m_staticText9;
+		wxBitmapComboBox* m_bcomboBox1;
+		wxButton* m_button15;
+		wxStaticText* m_staticText23;
+		wxPanel* m_panel7;
+		wxListCtrl* m_list_PrestamosAnteriores;
+
+	public:
+
+		MyDialogPrestar( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 469,386 ), long style = wxDEFAULT_DIALOG_STYLE );
+
+		~MyDialogPrestar();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class MyDialogHistorial
+///////////////////////////////////////////////////////////////////////////////
+class MyDialogHistorial : public wxDialog
+{
+	private:
+
+	protected:
+		wxStaticText* m_staticPrestar_NombreAlumno;
+		wxStaticText* m_staticPrestar_NombreAlumno_Valor;
+		wxStaticText* m_staticPrestar_DniAlumno;
+		wxStaticText* m_staticPrestar_DniAlumno_Valor;
+		wxStaticText* m_staticText23;
+		wxPanel* m_panel7;
+		wxListCtrl* m_list_PrestamosAnteriores;
+
+	public:
+
+		MyDialogHistorial( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 554,424 ), long style = wxDEFAULT_DIALOG_STYLE );
+
+		~MyDialogHistorial();
 
 };
 

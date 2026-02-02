@@ -4,7 +4,6 @@ using namespace std;
 
 VentanaPrincipal::VentanaPrincipal(wxWindow *parent) : VentanaParaBibliotecario(parent) {
 	
-	
 }
 
 VentanaPrincipal::~VentanaPrincipal() {

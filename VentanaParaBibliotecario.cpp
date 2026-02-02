@@ -1,6 +1,7 @@
 #include "VentanaParaBibliotecario.h"
-#include "VentanaPrestar.h"
-#include "VentanaHistorial.h"
+#include "DialogoPrestamo.h"
+#include "DialogoHistorial.h"
+
 
 using namespace std;
 
@@ -40,17 +41,17 @@ void VentanaParaBibliotecario::CargarLista(wxListCtrl* lista){
 	
 	//
 	lista->Freeze();
-	
-	string test = "EjemploNombreAlumno";
-	int dni = 3242352; 
-	for(int i=0;i<100;i++) { 
+	vAlumno = sistema.VerContenido<Alumno>(sistema.pathAlumnos(),true);
+	for(int i=0;i<vAlumno.size();i++) { 
 		///Llenamos con ID
-		long index = lista -> InsertItem(i, wxString::Format("%d",((i+1)*2)));
+		long index = lista -> InsertItem(i, wxString::Format("%d",vAlumno[i].VerID()));
 		
 		///CargarNombreDelAlumno
-		lista-> SetItem(index, 1, test );
+	
+		lista-> SetItem(index, 1, vAlumno[i].VerNombre() );
 		
-		lista-> SetItem(index,2, wxString::Format("%d", dni) );		
+		///CargamosDni
+		lista-> SetItem(index,2, wxString::Format("%d", vAlumno[i].VerDNI()) );		
 	}
 	///Mostrar todo de golpe
 	lista->Thaw();
@@ -78,12 +79,26 @@ void VentanaParaBibliotecario::OnRadioButton_CambiaPestana(wxCommandEvent& event
 
 
 void VentanaParaBibliotecario::OnButtonClickPrestarLibro( wxCommandEvent& event )  {
-	VentanaPrestar *nueva= new VentanaPrestar(NULL);
-	nueva->Show();
+	long id = m_list_Alumnos->GetNextItem(-1,wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	if(id != -1){
+	if(id >= 0 and id <= vAlumno.size()){
+	
+		DialogoPrestamo *nueva= new DialogoPrestamo(this,vAlumno[id]);
+		nueva->ShowModal();
+	}
+	}
 }
 
 void VentanaParaBibliotecario::OnButtonClickHistorialAlumno( wxCommandEvent& event )  {
-	VentanaHistorial *nueva= new VentanaHistorial(NULL);
-	nueva->Show();
+	long id = m_list_Alumnos->GetNextItem(-1,wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	if(id != -1){
+		if(id >= 0 and id <= vAlumno.size()){
+			
+			DialogoHistorial *nueva= new DialogoHistorial(this,vAlumno[id]);
+			nueva->ShowModal();
+		}
+	}
 }
+
+
 
