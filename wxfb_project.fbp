@@ -1899,7 +1899,7 @@
                     </object>
                   </object>
                 </object>
-                <object class="simplebookpage" expanded="false">
+                <object class="simplebookpage" expanded="true">
                   <property name="label">a page</property>
                   <property name="select">0</property>
                   <object class="wxPanel" expanded="false">
