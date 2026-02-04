@@ -126,3 +126,7 @@ void VentanaParaBibliotecario::Onclick_Boton_Buscar_Frase( wxCommandEvent& event
 	
 }
 
+void VentanaParaBibliotecario::Onclick_Boton_Buscar_Frase( wxCommandEvent& event )  {
+	event.Skip();
+}
+
