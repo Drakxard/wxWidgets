@@ -16,11 +16,12 @@ struct Tags;
 struct Bloque;
 class System{
 	string alumnos = "Recursos/Binarios/alumnos.bin";	
+	string bibliotecarios = "Recursos/Binarios/bibliotecarios.bin";	
 	
 public:
 	System(){};
 	string pathAlumnos(){return alumnos;}
-	
+	string pathBibliotecarios(){return bibliotecarios;}
 	template<typename T>
 	bool Guardar(string nombreArhivo, vector<T> &A_Guardar, bool sobreEscribir=false);
 	

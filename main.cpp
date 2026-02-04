@@ -68,48 +68,13 @@ void menuAlumno();
 int main(){
 
 	Bloques allTags;
-	/*-----------------Login------------------------
+	///-----------------Login------------------------
 	//Saber los alumnos y bibliotecarios
-	vectorAlumnos = sistema.VerContenido<Alumno>(alumnos,true);
-	vectorBibliotecario= sistema.VerContenido<Bibliotecario>(bibliotecarios,true);
+
+
 	
-	cout<<"Sistema de gestion Bibliotecario!!!"<<endl<<endl;
-	
-	int dni;
-	cout<<"Ingrese su Documento de Identidad, por favor: ";
-	cin>>dni;
-	
-	
-	int PosBibliotecario = BuscarDniEnBibliotecarios(dni, vectorBibliotecario);
-	cout<<"PosBibliotecario: "<<PosBibliotecario<<endl;
-	//Declarar Variables para ser usadas en la ejecucion
-	Alumno alumn;
-	Bibliotecario biblio;
-	
-	
-	
-	if(PosBibliotecario != -1){
-	biblio = ObjetoCorrespondienteBibliotecario(PosBibliotecario, vectorBibliotecario);
-	cout<<"?Que Quieres Hacer "<<biblio.VerNombre()<<" ?"<<endl;
-	menuBibliotecario();
-}
-	else{
-	int PosAlumno = BuscarDniEnAlumnos(dni,vectorAlumnos);
-	if(PosAlumno!= -1){
-	alumn = ObjetoCorrespondienteAlumno(PosAlumno, vectorAlumnos); 
-	cout<<"PosAlumno: "<<PosAlumno<<endl;
-	
-	cout<<"?Que Quieres Hacer "<<alumn.VerNombre()<<" ?"<<endl;
-	cout<<"Menu alumno..";
-}else{
-	cout<<"No est?s en el sistema... Registrandote"<<endl;
-	cant=1;
-	admin.CargarNuevos<Alumno>(cant,alumnos);
-}
-}
-	
-	//Fin login, tenemos o un Bibliotecario o un Alumno
-	*/
+	///Fin login, tenemos o un Bibliotecario o un Alumno
+
 	/* ----------------------- Intefaz --------------------
 	///Para mostrar los libros antes mostramos sus Cabeceras
 	

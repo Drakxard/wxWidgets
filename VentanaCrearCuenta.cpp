@@ -29,6 +29,8 @@ void VentanaCrearCuenta::OnclikBienvenido_Iniciar( wxCommandEvent& event )  {
 		return;
 	}
 	///Construir el alumno
+
+	
 	VentanaAlumno *ventanaAlum = new VentanaAlumno(NULL);
 	ventanaAlum->Show();
 	this->Close();

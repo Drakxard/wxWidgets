@@ -2,7 +2,9 @@
 #include <wx/msgdlg.h>
 #include <string>
 #include "VentanaPrincipal.h"
+#include "VentanaParaBibliotecario.h"
 #include "VentanaCrearCuenta.h"
+#include "VentanaAlumno.h"
 using namespace std;
 
 VentanaLogin::VentanaLogin(wxWindow *parent) : MyFrameLogin(parent) {
@@ -20,16 +22,37 @@ void VentanaLogin::OnclikBienvenido_Iniciar( wxCommandEvent& event )  {
 		return;
 	}
 	
-	//Bibliotecario o no, clase me lo dice
-	bool tipoDeUsuario = true;
-
-	if(tipoDeUsuario) {
+	System sistema;
+	vectorAlumnos = sistema.VerContenido<Alumno>(sistema.pathAlumnos(),true);
+	vectorBibliotecario= sistema.VerContenido<Bibliotecario>(sistema.pathBibliotecarios(),true);
+	
+	int PosBibliotecario = BuscarDniEnBibliotecarios(dni, vectorBibliotecario);
+	
+	if(PosBibliotecario != -1){
+		biblio = ObjetoCorrespondienteBibliotecario(PosBibliotecario, vectorBibliotecario);
+		///cout<<"?Que Quieres Hacer "<<biblio.VerNombre()<<" ?"<<endl;
+		///menuBibliotecario
 		VentanaPrincipal *ventana = new VentanaPrincipal(NULL);
 		ventana->Show();
 		this->Close();
-	}else{
-		OnButtonClickCrearCuenta(event);
 	}
+	else{
+		int PosAlumno = BuscarDniEnAlumnos(dni,vectorAlumnos);
+		if(PosAlumno!= -1){
+			alumn = ObjetoCorrespondienteAlumno(PosAlumno, vectorAlumnos); 
+			///MenuAlumno
+			VentanaAlumno *ventana = new VentanaAlumno(NULL);
+			ventana->Show();
+			this->Close();
+		}else{
+			///cout<<"No est?s en el sistema... Registrandote"<<endl;
+			///cant=1; PARA VENTANA CREAR CUENTA
+			///admin.CargarNuevos<Alumno>(cant,alumnos);
+			OnButtonClickCrearCuenta(event);
+		}
+	}
+	
+	
 }
 void VentanaLogin::onTextEnter_Bienvenido_Confirmar( wxCommandEvent& event )  {
 	OnclikBienvenido_Iniciar( event );

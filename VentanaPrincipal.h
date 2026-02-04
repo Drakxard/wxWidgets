@@ -2,6 +2,8 @@
 #define VENTANAPRINCIPAL_H
 #include "wxfb_project.h"
 #include "VentanaParaBibliotecario.h"
+#include "Funcionalidades/system/system.h"
+
 
 class VentanaPrincipal : public VentanaParaBibliotecario {
 	

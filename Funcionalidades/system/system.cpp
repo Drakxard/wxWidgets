@@ -188,7 +188,7 @@ auto encontrar = find_if(v.begin(), v.end(), [dni](const S& x) {
 return x.VerDNI() == dni;
 });
 if(encontrar !=v.end())
-return encontrar->VerID();
+return (encontrar-v.begin());
 
 return -1;
 }
