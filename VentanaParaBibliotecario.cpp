@@ -120,13 +120,7 @@ void VentanaParaBibliotecario::OnButtonClickHistorialAlumno( wxCommandEvent& eve
 	}
 }
 
-
-
 void VentanaParaBibliotecario::Onclick_Boton_Buscar_Frase( wxCommandEvent& event )  {
 	
-}
-
-void VentanaParaBibliotecario::Onclick_Boton_Buscar_Frase( wxCommandEvent& event )  {
-	event.Skip();
 }
 

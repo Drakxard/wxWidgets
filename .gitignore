@@ -9,3 +9,6 @@ debug.w32/VentanaLogin.o
 MiProyecto.zpr
 MiProyecto.zpr
 MiProyecto.zpr
+*.o
+MiProyecto.zpr
+MiProyecto.zpr
