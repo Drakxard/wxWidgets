@@ -22,20 +22,13 @@ VentanaParaBibliotecario::VentanaParaBibliotecario(wxWindow *parent) : MyFrameIn
 	
 	m_list_Bibliotecarios->SetSingleStyle(wxLC_HRULES); // Líneas horizontales
 	m_list_Bibliotecarios->SetSingleStyle(wxLC_VRULES); // Líneas verticaless
-	
-	
-}
-
-VentanaParaBibliotecario::~VentanaParaBibliotecario() {
-	
+		
 }
 
 
-
-
-
-
-void VentanaParaBibliotecario::CargarLista(wxListCtrl* lista){
+VentanaParaBibliotecario::~VentanaParaBibliotecario() {	
+}
+void VentanaParaBibliotecario::CargarListaAlumnos(wxListCtrl* lista){
 	//Limpiamos la tabla
 	lista->DeleteAllItems();
 	
@@ -54,11 +47,32 @@ void VentanaParaBibliotecario::CargarLista(wxListCtrl* lista){
 		lista-> SetItem(index,2, wxString::Format("%d", vAlumno[i].VerDNI()) );		
 	}
 	///Mostrar todo de golpe
-	lista->Thaw();
-	
+	lista->Thaw();	
 }
 
 
+void VentanaParaBibliotecario::CargarListaBibliotecario(wxListCtrl* lista){
+	//Limpiamos la tabla
+	lista->DeleteAllItems();
+	
+	//
+	lista->Freeze();
+	vBibliotecario = sistema.VerContenido<Bibliotecario>(sistema.pathBibliotecarios(),true);
+	for(int i=0;i<vBibliotecario.size();i++) { 
+		///Llenamos con ID
+		long index = lista -> InsertItem(i, wxString::Format("%d",vBibliotecario[i].VerID()));
+		
+		///CargarNombreDelAlumno
+		
+		lista-> SetItem(index, 1, vBibliotecario[i].VerNombre() );
+		
+		///CargamosDni
+		lista-> SetItem(index,2, wxString::Format("%d", vBibliotecario[i].VerDNI()) );		
+	}
+	///Mostrar todo de golpe
+	lista->Thaw();
+	
+}
 
 
 void VentanaParaBibliotecario::OnRadioButton_CambiaPestana(wxCommandEvent& event){
@@ -67,11 +81,11 @@ void VentanaParaBibliotecario::OnRadioButton_CambiaPestana(wxCommandEvent& event
 	}
 	else if(m_radio_Alumnos->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(1);
-		CargarLista(m_list_Alumnos);
+		CargarListaAlumnos(m_list_Alumnos);
 	}				
 	else if(m_radio_Bibliotecarios->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(2);
-		CargarLista(m_list_Bibliotecarios);
+		CargarListaBibliotecario(m_list_Bibliotecarios);
 	}
 	this->Layout();  ///Actualizamos al frame actual
 }
