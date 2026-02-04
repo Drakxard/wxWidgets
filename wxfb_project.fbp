@@ -1431,7 +1431,7 @@
               <property name="border">5</property>
               <property name="flag">wxEXPAND | wxALL</property>
               <property name="proportion">1</property>
-              <object class="wxSimplebook" expanded="false">
+              <object class="wxSimplebook" expanded="true">
                 <property name="BottomDockable">1</property>
                 <property name="LeftDockable">1</property>
                 <property name="RightDockable">1</property>

@@ -7,6 +7,9 @@ class VentanaParaAlumno : public MyFrameInicioCorrectoAlumno {
 private:
 	
 protected:
+	void OnRadioButton_CambiaPestana( wxCommandEvent& event )  override;
+	void OnButtonClickPrestarLibro( wxCommandEvent& event )  override;
+	void OnButtonClickHistorialAlumno( wxCommandEvent& event )  override;
 	
 public:
 	VentanaParaAlumno(wxWindow *parent=NULL);
