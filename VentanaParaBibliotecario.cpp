@@ -79,12 +79,18 @@ void VentanaParaBibliotecario::OnRadioButton_CambiaPestana(wxCommandEvent& event
 	if(m_radio_Libros->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(0);
 	}
-	else if(m_radio_Alumnos->GetValue()){
+	if(m_radio_InfoLibros->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(1);
+	}
+	if(m_radio_Etiquetas->GetValue()){
+		m_Bibliotecario_frameActual->SetSelection(2);
+	}
+	else if(m_radio_Alumnos->GetValue()){
+		m_Bibliotecario_frameActual->SetSelection(3);
 		CargarListaAlumnos(m_list_Alumnos);
 	}				
 	else if(m_radio_Bibliotecarios->GetValue()){
-		m_Bibliotecario_frameActual->SetSelection(2);
+		m_Bibliotecario_frameActual->SetSelection(4);
 		CargarListaBibliotecario(m_list_Bibliotecarios);
 	}
 	this->Layout();  ///Actualizamos al frame actual
@@ -115,4 +121,8 @@ void VentanaParaBibliotecario::OnButtonClickHistorialAlumno( wxCommandEvent& eve
 }
 
 
+
+void VentanaParaBibliotecario::Onclick_Boton_Buscar_Frase( wxCommandEvent& event )  {
+	
+}
 
