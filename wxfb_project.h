@@ -98,6 +98,8 @@ class MyFrameInicioCorrectoBibliotecario : public wxFrame
 		wxTextCtrl* m_textCtrl2;
 		wxButton* m_button1;
 		wxRadioButton* m_radio_Libros;
+		wxRadioButton* m_radioBtn8;
+		wxRadioButton* m_radioBtn9;
 		wxRadioButton* m_radio_Alumnos;
 		wxRadioButton* m_radio_Bibliotecarios;
 		wxSimplebook* m_Bibliotecario_frameActual;
@@ -107,6 +109,17 @@ class MyFrameInicioCorrectoBibliotecario : public wxFrame
 		wxButton* m_button19;
 		wxStaticText* m_staticText18;
 		wxButton* m_button20;
+		wxPanel* m_panel_DetallesLibros;
+		wxListCtrl* m_list_Alumnos1;
+		wxButton* m_button131;
+		wxButton* m_button21;
+		wxButton* m_button201;
+		wxButton* m_button141;
+		wxPanel* m_panel_DetallesEtiquetas;
+		wxListCtrl* m_list_Alumnos11;
+		wxButton* m_button1311;
+		wxButton* m_button22;
+		wxButton* m_button1411;
 		wxPanel* m_panel_Alumnos;
 		wxListCtrl* m_list_Alumnos;
 		wxButton* m_button13;
