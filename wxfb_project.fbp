@@ -977,7 +977,7 @@
                     <property name="minimize_button">0</property>
                     <property name="minimum_size"></property>
                     <property name="moveable">1</property>
-                    <property name="name">m_textCtrl2</property>
+                    <property name="name">mtext_Buscador_frase</property>
                     <property name="pane_border">1</property>
                     <property name="pane_position"></property>
                     <property name="pane_size"></property>
@@ -1050,7 +1050,7 @@
                     <property name="minimize_button">0</property>
                     <property name="minimum_size"></property>
                     <property name="moveable">1</property>
-                    <property name="name">m_button1</property>
+                    <property name="name">Boton_Buscar_Frase</property>
                     <property name="pane_border">1</property>
                     <property name="pane_position"></property>
                     <property name="pane_size"></property>
@@ -1073,6 +1073,7 @@
                     <property name="window_extra_style"></property>
                     <property name="window_name"></property>
                     <property name="window_style"></property>
+                    <event name="OnButtonClick">Onclick_Boton_Buscar_Frase</event>
                   </object>
                 </object>
               </object>
@@ -1152,11 +1153,11 @@
                     <event name="OnRadioButton">OnRadioButton_CambiaPestana</event>
                   </object>
                 </object>
-                <object class="sizeritem" expanded="true">
+                <object class="sizeritem" expanded="false">
                   <property name="border">5</property>
                   <property name="flag">wxALL</property>
                   <property name="proportion">0</property>
-                  <object class="wxRadioButton" expanded="true">
+                  <object class="wxRadioButton" expanded="false">
                     <property name="BottomDockable">1</property>
                     <property name="LeftDockable">1</property>
                     <property name="RightDockable">1</property>
@@ -1193,7 +1194,7 @@
                     <property name="minimize_button">0</property>
                     <property name="minimum_size"></property>
                     <property name="moveable">1</property>
-                    <property name="name">m_radioBtn8</property>
+                    <property name="name">m_radio_InfoLibros</property>
                     <property name="pane_border">1</property>
                     <property name="pane_position"></property>
                     <property name="pane_size"></property>
@@ -1217,11 +1218,11 @@
                     <property name="window_style"></property>
                   </object>
                 </object>
-                <object class="sizeritem" expanded="true">
+                <object class="sizeritem" expanded="false">
                   <property name="border">5</property>
                   <property name="flag">wxALL</property>
                   <property name="proportion">0</property>
-                  <object class="wxRadioButton" expanded="true">
+                  <object class="wxRadioButton" expanded="false">
                     <property name="BottomDockable">1</property>
                     <property name="LeftDockable">1</property>
                     <property name="RightDockable">1</property>
@@ -1258,7 +1259,7 @@
                     <property name="minimize_button">0</property>
                     <property name="minimum_size"></property>
                     <property name="moveable">1</property>
-                    <property name="name">m_radioBtn9</property>
+                    <property name="name">m_radio_Etiquetas</property>
                     <property name="pane_border">1</property>
                     <property name="pane_position"></property>
                     <property name="pane_size"></property>
@@ -1483,10 +1484,10 @@
                 <property name="window_extra_style"></property>
                 <property name="window_name"></property>
                 <property name="window_style"></property>
-                <object class="simplebookpage" expanded="false">
+                <object class="simplebookpage" expanded="true">
                   <property name="label">a page</property>
                   <property name="select">0</property>
-                  <object class="wxPanel" expanded="false">
+                  <object class="wxPanel" expanded="true">
                     <property name="BottomDockable">1</property>
                     <property name="LeftDockable">1</property>
                     <property name="RightDockable">1</property>
@@ -2345,7 +2346,7 @@
                     </object>
                   </object>
                 </object>
-                <object class="simplebookpage" expanded="false">
+                <object class="simplebookpage" expanded="true">
                   <property name="label">a page</property>
                   <property name="select">0</property>
                   <object class="wxPanel" expanded="false">
@@ -2717,7 +2718,7 @@
                     </object>
                   </object>
                 </object>
-                <object class="simplebookpage" expanded="false">
+                <object class="simplebookpage" expanded="true">
                   <property name="label">a page</property>
                   <property name="select">0</property>
                   <object class="wxPanel" expanded="false">
@@ -3015,7 +3016,7 @@
                     </object>
                   </object>
                 </object>
-                <object class="simplebookpage" expanded="false">
+                <object class="simplebookpage" expanded="true">
                   <property name="label">a page</property>
                   <property name="select">0</property>
                   <object class="wxPanel" expanded="false">

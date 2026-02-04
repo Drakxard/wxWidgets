@@ -95,11 +95,11 @@ class MyFrameInicioCorrectoBibliotecario : public wxFrame
 	private:
 
 	protected:
-		wxTextCtrl* m_textCtrl2;
-		wxButton* m_button1;
+		wxTextCtrl* mtext_Buscador_frase;
+		wxButton* Boton_Buscar_Frase;
 		wxRadioButton* m_radio_Libros;
-		wxRadioButton* m_radioBtn8;
-		wxRadioButton* m_radioBtn9;
+		wxRadioButton* m_radio_InfoLibros;
+		wxRadioButton* m_radio_Etiquetas;
 		wxRadioButton* m_radio_Alumnos;
 		wxRadioButton* m_radio_Bibliotecarios;
 		wxSimplebook* m_Bibliotecario_frameActual;
@@ -128,6 +128,7 @@ class MyFrameInicioCorrectoBibliotecario : public wxFrame
 		wxListCtrl* m_list_Bibliotecarios;
 
 		// Virtual event handlers, override them in your derived class
+		virtual void Onclick_Boton_Buscar_Frase( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRadioButton_CambiaPestana( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickPrestarLibro( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickHistorialAlumno( wxCommandEvent& event ) { event.Skip(); }
