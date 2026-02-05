@@ -1,3 +1,5 @@
 *.o
 *.exe
 debug.w32/
+/debug.w32
+*.zpr
