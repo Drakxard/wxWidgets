@@ -15,11 +15,14 @@ struct Cabecera{
 struct Tags;
 struct Bloque;
 class System{
+	string libros = "Recursos/Binarios/libros.bin";	
 	string alumnos = "Recursos/Binarios/alumnos.bin";	
 	string bibliotecarios = "Recursos/Binarios/bibliotecarios.bin";	
 	
 public:
 	System(){};
+	
+	string pathLibros(){return libros;}
 	string pathAlumnos(){return alumnos;}
 	string pathBibliotecarios(){return bibliotecarios;}
 	template<typename T>

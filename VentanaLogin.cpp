@@ -4,7 +4,7 @@
 #include "VentanaPrincipal.h"
 #include "VentanaParaBibliotecario.h"
 #include "VentanaCrearCuenta.h"
-#include "VentanaAlumno.h"
+#include "VentanaParaAlumno.h"
 using namespace std;
 
 VentanaLogin::VentanaLogin(wxWindow *parent) : MyFrameLogin(parent) {
@@ -41,7 +41,7 @@ void VentanaLogin::OnclikBienvenido_Iniciar( wxCommandEvent& event )  {
 		if(PosAlumno!= -1){
 			alumn = ObjetoCorrespondienteAlumno(PosAlumno, vectorAlumnos); 
 			///MenuAlumno
-			VentanaAlumno *ventana = new VentanaAlumno(NULL);
+			VentanaParaAlumno *ventana = new VentanaParaAlumno(NULL);
 			ventana->Show();
 			this->Close();
 		}else{

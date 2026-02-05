@@ -1,7 +1,7 @@
 #include "VentanaCrearCuenta.h"
 #include <wx/msgdlg.h>
-#include "VentanaAlumno.h"
 #include "VentanaLogin.h"
+#include "VentanaParaAlumno.h"
 
 VentanaCrearCuenta::VentanaCrearCuenta(wxWindow *parent) : MyFrameCrearCuenta(parent) {
 	
@@ -31,7 +31,7 @@ void VentanaCrearCuenta::OnclikBienvenido_Iniciar( wxCommandEvent& event )  {
 	///Construir el alumno
 
 	
-	VentanaAlumno *ventanaAlum = new VentanaAlumno(NULL);
+	VentanaParaAlumno *ventanaAlum = new VentanaParaAlumno(NULL);
 	ventanaAlum->Show();
 	this->Close();
 }

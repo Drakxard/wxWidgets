@@ -7,6 +7,7 @@ class VentanaAlumno : public MyFrameInicioCorrectoAlumno {
 private:
 	
 protected:
+	void Onclick_Boton_Buscar_Frase( wxCommandEvent& event )  override;
 	void OnButtonClickPrestarLibro( wxCommandEvent& event )  override;
 	void OnButtonClickHistorialAlumno( wxCommandEvent& event )  override;
 	void OnRadioButton_CambiaPestana( wxCommandEvent& event )  override;
