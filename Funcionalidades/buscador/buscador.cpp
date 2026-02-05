@@ -3,6 +3,8 @@
 #include "../system/system.h"
 #include <algorithm>
 #include "../Bloques/Bloques.h"
+#include "../bibliotecario/bibliotecario.h"
+#include "../alumno/alumno.h"
 using namespace std;
 vector<size_t> Buscador::BusquedaSimple(string nombreBuscado)
 {
@@ -123,6 +125,7 @@ vector<T>Buscador:: Relacionados(string palabraBuscada, vector<T>&v){
 	
 template vector<Alumno>Buscador:: Relacionados(string palabraBuscada, vector<Alumno>&v);
 template vector<Libro>Buscador:: Relacionados(string palabraBuscada, vector<Libro>&v);
+template vector<Bibliotecario>Buscador:: Relacionados(string palabraBuscada, vector<Bibliotecario>&v);
 
 	
 	

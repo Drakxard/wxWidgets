@@ -1,6 +1,9 @@
 #include "VentanaParaBibliotecario.h"
 #include "DialogoPrestamo.h"
 #include "DialogoHistorial.h"
+#include <wx/msgdlg.h>
+#include "Dialogo_Eliminar.h"
+
 
 
 using namespace std;
@@ -120,7 +123,144 @@ void VentanaParaBibliotecario::OnButtonClickHistorialAlumno( wxCommandEvent& eve
 	}
 }
 
-void VentanaParaBibliotecario::Onclick_Boton_Buscar_Frase( wxCommandEvent& event )  {
+
+
+
+void VentanaParaBibliotecario::MuestraListaResultadoBibliotecario(wxListCtrl* lista){
+	//Limpiamos la tabla
+	lista->DeleteAllItems();
 	
+	//
+	lista->Freeze();
+	if(vResultadoBibliotecario.size()==0){
+			wxMessageBox("No hay nadie con ese nombre","Sin coincidencias",wxOK|wxICON_INFORMATION);
+			return;
+		
+	}else{
+		for(int i=0;i<vResultadoBibliotecario.size();i++) { 
+		///Llenamos con ID
+		long index = lista -> InsertItem(i, wxString::Format("%d",vResultadoBibliotecario[i].VerID()));
+		
+		///CargarNombreDelAlumno
+		
+		lista-> SetItem(index, 1,vResultadoBibliotecario[i].VerNombre() );
+		
+		///CargamosDni
+		lista-> SetItem(index,2, wxString::Format("%d", vResultadoBibliotecario[i].VerDNI()) );		
+		}
+	}
+		///Mostrar todo de golpe
+	lista->Thaw();
+	
+}
+
+void VentanaParaBibliotecario::MuestraListaResultadoAlumno(wxListCtrl* lista){
+	//Limpiamos la tabla
+	lista->DeleteAllItems();
+	lista->Freeze();
+	if(vResultadoAlumno.size()==0){
+		wxMessageBox("No hay nadie con ese nombre","Sin coincidencias",wxOK|wxICON_INFORMATION);
+		return;
+		
+	}else{
+		for(int i=0;i<vResultadoAlumno.size();i++) { 
+			///Llenamos con ID
+			long index = lista -> InsertItem(i, wxString::Format("%d",vResultadoAlumno[i].VerID()));
+			
+			///CargarNombreDelAlumno
+			
+			lista-> SetItem(index, 1,vResultadoAlumno[i].VerNombre() );
+			
+			///CargamosDni
+			lista-> SetItem(index,2, wxString::Format("%d", vResultadoAlumno[i].VerDNI()) );		
+		}
+	}
+	///Mostrar todo de golpe
+	lista->Thaw();
+	
+}
+
+
+void VentanaParaBibliotecario::MuestraListaResultadoLibro(wxListCtrl* lista){
+//	//Limpiamos la tabla
+//	lista->DeleteAllItems();
+//	lista->Freeze();
+//	if(vResultadoLibro.size()==0){
+//		wxMessageBox("No hay nadie con ese nombre","Sin coincidencias",wxOK|wxICON_INFORMATION);
+//		return;
+//		
+//	}else{
+//		for(int i=0;i<vResultadoLibro.size();i++) { 
+//			///Llenamos con ID
+//			long index = lista -> InsertItem(i, wxString::Format("%d",vResultadoLibro[i].VerID()));
+//			
+//			///CargarNombreDelAlumno
+//			
+//			lista-> SetItem(index, 1,vResultadoLibro[i].VerNombre() );
+//			
+//			///CargamosDni
+//			lista-> SetItem(index,2, wxString::Format("%d",vResultadoLibro[i].VerDNI()) );		
+//		}
+//	}
+//	///Mostrar todo de golpe
+//	lista->Thaw();
+//	
+}
+
+
+
+void VentanaParaBibliotecario::Onclick_Boton_Buscar_Frase( wxCommandEvent& event )  {
+	string palabra;
+	if(m_radio_Libros->GetValue()){
+//		string palabra;
+//		palabra=mtext_Buscador_frase->GetValue().ToStdString();
+//		vResultadoLibro = navega.Relacionados<Alumno>(palabra,vLibro );
+//		MuestraListaResultadoLibro(m_list_Libro);
+		
+	}
+	else if(m_radio_InfoLibros->GetValue()){
+		m_Bibliotecario_frameActual->SetSelection(1);
+	}
+	else if(m_radio_Etiquetas->GetValue()){
+		m_Bibliotecario_frameActual->SetSelection(2);
+	}
+	else if(m_radio_Alumnos->GetValue()){
+		
+		palabra=mtext_Buscador_frase->GetValue().ToStdString();
+		vResultadoAlumno = navega.Relacionados<Alumno>(palabra,vAlumno );
+		MuestraListaResultadoAlumno(m_list_Alumnos);
+	}				
+	else if(m_radio_Bibliotecarios->GetValue()){
+		
+		palabra=mtext_Buscador_frase->GetValue().ToStdString();
+		vResultadoBibliotecario = navega.Relacionados<Bibliotecario>(palabra,vBibliotecario );
+		MuestraListaResultadoBibliotecario(m_list_Bibliotecarios);
+		
+	}
+	this->Layout();
+}
+
+void VentanaParaBibliotecario::onclickbutton_eliminar( wxCommandEvent& event )  {
+	
+	if(m_radio_Libros->GetValue()){
+		
+	}
+	if(m_radio_InfoLibros->GetValue()){
+		
+	}
+	if(m_radio_Etiquetas->GetValue()){
+		
+	}
+	else if(m_radio_Alumnos->GetValue()){
+		Dialogo_Eliminar *ventanaCrear = new Dialogo_Eliminar(NULL);
+		ventanaCrear->ShowModal();
+		
+		
+	}				
+	else if(m_radio_Bibliotecarios->GetValue()){
+		m_Bibliotecario_frameActual->SetSelection(4);
+		CargarListaBibliotecario(m_list_Bibliotecarios);
+	}
+	this->Layout();
 }
 

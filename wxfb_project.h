@@ -126,12 +126,14 @@ class MyFrameInicioCorrectoBibliotecario : public wxFrame
 		wxButton* m_button14;
 		wxPanel* m_panel_Bibliotecarios;
 		wxListCtrl* m_list_Bibliotecarios;
+		wxButton* button_eliminar;
 
 		// Virtual event handlers, override them in your derived class
 		virtual void Onclick_Boton_Buscar_Frase( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRadioButton_CambiaPestana( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickPrestarLibro( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickHistorialAlumno( wxCommandEvent& event ) { event.Skip(); }
+		virtual void onclickbutton_eliminar( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:
@@ -255,6 +257,33 @@ class MyDialogHistorial : public wxDialog
 		MyDialogHistorial( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 554,424 ), long style = wxDEFAULT_DIALOG_STYLE );
 
 		~MyDialogHistorial();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class MyDialog_Eliminar
+///////////////////////////////////////////////////////////////////////////////
+class MyDialog_Eliminar : public wxDialog
+{
+	private:
+
+	protected:
+		wxStaticText* m_staticText17;
+		wxTextCtrl* m_text_ID_Eliminar;
+		wxButton* m_button_Cancela_Eliminacion;
+		wxButton* m_button_Continuar_Eliminar;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void onTextEnter_IDa_Eliminar( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonClick_Cancela_Eliminar( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnclikContinuar_Eliminar( wxCommandEvent& event ) { event.Skip(); }
+
+
+	public:
+
+		MyDialog_Eliminar( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 336,136 ), long style = wxDEFAULT_DIALOG_STYLE );
+
+		~MyDialog_Eliminar();
 
 };
 
