@@ -1,0 +1,44 @@
+############################
+# Carpetas de compilación
+############################
+debug.w32/
+release.w32/
+Debug/
+Release/
+
+############################
+# Archivos objeto y binarios
+############################
+*.o
+*.obj
+*.exe
+*.dll
+
+############################
+# Archivos temporales de Code::Blocks
+############################
+*.layout
+*.depend
+*.cbTemp
+
+############################
+# Archivos generados por wxFormBuilder
+############################
+wxfb_project.o
+
+############################
+# Archivos temporales del sistema
+############################
+*.log
+*.tmp
+*.bak
+*.swp
+.DS_Store
+Thumbs.db
+
+############################
+# NO ignorar (ejemplo)
+############################
+# *.cbp
+# *.workspace
+# *.zpr
