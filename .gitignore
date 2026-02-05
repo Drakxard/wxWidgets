@@ -1,14 +1,44 @@
-MiProyecto.zpr
-debug.w32/MiProyecto.exe
-debug.w32/MiProyecto.exe
-debug.w32/wxfb_project.o
-debug.w32/VentanaPrincipal.o
-debug.w32/VentanaParaBibliotecario.o
-debug.w32/VentanaParaAlumno.o
-debug.w32/VentanaLogin.o
-MiProyecto.zpr
-MiProyecto.zpr
-MiProyecto.zpr
+############################
+# Carpetas de compilación
+############################
+debug.w32/
+release.w32/
+Debug/
+Release/
+
+############################
+# Archivos objeto y binarios
+############################
 *.o
-MiProyecto.zpr
-MiProyecto.zpr
+*.obj
+*.exe
+*.dll
+
+############################
+# Archivos temporales de Code::Blocks
+############################
+*.layout
+*.depend
+*.cbTemp
+
+############################
+# Archivos generados por wxFormBuilder
+############################
+wxfb_project.o
+
+############################
+# Archivos temporales del sistema
+############################
+*.log
+*.tmp
+*.bak
+*.swp
+.DS_Store
+Thumbs.db
+
+############################
+# NO ignorar (ejemplo)
+############################
+# *.cbp
+# *.workspace
+# *.zpr
