@@ -183,17 +183,22 @@ class MyFrameInicioCorrectoAlumno : public wxFrame
 		wxButton* m_button14;
 		wxPanel* m_panel_Bibliotecarios;
 		wxListCtrl* m_list_Bibliotecarios;
+		wxButton* button_eliminar;
 
 		// Virtual event handlers, override them in your derived class
 		virtual void Onclick_Boton_Buscar_Frase( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRadioButton_CambiaPestana( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickPrestarLibro( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickHistorialAlumno( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonClickAgregar( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonClickEditar( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonClickEliminar( wxCommandEvent& event ) { event.Skip(); }
+		virtual void onclickbutton_eliminar( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:
 
-		MyFrameInicioCorrectoAlumno( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("ALUMNO"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 580,420 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		MyFrameInicioCorrectoAlumno( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 580,420 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~MyFrameInicioCorrectoAlumno();
 
@@ -298,6 +303,33 @@ class MyDialog_Eliminar : public wxDialog
 		MyDialog_Eliminar( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 336,136 ), long style = wxDEFAULT_DIALOG_STYLE );
 
 		~MyDialog_Eliminar();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class MyDialogAgregar
+///////////////////////////////////////////////////////////////////////////////
+class MyDialogAgregar : public wxDialog
+{
+	private:
+
+	protected:
+		wxStaticText* m_staticText17;
+		wxTextCtrl* m_text_Bienvenido_Valor;
+		wxButton* m_button_NuevoElemento_cancelar;
+		wxButton* m_button_NuevoElemento_Continuar;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void onTextEnter_Bienvenido_Confirmar( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonClickCerrar( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnclikNuevoElemento( wxCommandEvent& event ) { event.Skip(); }
+
+
+	public:
+
+		MyDialogAgregar( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Nuevo Elemento"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
+
+		~MyDialogAgregar();
 
 };
 

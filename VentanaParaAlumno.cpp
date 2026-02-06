@@ -10,12 +10,21 @@ VentanaParaAlumno::VentanaParaAlumno(wxWindow *parent) : MyFrameInicioCorrectoAl
 	
 	
 	///LIBRO
+	
 	m_list_InfoLibros->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
 	m_list_InfoLibros->InsertColumn(1, "Nombre", wxLIST_FORMAT_LEFT, 200);
-	m_list_InfoLibros->InsertColumn(2, "DNI", wxLIST_FORMAT_LEFT, 100);
-	 
+	m_list_InfoLibros->InsertColumn(2, "Estado", wxLIST_FORMAT_LEFT, 100);
+	
 	m_list_InfoLibros->SetSingleStyle(wxLC_HRULES); // Líneas horizontales
 	m_list_InfoLibros->SetSingleStyle(wxLC_VRULES); // Líneas verticaless
+	
+	///Etiquetas
+	
+	m_list_Etiquetas->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
+	m_list_Etiquetas->InsertColumn(1, "Nombre", wxLIST_FORMAT_LEFT, 200);
+
+	m_list_Etiquetas->SetSingleStyle(wxLC_HRULES); // Líneas horizontales
+	m_list_Etiquetas->SetSingleStyle(wxLC_VRULES); // Líneas verticaless
 	
 	
 	///AlUMNO
@@ -109,19 +118,17 @@ void VentanaParaAlumno::CargarListaInfoLibros(wxListCtrl* lista){
 void VentanaParaAlumno::CargarListaEtiquetas(wxListCtrl* lista){
 	//Limpiamos la tabla
 	lista->DeleteAllItems();
-	//
+	//¿¿
 	lista->Freeze();
-	vLibros = sistema.VerContenido<Libro>(sistema.pathLibros(),true);
-	for(int i=0;i<vLibros.size();i++) { 
+	tagsActuales = sistema.VerContenido<Tags>(allTags.VerPathEtiquetas(),true);
+	for(int i=0;i<tagsActuales.size();i++) { 
 		///Llenamos con ID
-		long index = lista -> InsertItem(i, wxString::Format("%d",vLibros[i].VerID()));
+		long index = lista -> InsertItem(i, wxString::Format("%d",tagsActuales[i].IdTag));
 		
 		///CargarNombreDelAlumno
 		
-		lista-> SetItem(index, 1, vLibros[i].VerNombre() );
-		
-		lista-> SetItem(index,2, wxString::Format("%d", vLibros[i].EstadoDisponibilidad()) );		
-	}
+		lista-> SetItem(index, 1, tagsActuales[i].NombreTag );
+		}
 	///Mostrar todo de golpe
 	lista->Thaw();
 	
@@ -137,7 +144,7 @@ void VentanaParaAlumno::OnRadioButton_CambiaPestana(wxCommandEvent& event){
 	}
 	if(m_radio_Etiquetas->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(2);
-		CargarListaEtiquetas(m_list_InfoLibros);
+		CargarListaEtiquetas(m_list_Etiquetas);
 	}
 	else if(m_radio_Alumnos->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(3);
@@ -176,5 +183,24 @@ void VentanaParaAlumno::OnButtonClickHistorialAlumno( wxCommandEvent& event )  {
 
 void VentanaParaAlumno::Onclick_Boton_Buscar_Frase( wxCommandEvent& event )  {
 	
+}
+
+void VentanaParaAlumno::onclickbutton_eliminar( wxCommandEvent& event )  {
+	event.Skip();
+}
+
+void VentanaParaAlumno::OnButtonClickAgregar( wxCommandEvent& event )  {
+			
+			MyDialogAgregar *nueva= new MyDialogAgregar(this);
+			nueva->ShowModal();
+	
+}
+
+void VentanaParaAlumno::OnButtonClickEditar( wxCommandEvent& event )  {
+	event.Skip();
+}
+
+void VentanaParaAlumno::OnButtonClickEliminar( wxCommandEvent& event )  {
+	event.Skip();
 }
 
