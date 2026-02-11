@@ -160,7 +160,7 @@ path=Ventanas.h
 cursor=0:0
 [header]
 path=Dialogo_Eliminar.h
-cursor=12:28
+cursor=22:0
 open=true
 [other]
 path=Readme.txt
