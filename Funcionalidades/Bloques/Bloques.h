@@ -7,9 +7,13 @@
 using namespace std;
 struct Tags{
 	size_t IdTag;
-	size_t VerID(){return IdTag;}
+	size_t VerID()const {return IdTag;}
 	char NombreTag[50];
 	size_t InicioBloque;
+	bool existe;
+	void Existe(){existe = true;}
+	void NoExiste(){existe = false;}
+	bool Existencia(){return existe;}
 };
 
 struct Bloque{
@@ -31,13 +35,13 @@ class Bloques {
 public:
 	Bloques();
 	~Bloques();
-	Tags AgregarNuevoTag();
+	Tags AgregarNuevoTag(string Nombre);
 	size_t AgregarNuevoBloque();
 	vector<size_t>LeerTodosLosElementos(size_t IdTag);
 	bool AgregarNuevoElemento(size_t IdTag, size_t idLibro);
 	string VerPathEtiquetas(){return allTags;}
 	size_t CantTags(){return CantidadTags;}
-
+	
 };
 
 #endif

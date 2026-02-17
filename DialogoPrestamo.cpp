@@ -3,7 +3,7 @@
 
 using namespace std;
 
-DialogoPrestamo::DialogoPrestamo(wxWindow *parent, Alumno alumnoSeleccionado): MyDialogPrestar(parent){
+DialogoPrestamo::DialogoPrestamo(wxWindow *parent, Alumno alumnoSeleccionado): MyDialogPrestamo(parent){
 	this-> alumnoSeleccionado = alumnoSeleccionado;
 	
 	m_staticPrestar_NombreAlumno_Valor->SetLabel(alumnoSeleccionado.VerNombre());
