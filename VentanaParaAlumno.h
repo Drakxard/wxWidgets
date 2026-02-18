@@ -1,6 +1,6 @@
 #ifndef VENTANAPARAALUMNO_H
 #define VENTANAPARAALUMNO_H
-#include "ProyBaseAlumno.h"
+#include "wxfb_project.h"
 #include "Funcionalidades/alumno/alumno.h"
 #include "Funcionalidades/system/system.h"
 #include "Funcionalidades/bibliotecario/bibliotecario.h"
@@ -10,7 +10,6 @@ class VentanaParaAlumno : public MyFrameInicioCorrectoAlumno {
 	
 private:
 	System sistema;
-	string path;
 	Bloques allTags;
 	vector<Tags> tagsActuales;
 	vector<size_t> idTags;
@@ -18,9 +17,6 @@ private:
 	vector<Bibliotecario> vBibliotecario;
 	vector<Libro>vLibros;
 protected:
-	void OnButtonClickPrestar( wxCommandEvent& event ) ;
-	void OnButtonClickEditar( wxCommandEvent& event )  ;
-	void OnButtonClickLectores( wxCommandEvent& event )  ;
 	void OnButtonClickAgregar( wxCommandEvent& event )  override;
 	void OnButtonClickEliminar( wxCommandEvent& event )  override;
 	void onclickbutton_eliminar( wxCommandEvent& event )  override;

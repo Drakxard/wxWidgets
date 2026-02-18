@@ -1,6 +1,6 @@
 #ifndef VENTANALOGIN_H
 #define VENTANALOGIN_H
-#include "ProyBaseLogin.h"
+#include "wxfb_project.h"
 #include "Funcionalidades/login/login.h"
 #include "Funcionalidades/system/system.h"
 

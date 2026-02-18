@@ -1,6 +1,6 @@
 #ifndef VENTANACREARCUENTA_H
 #define VENTANACREARCUENTA_H
-#include "ProyCrearBaseCuenta.h"
+#include "wxfb_project.h"
 
 class VentanaCrearCuenta : public MyFrameCrearCuenta {
 	

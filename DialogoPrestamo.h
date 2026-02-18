@@ -11,7 +11,7 @@ private:
 protected:
 	Alumno alumnoSeleccionado;
 public:
-
+	
 	DialogoPrestamo(wxWindow *parent, Alumno alumnoSeleccionado);
 	~DialogoPrestamo();
 	void CargarLista(wxListCtrl* lista);

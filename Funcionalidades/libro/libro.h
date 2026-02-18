@@ -7,17 +7,20 @@ using namespace std;
 
 class Libro
 {
+	bool existe;
 	size_t id;
 	char nombre[50];
 	int diasRestantes;
 	bool disponible; // Quitamos la inicializaci�n aqu� para hacerlo en el constructor
 	bool caduco;
+	
 public:
 	Libro()
 	{
 		id = -1;
 		disponible = true;
 		diasRestantes = 0;
+		existe= true;
 	};
 	
 	Libro(size_t id, const char* nombre)
@@ -28,6 +31,7 @@ public:
 		this->disponible = true; // Por defecto disponible
 		this->caduco = false;
 		this->diasRestantes = 0;
+		existe = true;
 	}
 	
 	size_t VerID() const;
@@ -41,7 +45,10 @@ public:
 	void CambiarEstado(bool estado); // 1 expirado, 0 no expirado
 	void RestarDia(); 
 	void DiasRestantes(int dias);
-	
+	void Existe(){existe = true;}
+	void NoExiste(){existe = false;}
+	bool Existencia(){return existe;}
+		
 	bool operator==(const Libro& otro) const;
 };
 #endif

@@ -30,7 +30,7 @@ public:
 	string pathAlumnos(){return alumnos;}
 	string pathBibliotecarios(){return bibliotecarios;}
 	template<typename T>
-		bool Guardar(string nombreArhivo, vector<T> &A_Guardar, bool sobreEscribir=false);
+	bool Guardar(string nombreArhivo, vector<T> &A_Guardar, bool sobreEscribir=false);
 	
 	bool Guardar(string nombreArhivo, Bloque &A_Guardar, size_t Pos);
 	//Falta codear Eliminar, tempalte
@@ -57,7 +57,7 @@ public:
 	template <typename T>
 	bool EscribirEnBin(vector<int> &IdARecuperar, vector<T>&elementos, string nombreArchivo);
 	
-	
+
 	
 	
 	///Cabeceras para libros

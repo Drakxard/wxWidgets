@@ -111,7 +111,7 @@ void VentanaParaAlumno::CargarListaInfoLibros(wxListCtrl* lista){
 		///CargarNombreDelAlumno
 		
 		lista-> SetItem(index, 1, vLibros[i].VerNombre() );
-		
+	
 		lista-> SetItem(index,2, wxString::Format("%d", vLibros[i].EstadoDisponibilidad()) );		
 	}
 	///Mostrar todo de golpe
@@ -144,22 +144,18 @@ void VentanaParaAlumno::OnRadioButton_CambiaPestana(wxCommandEvent& event){
 		m_Bibliotecario_frameActual->SetSelection(0);
 	}
 	if(m_radio_InfoLibros->GetValue()){
-		path = sistema.pathLibros();
 		m_Bibliotecario_frameActual->SetSelection(1);
 		CargarListaInfoLibros(m_list_InfoLibros);
 	}
 	if(m_radio_Etiquetas->GetValue()){
-		path = sistema.VerPathEtiquetas();
 		m_Bibliotecario_frameActual->SetSelection(2);
 		CargarListaEtiquetas(m_list_Etiquetas);
 	}
 	else if(m_radio_Alumnos->GetValue()){
-		path = sistema.pathAlumnos();
 		m_Bibliotecario_frameActual->SetSelection(3);
 		CargarListaAlumnos(m_list_Alumnos);
 	}				
 	else if(m_radio_Bibliotecarios->GetValue()){
-		path = sistema.pathBibliotecarios();
 		m_Bibliotecario_frameActual->SetSelection(4);
 		CargarListaBibliotecario(m_list_Bibliotecarios);
 	}
@@ -198,11 +194,12 @@ void VentanaParaAlumno::onclickbutton_eliminar( wxCommandEvent& event )  {
 	event.Skip();
 }
 
-void VentanaParaAlumno::OnButtonClickAgregar( wxCommandEvent& event)  {
-	DialogoAgregar *nueva= new DialogoAgregar(this,&sistema,path);
+void VentanaParaAlumno::OnButtonClickAgregar( wxCommandEvent& event )  {
+	DialogoAgregar *nueva= new DialogoAgregar(this,&sistema,sistema.VerPathEtiquetas());
 	if (nueva->ShowModal() == wxID_OK){
 		CargarListaEtiquetas(m_list_Etiquetas);
 	}
+	
 }
 
 
@@ -216,17 +213,5 @@ void VentanaParaAlumno::OnButtonClickEliminar( wxCommandEvent& event )  {
 			}
 		}
 	}
-}
-
-void VentanaParaAlumno::OnButtonClickPrestar( wxCommandEvent& event )  {
-	event.Skip();
-}
-
-void VentanaParaAlumno::OnButtonClickEditar( wxCommandEvent& event )  {
-	event.Skip();
-}
-
-void VentanaParaAlumno::OnButtonClickLectores( wxCommandEvent& event )  {
-	event.Skip();
 }
 

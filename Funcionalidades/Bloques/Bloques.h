@@ -41,7 +41,7 @@ public:
 	bool AgregarNuevoElemento(size_t IdTag, size_t idLibro);
 	string VerPathEtiquetas(){return allTags;}
 	size_t CantTags(){return CantidadTags;}
-	
+
 };
 
 #endif

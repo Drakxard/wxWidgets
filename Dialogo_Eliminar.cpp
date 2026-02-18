@@ -33,9 +33,9 @@ void Dialogo_Eliminar::OnclikContinuar_Eliminar( wxCommandEvent& event) {
 		sistema.Guardar<Tags>(path,VTags,true);
 	}
 	if(tipo==2){
-		vector<Alumno> Valumnos=sistema.VerContenido<Alumno>(path,true);
-		sistema.Eliminar<Alumno>(id, Valumnos);
-		sistema.Guardar<Alumno>(path,Valumnos);
+	vector<Alumno> Valumnos=sistema.VerContenido<Alumno>(path,true);
+	sistema.Eliminar<Alumno>(id, Valumnos);
+	sistema.Guardar<Alumno>(path,Valumnos);
 	}
 	
 	EndModal(wxID_OK);

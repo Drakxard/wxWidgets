@@ -23,23 +23,23 @@ DialogoHistorial::~DialogoHistorial() {
 }
 
 void DialogoHistorial::CargarLista(wxListCtrl* lista){
-//Limpiamos la tabla
-lista->DeleteAllItems();
-
-//
-lista->Freeze();
-
-string test = "EjemploNombreAlumno";
-int dni = 3242352; 
-for(int i=0;i<100;i++) { 
-	///Llenamos con ID
-	long index = lista -> InsertItem(i, wxString::Format("%d",((i+1)*2)));
+	//Limpiamos la tabla
+	lista->DeleteAllItems();
 	
-	///CargarNombreDelAlumno
-	lista-> SetItem(index, 1, test );
-}
-///Mostrar todo de golpe
-lista->Thaw();
-
+	//
+	lista->Freeze();
+	
+	string test = "EjemploNombreAlumno";
+	int dni = 3242352; 
+	for(int i=0;i<100;i++) { 
+		///Llenamos con ID
+		long index = lista -> InsertItem(i, wxString::Format("%d",((i+1)*2)));
+		
+		///CargarNombreDelAlumno
+		lista-> SetItem(index, 1, test );
+	}
+	///Mostrar todo de golpe
+	lista->Thaw();
+	
 }
 
