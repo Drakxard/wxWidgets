@@ -194,11 +194,11 @@ void VentanaParaBibliotecario::MuestraListaResultadoLibro(wxListCtrl* lista){
 //			///Llenamos con ID
 //			long index = lista -> InsertItem(i, wxString::Format("%d",vResultadoLibro[i].VerID()));
 //			
-//			///CargarNombreDelAlumno
+//			///Cargar nombre del Libro
 //			
 //			lista-> SetItem(index, 1,vResultadoLibro[i].VerNombre() );
 //			
-//			///CargamosDni
+//			///Cargamos su disponibil
 //			lista-> SetItem(index,2, wxString::Format("%d",vResultadoLibro[i].VerDNI()) );		
 //		}
 //	}
@@ -252,8 +252,16 @@ void VentanaParaBibliotecario::onclickbutton_eliminar( wxCommandEvent& event )  
 		
 	}
 	else if(m_radio_Alumnos->GetValue()){
-		Dialogo_Eliminar *ventanaCrear = new Dialogo_Eliminar(NULL);
-		ventanaCrear->ShowModal();
+		long id = m_list_Alumnos->GetNextItem(-1,wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+		if(id != -1){
+			if(id >= 0 and id <= vAlumno.size()){
+				
+				Dialogo_Eliminar *nueva= new Dialogo_Eliminar(this,id,sistema.pathAlumnos(),3,vAlumno[id].VerNombre());
+				if (nueva->ShowModal() == wxID_OK){
+					CargarListaBibliotecario(m_list_Alumnos);
+				}
+			}
+		}
 		
 		
 	}				

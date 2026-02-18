@@ -3,6 +3,8 @@
 #include "../preConfiguracion/preConfiguracion.h"
 #include "../libro/libro.h"
 #include "../alumno/alumno.h"
+#include "../bibliotecario/bibliotecario.h"
+
 
 
 
@@ -18,10 +20,12 @@ class System{
 	string libros = "Recursos/Binarios/libros.bin";	
 	string alumnos = "Recursos/Binarios/alumnos.bin";	
 	string bibliotecarios = "Recursos/Binarios/bibliotecarios.bin";	
+	string allTags_data= "./Recursos/Binarios/Tags/tags_data.bin";
+	string allTags= "./Recursos/Binarios/Tags/tags.bin";
 	
 public:
 	System(){};
-	
+	string VerPathEtiquetas(){return allTags;}
 	string pathLibros(){return libros;}
 	string pathAlumnos(){return alumnos;}
 	string pathBibliotecarios(){return bibliotecarios;}
@@ -32,6 +36,7 @@ public:
 	//Falta codear Eliminar, tempalte
 	template<typename T>
 	bool Eliminar(size_t id, vector<T>&v);
+	
 	vector<Tags> etiquetas(const string& path);
 	bool actualizar_disponibilidad( string nombreArchivo, int id);
 	

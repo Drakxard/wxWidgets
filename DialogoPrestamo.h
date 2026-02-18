@@ -4,14 +4,14 @@
 #include "Funcionalidades/alumno/alumno.h"
 
 
-class DialogoPrestamo : public MyDialogPrestar {
+class DialogoPrestamo : public MyDialogPrestamo {
 	
 private:
 	
 protected:
 	Alumno alumnoSeleccionado;
 public:
-
+	
 	DialogoPrestamo(wxWindow *parent, Alumno alumnoSeleccionado);
 	~DialogoPrestamo();
 	void CargarLista(wxListCtrl* lista);

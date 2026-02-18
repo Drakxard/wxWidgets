@@ -7,14 +7,14 @@ class Dialogo_Eliminar : public MyDialog_Eliminar {
 	
 private:
 	System sistema;
+	size_t id;
+	string path;
+	size_t tipo;
 protected:
-	void onTextEnter_IDa_Eliminar( wxCommandEvent& event, size_t id )  ;
 	void OnButtonClick_Cancela_Eliminar( wxCommandEvent& event )  override;
-	void OnclikContinuar_Eliminar( wxCommandEvent& event, size_t id )  ;
-	
-	
+	void OnclikContinuar_Eliminar( wxCommandEvent& event)  ;
 public:
-	Dialogo_Eliminar(wxWindow *parent=NULL);
+	Dialogo_Eliminar(wxWindow *parent, size_t id, string path, size_t tipo, string nombre);
 	~Dialogo_Eliminar();
 };
 

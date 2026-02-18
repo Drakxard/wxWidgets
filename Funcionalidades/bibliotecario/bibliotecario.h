@@ -8,11 +8,15 @@
 using namespace std;
 class System;
 class Bibliotecario: public Persona{
- System* sistema; vector<int>Id_Prestamos;
-public:
+	bool existe;
+	System* sistema; vector<int>Id_Prestamos;
+	
+ public:
 	Bibliotecario(){}
-	Bibliotecario(size_t id, const char *nombre,size_t DNI):Persona(id,nombre,DNI){};
-
+	Bibliotecario(size_t id, const char *nombre,size_t DNI):Persona(id,nombre,DNI){	existe = true;};
+	void Existe(){existe = true;}
+	void NoExiste(){existe = false;}
+	bool Existencia(){return existe;}
 	template<typename T>
 	vector<T> AgregarElementos(int Agregar,string nombreArchivo);
 	vector<Libro> AgregarElementos(int Agregar,string nombreArchivo);

@@ -1,6 +1,6 @@
 #ifndef VENTANAPARABIBLIOTECARIO_H
 #define VENTANAPARABIBLIOTECARIO_H
-#include "wxfb_project.h"
+#include "ProyBaseBibliotecario.h"
 #include "Funcionalidades/alumno/alumno.h"
 #include "Funcionalidades/system/system.h"
 #include "Funcionalidades/bibliotecario/bibliotecario.h"

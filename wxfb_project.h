@@ -15,189 +15,20 @@
 #include <wx/font.h>
 #include <wx/colour.h>
 #include <wx/settings.h>
-#include <wx/textctrl.h>
 #include <wx/sizer.h>
+#include <wx/listctrl.h>
+#include <wx/panel.h>
+#include <wx/frame.h>
+#include <wx/radiobut.h>
+#include <wx/bmpcbox.h>
 #include <wx/button.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/icon.h>
-#include <wx/frame.h>
-#include <wx/radiobut.h>
-#include <wx/statbmp.h>
-#include <wx/panel.h>
-#include <wx/listctrl.h>
-#include <wx/simplebook.h>
-#include <wx/bmpcbox.h>
 #include <wx/dialog.h>
+#include <wx/textctrl.h>
 
 ///////////////////////////////////////////////////////////////////////////
-
-///////////////////////////////////////////////////////////////////////////////
-/// Class MyFrameLogin
-///////////////////////////////////////////////////////////////////////////////
-class MyFrameLogin : public wxFrame
-{
-	private:
-
-	protected:
-		wxStaticText* m_staticText17;
-		wxTextCtrl* m_text_Bienvenido_Valor;
-		wxButton* m_button_Bienvenido_CrearCuenta;
-		wxButton* m_button_Bienvenido_Continuar;
-
-		// Virtual event handlers, override them in your derived class
-		virtual void onTextEnter_Bienvenido_Confirmar( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnButtonClickCrearCuenta( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnclikBienvenido_Iniciar( wxCommandEvent& event ) { event.Skip(); }
-
-
-	public:
-
-		MyFrameLogin( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Bienvenido"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
-
-		~MyFrameLogin();
-
-};
-
-///////////////////////////////////////////////////////////////////////////////
-/// Class MyFrameCrearCuenta
-///////////////////////////////////////////////////////////////////////////////
-class MyFrameCrearCuenta : public wxFrame
-{
-	private:
-
-	protected:
-		wxStaticText* m_staticText_CrearCuenta_ref1;
-		wxTextCtrl* m_text_CrearCuenta_campo1;
-		wxStaticText* m_staticText_CrearCuenta_ref2;
-		wxTextCtrl* m_text_CrearCuenta_campo2;
-		wxButton* m_button10;
-		wxButton* m_button11;
-
-		// Virtual event handlers, override them in your derived class
-		virtual void OnButtonClickCerrar( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnclikBienvenido_Iniciar( wxCommandEvent& event ) { event.Skip(); }
-
-
-	public:
-
-		MyFrameCrearCuenta( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Crear Nueva Cuenta"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
-
-		~MyFrameCrearCuenta();
-
-};
-
-///////////////////////////////////////////////////////////////////////////////
-/// Class MyFrameInicioCorrectoBibliotecario
-///////////////////////////////////////////////////////////////////////////////
-class MyFrameInicioCorrectoBibliotecario : public wxFrame
-{
-	private:
-
-	protected:
-		wxTextCtrl* mtext_Buscador_frase;
-		wxButton* Boton_Buscar_Frase;
-		wxRadioButton* m_radio_Libros;
-		wxRadioButton* m_radio_InfoLibros;
-		wxRadioButton* m_radio_Etiquetas;
-		wxRadioButton* m_radio_Alumnos;
-		wxRadioButton* m_radio_Bibliotecarios;
-		wxSimplebook* m_Bibliotecario_frameActual;
-		wxPanel* m_panel_Bibliotecario_Libros;
-		wxStaticText* m_staticText4;
-		wxStaticBitmap* m_bitmap2;
-		wxButton* m_button19;
-		wxStaticText* m_staticText18;
-		wxButton* m_button20;
-		wxPanel* m_panel_DetallesLibros;
-		wxListCtrl* m_list_Alumnos1;
-		wxButton* m_button131;
-		wxButton* m_button21;
-		wxButton* m_button201;
-		wxButton* m_button141;
-		wxPanel* m_panel_DetallesEtiquetas;
-		wxListCtrl* m_list_Alumnos11;
-		wxButton* m_button1311;
-		wxButton* m_button22;
-		wxButton* m_button1411;
-		wxPanel* m_panel_Alumnos;
-		wxListCtrl* m_list_Alumnos;
-		wxButton* m_button13;
-		wxButton* m_button14;
-		wxPanel* m_panel_Bibliotecarios;
-		wxListCtrl* m_list_Bibliotecarios;
-		wxButton* button_eliminar;
-
-		// Virtual event handlers, override them in your derived class
-		virtual void Onclick_Boton_Buscar_Frase( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnRadioButton_CambiaPestana( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnButtonClickPrestarLibro( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnButtonClickHistorialAlumno( wxCommandEvent& event ) { event.Skip(); }
-		virtual void onclickbutton_eliminar( wxCommandEvent& event ) { event.Skip(); }
-
-
-	public:
-
-		MyFrameInicioCorrectoBibliotecario( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 514,420 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
-
-		~MyFrameInicioCorrectoBibliotecario();
-
-};
-
-///////////////////////////////////////////////////////////////////////////////
-/// Class MyFrameInicioCorrectoAlumno
-///////////////////////////////////////////////////////////////////////////////
-class MyFrameInicioCorrectoAlumno : public wxFrame
-{
-	private:
-
-	protected:
-		wxTextCtrl* mtext_Buscador_frase;
-		wxButton* Boton_Buscar_Frase;
-		wxRadioButton* m_radio_Libros;
-		wxRadioButton* m_radio_InfoLibros;
-		wxRadioButton* m_radio_Etiquetas;
-		wxRadioButton* m_radio_Alumnos;
-		wxRadioButton* m_radio_Bibliotecarios;
-		wxSimplebook* m_Bibliotecario_frameActual;
-		wxPanel* m_panel_Bibliotecario_Libros;
-		wxStaticText* m_staticText4;
-		wxStaticBitmap* m_bitmap2;
-		wxButton* m_button19;
-		wxStaticText* m_staticText18;
-		wxButton* m_button20;
-		wxPanel* m_panel_DetallesLibros;
-		wxListCtrl* m_list_InfoLibros;
-		wxButton* m_button131;
-		wxButton* m_button21;
-		wxButton* m_button201;
-		wxButton* m_button141;
-		wxPanel* m_panel_DetallesEtiquetas;
-		wxListCtrl* m_list_Etiquetas;
-		wxButton* m_button1311;
-		wxButton* m_button22;
-		wxButton* m_button1411;
-		wxPanel* m_panel_Alumnos;
-		wxListCtrl* m_list_Alumnos;
-		wxButton* m_button13;
-		wxButton* m_button14;
-		wxPanel* m_panel_Bibliotecarios;
-		wxListCtrl* m_list_Bibliotecarios;
-
-		// Virtual event handlers, override them in your derived class
-		virtual void Onclick_Boton_Buscar_Frase( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnRadioButton_CambiaPestana( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnButtonClickPrestarLibro( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnButtonClickHistorialAlumno( wxCommandEvent& event ) { event.Skip(); }
-
-
-	public:
-
-		MyFrameInicioCorrectoAlumno( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("ALUMNO"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 580,420 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
-
-		~MyFrameInicioCorrectoAlumno();
-
-};
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class MyFrameHistorial
@@ -221,9 +52,9 @@ class MyFrameHistorial : public wxFrame
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Class MyDialogPrestar
+/// Class MyDialogPrestamo
 ///////////////////////////////////////////////////////////////////////////////
-class MyDialogPrestar : public wxDialog
+class MyDialogPrestamo : public wxDialog
 {
 	private:
 
@@ -244,9 +75,9 @@ class MyDialogPrestar : public wxDialog
 
 	public:
 
-		MyDialogPrestar( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 469,386 ), long style = wxDEFAULT_DIALOG_STYLE );
+		MyDialogPrestamo( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 469,386 ), long style = wxDEFAULT_DIALOG_STYLE );
 
-		~MyDialogPrestar();
+		~MyDialogPrestamo();
 
 };
 
@@ -283,21 +114,47 @@ class MyDialog_Eliminar : public wxDialog
 
 	protected:
 		wxStaticText* m_staticText17;
-		wxTextCtrl* m_text_ID_Eliminar;
+		wxStaticText* m_staticEliminar;
 		wxButton* m_button_Cancela_Eliminacion;
 		wxButton* m_button_Continuar_Eliminar;
 
 		// Virtual event handlers, override them in your derived class
-		virtual void onTextEnter_IDa_Eliminar( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClick_Cancela_Eliminar( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnclikContinuar_Eliminar( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:
 
-		MyDialog_Eliminar( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 336,136 ), long style = wxDEFAULT_DIALOG_STYLE );
+		MyDialog_Eliminar( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Eliminar"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 336,136 ), long style = wxDEFAULT_DIALOG_STYLE );
 
 		~MyDialog_Eliminar();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class MyDialogAgregar
+///////////////////////////////////////////////////////////////////////////////
+class MyDialogAgregar : public wxDialog
+{
+	private:
+
+	protected:
+		wxStaticText* m_staticText17;
+		wxTextCtrl* m_text_NuevoTag_Valor;
+		wxButton* m_button_NuevoElemento_cancelar;
+		wxButton* m_button_NuevoElemento_Continuar;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void onTextEnter_Bienvenido_Confirmar( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonClickCerrar( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnclikNuevoElemento( wxCommandEvent& event ) { event.Skip(); }
+
+
+	public:
+
+		MyDialogAgregar( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Nuevo Elemento"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
+
+		~MyDialogAgregar();
 
 };
 

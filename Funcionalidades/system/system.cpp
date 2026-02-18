@@ -33,17 +33,16 @@ return true;
 
 template <typename T>
 bool System::Eliminar(size_t id, vector<T>&v){
-typename vector<T>::iterator itBorrar = find_if(v.begin(),v.end(),[id](const T& a){
-return a.VerID() == id;
-});
-if(itBorrar!=v.end()){
-v.erase(itBorrar);
-return true;//borrado
-}else{
-return false;//no se encontro xD
+	typename vector<T>::iterator itBorrar = find_if(v.begin(),v.end(),[id](const T& a){
+		return a.VerID() == id;
+	});
+	if(itBorrar!=v.end()){
+		(*(itBorrar)).NoExiste();
+		return true;//borrado
+	}else{
+		return false;//no se encontro xD
+	}
 }
-}
-
 template <typename T> ///Cambiar a solo leer N cosas
 vector<T> System::VerContenido(string nombreArchivo,bool crear){
 ifstream archi(nombreArchivo,ios::binary);
@@ -274,6 +273,8 @@ template int System::VerUltimo<Bibliotecario>(string nombreArchivo);
 
 
 template bool System:: Eliminar<Alumno>(size_t id, vector<Alumno>&v);
+template bool System:: Eliminar<Tags>(size_t id, vector<Tags>&v);
+
 // funcion para saltar al lugar que quieras, de libro, alumno o incluso bibl!
 // vector<Registro> resultado = Saltar<Registro>(vector<int>IdARecuperar);
 

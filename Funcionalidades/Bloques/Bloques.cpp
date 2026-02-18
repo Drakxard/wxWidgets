@@ -24,33 +24,25 @@ Bloques::~Bloques(){
 	}}
 
 
-Tags Bloques::AgregarNuevoTag(){
+Tags Bloques::AgregarNuevoTag(string Nombre){
 	modificacion = true;
-	string nombreTag;
-	cin.ignore();
-	cout<<"Nombre para el nuevo tag: ";
-	getline(cin,nombreTag);
 	
 	
 	Tags nuevoTag;
 	nuevoTag.IdTag = CantidadTags;
 	++CantidadTags;
-
+//	nuevoTag.existe=true;
 	
-	strncpy(nuevoTag.NombreTag, nombreTag.c_str(), 49);
+	strncpy(nuevoTag.NombreTag, Nombre.c_str(), 49);
 	nuevoTag.NombreTag[49] = '\0';
 	nuevoTag.InicioBloque = UltimaDireccion;
-	cout<<"Bloque Inicia en:"<<nuevoTag.InicioBloque<<endl;
 	UltimaDireccion += TamBloque;
-	cout<<"Bloque Finaliza en:"<<UltimaDireccion-1<<endl;
 	///Asignar Bloque
 	Bloque bloqueNuevo;
 	bloqueNuevo.CantidadElementos=0;
 	bloqueNuevo.SiguienteBloque=0;
-	cout<<endl<<"Tam asignado: "<<sizeof(bloqueNuevo)<<endl;
 	sistema->Guardar(allTags_data,bloqueNuevo,nuevoTag.IdTag);
 	return nuevoTag;
-	
 	
 }
 

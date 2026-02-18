@@ -32,7 +32,7 @@ void VentanaLogin::OnclikBienvenido_Iniciar( wxCommandEvent& event )  {
 		biblio = ObjetoCorrespondienteBibliotecario(PosBibliotecario, vectorBibliotecario);
 		///cout<<"?Que Quieres Hacer "<<biblio.VerNombre()<<" ?"<<endl;
 		///menuBibliotecario
-		VentanaPrincipal *ventana = new VentanaPrincipal(NULL);
+		VentanaParaBibliotecario *ventana = new VentanaParaBibliotecario(NULL);
 		ventana->Show();
 		this->Close();
 	}
@@ -62,3 +62,4 @@ void VentanaLogin::OnButtonClickCrearCuenta( wxCommandEvent& event )  {
 	ventanaCrear->Show();
 	this->Close();
 }
+

@@ -3,8 +3,8 @@
 #include "VentanaLogin.h"
 
 IMPLEMENT_APP(Application)
-
-bool Application::OnInit() {
+	
+	bool Application::OnInit() {
 	wxInitAllImageHandlers();
 	VentanaLogin *win = new VentanaLogin(NULL);
 	win->Show();
