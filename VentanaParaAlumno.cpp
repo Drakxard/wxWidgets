@@ -3,13 +3,15 @@
 #include "DialogoHistorial.h"
 #include "DialogoAgregar.h"
 #include "Dialogo_Eliminar.h"
-
+#include "Funcionalidades/system/system.h"
+#include "Funcionalidades/bibliotecario/bibliotecario.h"
+#include "DialogoAgregarPersona.h"
 
 using namespace std;
 
 VentanaParaAlumno::VentanaParaAlumno(wxWindow *parent) : MyFrameInicioCorrectoAlumno(parent) {
 	///Para crear columnas a la Tabla, en diseñador no encontre opcion
-	
+	sistema = new System();
 	
 	///LIBRO
 	
@@ -24,7 +26,7 @@ VentanaParaAlumno::VentanaParaAlumno(wxWindow *parent) : MyFrameInicioCorrectoAl
 	
 	m_list_Etiquetas->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
 	m_list_Etiquetas->InsertColumn(1, "Nombre", wxLIST_FORMAT_LEFT, 200);
-	m_list_Etiquetas->InsertColumn(2, "Renovar", wxLIST_FORMAT_LEFT, 200);
+	m_list_Etiquetas->InsertColumn(2, "Estado", wxLIST_FORMAT_LEFT, 200);
 	
 	m_list_Etiquetas->SetSingleStyle(wxLC_HRULES); // Líneas horizontales
 	m_list_Etiquetas->SetSingleStyle(wxLC_VRULES); // Líneas verticaless
@@ -43,6 +45,7 @@ VentanaParaAlumno::VentanaParaAlumno(wxWindow *parent) : MyFrameInicioCorrectoAl
 	m_list_Bibliotecarios->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
 	m_list_Bibliotecarios->InsertColumn(1, "Nombre", wxLIST_FORMAT_LEFT, 200);
 	m_list_Bibliotecarios->InsertColumn(2, "DNI", wxLIST_FORMAT_LEFT, 100);
+	m_list_Bibliotecarios->InsertColumn(3, "Estado", wxLIST_FORMAT_LEFT, 100);
 	
 	m_list_Bibliotecarios->SetSingleStyle(wxLC_HRULES); // Líneas horizontales
 	m_list_Bibliotecarios->SetSingleStyle(wxLC_VRULES); // Líneas verticaless
@@ -51,6 +54,10 @@ VentanaParaAlumno::VentanaParaAlumno(wxWindow *parent) : MyFrameInicioCorrectoAl
 
 
 VentanaParaAlumno::~VentanaParaAlumno() {	
+	if (sistema) {
+		delete sistema;
+		sistema = nullptr;
+	}
 }
 void VentanaParaAlumno::CargarListaAlumnos(wxListCtrl* lista){
 	//Limpiamos la tabla
@@ -58,7 +65,7 @@ void VentanaParaAlumno::CargarListaAlumnos(wxListCtrl* lista){
 	
 	//
 	lista->Freeze();
-	vAlumno = sistema.VerContenido<Alumno>(sistema.pathAlumnos(),true);
+	vAlumno = sistema->VerContenido<Alumno>(sistema->alumnos(),true);
 	for(int i=0;i<vAlumno.size();i++) { 
 		///Llenamos con ID
 		long index = lista -> InsertItem(i, wxString::Format("%d",vAlumno[i].VerID()));
@@ -81,7 +88,7 @@ void VentanaParaAlumno::CargarListaBibliotecario(wxListCtrl* lista){
 	
 	//
 	lista->Freeze();
-	vBibliotecario = sistema.VerContenido<Bibliotecario>(sistema.pathBibliotecarios(),true);
+	vBibliotecario = sistema->VerContenido<Bibliotecario>(sistema->bibliotecarios(),true);
 	for(int i=0;i<vBibliotecario.size();i++) { 
 		///Llenamos con ID
 		long index = lista -> InsertItem(i, wxString::Format("%d",vBibliotecario[i].VerID()));
@@ -103,7 +110,7 @@ void VentanaParaAlumno::CargarListaInfoLibros(wxListCtrl* lista){
 	
 	//
 	lista->Freeze();
-	vLibros = sistema.VerContenido<Libro>(sistema.pathLibros(),true);
+	vLibros = sistema->VerContenido<Libro>(sistema->libros(),true);
 	for(int i=0;i<vLibros.size();i++) { 
 		///Llenamos con ID
 		long index = lista -> InsertItem(i, wxString::Format("%d",vLibros[i].VerID()));
@@ -111,8 +118,9 @@ void VentanaParaAlumno::CargarListaInfoLibros(wxListCtrl* lista){
 		///CargarNombreDelAlumno
 		
 		lista-> SetItem(index, 1, vLibros[i].VerNombre() );
+												///Antes estadoDisponibibldad
+		lista-> SetItem(index,2, wxString::Format("%d",vLibros[i].Existencia()) );		
 	
-		lista-> SetItem(index,2, wxString::Format("%d", vLibros[i].EstadoDisponibilidad()) );		
 	}
 	///Mostrar todo de golpe
 	lista->Thaw();
@@ -123,7 +131,7 @@ void VentanaParaAlumno::CargarListaEtiquetas(wxListCtrl* lista){
 	lista->DeleteAllItems();
 	//¿¿
 	lista->Freeze();
-	tagsActuales = sistema.VerContenido<Tags>(allTags.VerPathEtiquetas(),true);
+	tagsActuales = sistema->VerContenido<Tags>(sistema->etiquetas(),true);
 	for(int i=0;i<tagsActuales.size();i++) { 
 		
 		/// ID
@@ -195,23 +203,91 @@ void VentanaParaAlumno::onclickbutton_eliminar( wxCommandEvent& event )  {
 }
 
 void VentanaParaAlumno::OnButtonClickAgregar( wxCommandEvent& event )  {
-	DialogoAgregar *nueva= new DialogoAgregar(this,&sistema,sistema.VerPathEtiquetas());
-	if (nueva->ShowModal() == wxID_OK){
-		CargarListaEtiquetas(m_list_Etiquetas);
+	int tipo=0;
+	if(m_radio_InfoLibros->GetValue()){
+		tipo=0;
+		DialogoAgregar *nueva= new DialogoAgregar(this,sistema,admin,tipo,sistema->libros());
+		if (nueva->ShowModal() == wxID_OK){
+			CargarListaInfoLibros(m_list_InfoLibros);
+		}
 	}
-	
+	if(m_radio_Etiquetas->GetValue()){
+		tipo=1;
+		DialogoAgregar *nueva= new DialogoAgregar(this,sistema,admin,tipo,sistema->etiquetas());
+		if (nueva->ShowModal() == wxID_OK){
+			CargarListaEtiquetas(m_list_Etiquetas);
+		}
+	}
+	else if(m_radio_Alumnos->GetValue()){
+		tipo=0;
+		DialogoAgregarPersona *nueva= new DialogoAgregarPersona(this,sistema,admin,tipo,sistema->alumnos());
+		if (nueva->ShowModal() == wxID_OK){
+			CargarListaAlumnos(m_list_Alumnos);
+		}
+		
+	}				
+	else if(m_radio_Bibliotecarios->GetValue()){
+		tipo=1;
+		DialogoAgregarPersona *nueva= new DialogoAgregarPersona(this,sistema,admin,tipo,sistema->bibliotecarios());
+		if (nueva->ShowModal() == wxID_OK){
+			CargarListaBibliotecario(m_list_Bibliotecarios);
+		}
+	}
 }
 
 
 void VentanaParaAlumno::OnButtonClickEliminar( wxCommandEvent& event )  {
-	long id = m_list_Etiquetas->GetNextItem(-1,wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
-	if(id != -1){
-		if(id >= 0 and id <= tagsActuales.size()){
-			Dialogo_Eliminar *nueva= new Dialogo_Eliminar(this,id,sistema.VerPathEtiquetas(),1,tagsActuales[id].NombreTag);
-			if (nueva->ShowModal() == wxID_OK){
-				CargarListaEtiquetas(m_list_Etiquetas);
+	long id;
+	if(m_radio_InfoLibros->GetValue()){
+		id = m_list_InfoLibros->GetNextItem(-1,wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+		
+		if(id != -1){
+			if(id >= 0 and id <= vLibros.size()){
+				Dialogo_Eliminar *nueva= new Dialogo_Eliminar(this,id,sistema,sistema->libros(),0,vLibros[id].VerNombre());
+				if (nueva->ShowModal() == wxID_OK){
+					CargarListaInfoLibros(m_list_InfoLibros);
+				}
 			}
 		}
 	}
-}
+	if(m_radio_Etiquetas->GetValue()){
+		id = m_list_Etiquetas->GetNextItem(-1,wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+		
+		if(id != -1){
+			if(id >= 0 and id <= tagsActuales.size()){
+				Dialogo_Eliminar *nueva= new Dialogo_Eliminar(this,id,sistema,sistema->etiquetas(),1,tagsActuales[id].NombreTag);
+				if (nueva->ShowModal() == wxID_OK){
+					CargarListaEtiquetas(m_list_Etiquetas);
+				}
+			}
+		}
+		}
+		else if(m_radio_Alumnos->GetValue()){
+			id = m_list_Alumnos->GetNextItem(-1,wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+			if(id != -1){
+			if(id >= 0 and id <= vAlumno.size()){
+				Dialogo_Eliminar *nueva= new Dialogo_Eliminar(this,id,sistema,sistema->alumnos(),2,vAlumno[id].VerNombre());
+				if (nueva->ShowModal() == wxID_OK){
+					CargarListaAlumnos(m_list_Alumnos);
+				}
+			}
+		}
+	}				
+		else if(m_radio_Bibliotecarios->GetValue()){
+			id = m_list_Bibliotecarios->GetNextItem(-1,wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+			
+			if(id != -1){
+				if(id >= 0 and id <= vBibliotecario.size()){
+				Dialogo_Eliminar *nueva= new Dialogo_Eliminar(this,id,sistema,sistema->bibliotecarios(),3,vBibliotecario[id].VerNombre());
+					if (nueva->ShowModal() == wxID_OK){
+						CargarListaBibliotecario(m_list_Bibliotecarios);
+					}
+				}
+			}
+		}
+		
+		
+
+	}
+
 
