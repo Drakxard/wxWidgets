@@ -73,6 +73,32 @@ return resultado;
 
 }
 
+bool System::actualizar_disponibilidad(string nombreArchivo, int id) {
+	// Abrimos el archivo en modo lectura/escritura (in | out) binaria
+	fstream archivo(nombreArchivo, ios::in | ios::out | ios::binary);
+	if (!archivo) return false;
+	
+	Libro libroTemp;
+	// Leemos registro por registro
+	while (archivo.read(reinterpret_cast<char*>(&libroTemp), sizeof(Libro))) {
+		if (libroTemp.VerID() == id) {
+			// Utilizamos el método que ya definiste en libro.h
+			libroTemp.SetDisponible(false); 
+			
+			// Retrocedemos el "puntero" del archivo el tamaño exacto de un Libro
+			archivo.seekp(-static_cast<int>(sizeof(Libro)), ios::cur);
+			
+			// Sobreescribimos el libro actualizado en esa posición exacta
+			archivo.write(reinterpret_cast<const char*>(&libroTemp), sizeof(Libro));
+			
+			archivo.close();
+			return true; // Éxito
+		}
+	}
+	archivo.close();
+	return false; // No se encontró el libro
+}
+
 
 Bloque System::VerContenido(string nombreArchivo,size_t NroBloque){
 ifstream archi(nombreArchivo,ios::binary);

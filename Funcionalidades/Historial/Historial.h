@@ -8,6 +8,14 @@
 
 //prestados.bin ->registro de los prestamos
 
+struct RegistroPrestamo {
+	int dniAlumno; 
+	size_t idLibro;
+	char fechaPrestamo[20];
+	char fechaDevolucion[20]; // La fecha límite que le ponemos al alumno o sino sancion 
+	bool devuelto;            // false = Lo tiene el alumno, true = Ya lo devolvió
+};
+
 class Historial{
     System sistema;  
     int IdUsuario; //puede ser alumno o bibliotecario
