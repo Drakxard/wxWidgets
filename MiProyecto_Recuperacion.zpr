@@ -12,7 +12,7 @@ version_saved=20191006
 version_required=20150227
 tab_width=4
 tab_use_spaces=0
-explorer_path=../../Documentos/WX-PRESTAR/wxWidgets
+explorer_path=/home/francisco/Descargas/proyecto
 inspection_improving_template=wxString|>printf "%ls",${EXP}.m_impl._M_data()
 inherits_from=
 current_source=Dialogo_Eliminar.cpp
@@ -141,7 +141,8 @@ path=Funcionalidades/alumno/alumno.h
 cursor=8:7
 [header]
 path=Dialogo_Eliminar.h
-cursor=17:38
+cursor=2:9
+open=true
 [header]
 path=DialogoHistorial.h
 cursor=5:50
