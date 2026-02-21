@@ -9,7 +9,7 @@ DialogoAgregarPersona::DialogoAgregarPersona(wxWindow *parent, System* sistema, 
 	this->tipo = tipo;
 }
 
-void DialogoAgregarPersona::onTextEnter_Bienvenido_Confirmar( wxCommandEvent& event )  {
+void DialogoAgregarPersona::OnclikNuevoElemento( wxCommandEvent& event )  {
 	///Alumno -> 0
 	/// Bibliotecario -> 1
 	long dni;
@@ -44,9 +44,7 @@ void DialogoAgregarPersona::OnButtonClickCerrar( wxCommandEvent& event )  {
 	this->Close();
 }
 
-void DialogoAgregarPersona::OnclikNuevoElemento( wxCommandEvent& event )  {
-	event.Skip();
-}
+
 
 DialogoAgregarPersona::~DialogoAgregarPersona() {
 	

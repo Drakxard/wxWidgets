@@ -235,13 +235,18 @@ bool Verificar_Existencia_Binario(int Id,string nombreArchivo){
 	
 	template<typename T>
 		bool System::AlUltimo(string nombreArchivo, T elemento){
+		ofstream archi(nombreArchivo, ios::binary | ios::app);
 		
-		ofstream archi(nombreArchivo,ios::binary|ios::app);
+		if(!archi){
+			archi.clear(); // <-- Limpia el estado de error antes del nuevo open
+			archi.open(nombreArchivo, ios::binary);
+		}
 		
-		if(!archi)
-			throw runtime_error("error al abrir para VerUltimo-> "+nombreArchivo);
+		if(!archi){
+			throw runtime_error("error al abrir para VerUltimo-> " + nombreArchivo);
+		}
 		
-		archi.write(reinterpret_cast<const char*>(&elemento),sizeof(elemento));
+		archi.write(reinterpret_cast<const char*>(&elemento), sizeof(elemento));
 		archi.close();
 		return true;
 	}

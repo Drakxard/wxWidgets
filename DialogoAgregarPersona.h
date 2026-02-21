@@ -14,7 +14,6 @@ private:
 	int tipo;
 	
 protected:
-	void onTextEnter_Bienvenido_Confirmar( wxCommandEvent& event )  override;
 	void OnButtonClickCerrar( wxCommandEvent& event )  override;
 	void OnclikNuevoElemento( wxCommandEvent& event )  override;
 	
