@@ -63,4 +63,3 @@ void VentanaLogin::OnButtonClickCrearCuenta( wxCommandEvent& event )  {
 	ventanaCrear->Show();
 	this->Close();
 }
-

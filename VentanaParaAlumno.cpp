@@ -68,14 +68,13 @@ void VentanaParaAlumno::CargarListaAlumnos(wxListCtrl* lista){
 	vAlumno = sistema->VerContenido<Alumno>(sistema->alumnos(),true);
 	for(int i=0;i<vAlumno.size();i++) { 
 		///Llenamos con ID
-		long index = lista -> InsertItem(i, wxString::Format("%d",vAlumno[i].VerID()));
+		long index = lista->InsertItem(i, wxString::Format("%d", (int)vAlumno[i].VerID()));
 		
 		///CargarNombreDelAlumno
+		lista->SetItem(index, 1, vAlumno[i].VerNombre() );
 		
-		lista-> SetItem(index, 1, vAlumno[i].VerNombre() );
-		
-		///CargamosDni
-		lista-> SetItem(index,2, wxString::Format("%d", vAlumno[i].VerDNI()) );		
+		///CargamosDni (Envuelto en wxString por seguridad)
+		lista->SetItem(index, 2, wxString(to_string(vAlumno[i].VerDNI())));
 	}
 	///Mostrar todo de golpe
 	lista->Thaw();	
@@ -90,19 +89,17 @@ void VentanaParaAlumno::CargarListaBibliotecario(wxListCtrl* lista){
 	lista->Freeze();
 	vBibliotecario = sistema->VerContenido<Bibliotecario>(sistema->bibliotecarios(),true);
 	for(int i=0;i<vBibliotecario.size();i++) { 
-		///Llenamos con ID
-		long index = lista -> InsertItem(i, wxString::Format("%d",vBibliotecario[i].VerID()));
+		///Llenamos con ID (Casteado a int)
+		long index = lista->InsertItem(i, wxString::Format("%d", (int)vBibliotecario[i].VerID()));
 		
 		///CargarNombreDelAlumno
+		lista->SetItem(index, 1, vBibliotecario[i].VerNombre() );
 		
-		lista-> SetItem(index, 1, vBibliotecario[i].VerNombre() );
-		
-		///CargamosDni
-		lista-> SetItem(index,2, wxString::Format("%d", vBibliotecario[i].VerDNI()) );		
+		///CargamosDni (Envuelto en wxString)
+		lista->SetItem(index, 2, wxString(to_string(vBibliotecario[i].VerDNI())));	
 	}
 	///Mostrar todo de golpe
 	lista->Thaw();
-	
 }
 void VentanaParaAlumno::CargarListaInfoLibros(wxListCtrl* lista){
 	//Limpiamos la tabla
@@ -112,19 +109,17 @@ void VentanaParaAlumno::CargarListaInfoLibros(wxListCtrl* lista){
 	lista->Freeze();
 	vLibros = sistema->VerContenido<Libro>(sistema->libros(),true);
 	for(int i=0;i<vLibros.size();i++) { 
-		///Llenamos con ID
-		long index = lista -> InsertItem(i, wxString::Format("%d",vLibros[i].VerID()));
+		///Llenamos con ID (Casteado a int)
+		long index = lista->InsertItem(i, wxString::Format("%d", (int)vLibros[i].VerID()));
 		
 		///CargarNombreDelAlumno
+		lista->SetItem(index, 1, vLibros[i].VerNombre() );
 		
-		lista-> SetItem(index, 1, vLibros[i].VerNombre() );
-												///Antes estadoDisponibibldad
-		lista-> SetItem(index,2, wxString::Format("%d",vLibros[i].Existencia()) );		
-	
+		///Antes estadoDisponibibldad (Casteado a int)
+		lista->SetItem(index, 2, wxString::Format("%d", (int)vLibros[i].Existencia()) );		
 	}
 	///Mostrar todo de golpe
 	lista->Thaw();
-	
 }
 void VentanaParaAlumno::CargarListaEtiquetas(wxListCtrl* lista){
 	//Limpiamos la tabla
@@ -134,17 +129,17 @@ void VentanaParaAlumno::CargarListaEtiquetas(wxListCtrl* lista){
 	tagsActuales = sistema->VerContenido<Tags>(sistema->etiquetas(),true);
 	for(int i=0;i<tagsActuales.size();i++) { 
 		
-		/// ID
-		long index = lista -> InsertItem(i, wxString::Format("%d",tagsActuales[i].IdTag));
+		/// ID (Casteado a int)
+		long index = lista->InsertItem(i, wxString::Format("%d", (int)tagsActuales[i].IdTag));
+		
 		///Nombre	
-		lista-> SetItem(index, 1, tagsActuales[i].NombreTag );
+		lista->SetItem(index, 1, tagsActuales[i].NombreTag );
 		
-		lista-> SetItem(index,2, wxString::Format("%d",tagsActuales[i].Existencia()) );			
-		
+		///Existencia (Casteado a int)
+		lista->SetItem(index, 2, wxString::Format("%d", (int)tagsActuales[i].Existencia()) );			
 	}
 	///Mostrar todo de golpe
 	lista->Thaw();
-	
 }
 
 void VentanaParaAlumno::OnRadioButton_CambiaPestana(wxCommandEvent& event){
@@ -250,7 +245,7 @@ void VentanaParaAlumno::OnButtonClickEliminar( wxCommandEvent& event )  {
 			}
 		}
 	}
-	if(m_radio_Etiquetas->GetValue()){
+	else if(m_radio_Etiquetas->GetValue()){  // <-- Agregado el 'else' aquí
 		id = m_list_Etiquetas->GetNextItem(-1,wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 		
 		if(id != -1){
@@ -261,10 +256,10 @@ void VentanaParaAlumno::OnButtonClickEliminar( wxCommandEvent& event )  {
 				}
 			}
 		}
-		}
-		else if(m_radio_Alumnos->GetValue()){
-			id = m_list_Alumnos->GetNextItem(-1,wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
-			if(id != -1){
+	}
+	else if(m_radio_Alumnos->GetValue()){
+		id = m_list_Alumnos->GetNextItem(-1,wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+		if(id != -1){
 			if(id >= 0 and id <= vAlumno.size()){
 				Dialogo_Eliminar *nueva= new Dialogo_Eliminar(this,id,sistema,sistema->alumnos(),2,vAlumno[id].VerNombre());
 				if (nueva->ShowModal() == wxID_OK){
@@ -273,21 +268,18 @@ void VentanaParaAlumno::OnButtonClickEliminar( wxCommandEvent& event )  {
 			}
 		}
 	}				
-		else if(m_radio_Bibliotecarios->GetValue()){
-			id = m_list_Bibliotecarios->GetNextItem(-1,wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
-			
-			if(id != -1){
-				if(id >= 0 and id <= vBibliotecario.size()){
+	else if(m_radio_Bibliotecarios->GetValue()){
+		id = m_list_Bibliotecarios->GetNextItem(-1,wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+		
+		if(id != -1){
+			if(id >= 0 and id <= vBibliotecario.size()){
 				Dialogo_Eliminar *nueva= new Dialogo_Eliminar(this,id,sistema,sistema->bibliotecarios(),3,vBibliotecario[id].VerNombre());
-					if (nueva->ShowModal() == wxID_OK){
-						CargarListaBibliotecario(m_list_Bibliotecarios);
-					}
+				if (nueva->ShowModal() == wxID_OK){
+					CargarListaBibliotecario(m_list_Bibliotecarios);
 				}
 			}
 		}
-		
-		
-
 	}
+} 
 
 

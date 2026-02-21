@@ -12,6 +12,8 @@ Dialogo_Eliminar::Dialogo_Eliminar(wxWindow *parent,size_t id,System * sistema,s
 	this->tipo=tipo;
 	m_staticEliminar->SetLabel(nombre);
 	this->sistema = sistema;
+	this->Layout(); // Obliga a los sizers a recalcular los espacios
+	this->Fit();
 }
 
 
