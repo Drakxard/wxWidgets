@@ -5,6 +5,7 @@
 #include "VentanaParaBibliotecario.h"
 #include "VentanaCrearCuenta.h"
 #include "VentanaParaAlumno.h"
+
 using namespace std;
 
 VentanaLogin::VentanaLogin(wxWindow *parent) : MyFrameLogin(parent) {

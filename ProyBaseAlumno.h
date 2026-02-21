@@ -85,7 +85,7 @@ class MyFrameInicioCorrectoAlumno : public wxFrame
 
 	public:
 
-		MyFrameInicioCorrectoAlumno( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 580,420 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		MyFrameInicioCorrectoAlumno( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("ALUMNO"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 580,420 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~MyFrameInicioCorrectoAlumno();
 
