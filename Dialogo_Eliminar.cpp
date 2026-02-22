@@ -4,6 +4,7 @@
 #include <vector>
 #include "Funcionalidades/Bloques/Bloques.h"
 #include "Funcionalidades/system/system.h"
+#include "Reservar.h"
 using namespace std;
 
 Dialogo_Eliminar::Dialogo_Eliminar(wxWindow *parent,size_t id,System * sistema,string path,size_t tipo,string nombre) : MyDialog_Eliminar(parent) {
@@ -28,32 +29,39 @@ void Dialogo_Eliminar::OnButtonClick_Cancela_Eliminar( wxCommandEvent& event )  
 
 void Dialogo_Eliminar::OnclikContinuar_Eliminar( wxCommandEvent& event) {	
 	///0 -> Libro
-	///1 -> etiquetas
-	///2-> Alumno
-	///3-> Bibliotecario
+	///1 -> Reservars
+	///2 -> etiquetas
+	///3-> Alumno
+	///4-> Bibliotecario
 	vector<size_t>recuperarId={id};
 	string nombreArchivo;
 	if(tipo==0){
 		nombreArchivo = sistema->libros();
 		vector<Libro> resultados = sistema->LeerDelBin<Libro>(recuperarId,nombreArchivo);
-		///Modificacion
-		cout<<endl<<"Nombre: "<<resultados[0].VerNombre()<<endl;
-		resultados[0].NoExiste();
-		cout<<resultados[0].Existencia();
 		sistema->EscribirEnBin<Libro>(recuperarId,resultados,nombreArchivo);
 	
 	}
+	
 	if(tipo==1){
+		vector<Reservar> VReservars=sistema->VerContenido<Reservar>(path,true);
+		sistema->Eliminar<Reservar>(id, VReservars);
+		sistema->Guardar<Reservar>(path,VReservars,true);
+	}
+	if(tipo==2){
 		vector<Tags> VTags=sistema->VerContenido<Tags>(path,true);
 		sistema->Eliminar<Tags>(id, VTags);
 		sistema->Guardar<Tags>(path,VTags,true);
 	}
-	if(tipo==2){
+	if(tipo==3){
 	vector<Alumno> Valumnos=sistema->VerContenido<Alumno>(path,true);
 	sistema->Eliminar<Alumno>(id, Valumnos);
 	sistema->Guardar<Alumno>(path,Valumnos);
 	}
-	
+	if(tipo==4){
+		vector<Bibliotecario>vBibliotecario =sistema->VerContenido<Bibliotecario>(path,true);
+		sistema->Eliminar<Bibliotecario>(id, vBibliotecario);
+		sistema->Guardar<Bibliotecario>(path,vBibliotecario);
+	}
 	EndModal(wxID_OK);
 	
 }

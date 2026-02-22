@@ -26,6 +26,6 @@ public:
 		void CambiarNombre(const char *NuevoNombre);
 		void Cambiar_Id( int nuevo_id);
 		vector<Libro> VerLibros(string nombreArchivo,bool crear=false);//usan tanto el Bibliotecario como el Alumno
-
+		bool ReservarLibro();
 };
 #endif // 3. Fin de la condici�n

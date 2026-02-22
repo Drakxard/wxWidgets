@@ -1,4 +1,5 @@
 #include "VentanaParaAlumno.h"
+#include "DialogoReservar.h"
 #include "DialogoPrestamo.h"
 #include "DialogoHistorial.h"
 #include "DialogoAgregar.h"
@@ -12,7 +13,7 @@ using namespace std;
 VentanaParaAlumno::VentanaParaAlumno(wxWindow *parent) : MyFrameInicioCorrectoAlumno(parent) {
 	///Para crear columnas a la Tabla, en diseñador no encontre opcion
 	sistema = new System();
-	
+	this->Maximize(true);
 	///LIBRO
 	
 	m_list_InfoLibros->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
@@ -21,6 +22,12 @@ VentanaParaAlumno::VentanaParaAlumno(wxWindow *parent) : MyFrameInicioCorrectoAl
 	
 	m_list_InfoLibros->SetSingleStyle(wxLC_HRULES); // Líneas horizontales
 	m_list_InfoLibros->SetSingleStyle(wxLC_VRULES); // Líneas verticaless
+	
+	///Reservas
+	m_list_Reservas->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
+	m_list_Reservas->InsertColumn(1, "Nombre", wxLIST_FORMAT_LEFT, 200);
+	m_list_Reservas->InsertColumn(2, "Estado", wxLIST_FORMAT_LEFT, 200);
+	
 	
 	///Etiquetas
 	
@@ -36,6 +43,7 @@ VentanaParaAlumno::VentanaParaAlumno(wxWindow *parent) : MyFrameInicioCorrectoAl
 	m_list_Alumnos->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
 	m_list_Alumnos->InsertColumn(1, "Nombre", wxLIST_FORMAT_LEFT, 200);
 	m_list_Alumnos->InsertColumn(2, "Estado", wxLIST_FORMAT_LEFT, 100);
+	m_list_Alumnos->InsertColumn(3, "Dni", wxLIST_FORMAT_LEFT, 100);
 	
 	
 	m_list_Alumnos->SetSingleStyle(wxLC_HRULES); // Líneas horizontales
@@ -44,8 +52,8 @@ VentanaParaAlumno::VentanaParaAlumno(wxWindow *parent) : MyFrameInicioCorrectoAl
 	///BIBLIOTECARIO
 	m_list_Bibliotecarios->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
 	m_list_Bibliotecarios->InsertColumn(1, "Nombre", wxLIST_FORMAT_LEFT, 200);
-	m_list_Bibliotecarios->InsertColumn(2, "DNI", wxLIST_FORMAT_LEFT, 100);
-	m_list_Bibliotecarios->InsertColumn(3, "Estado", wxLIST_FORMAT_LEFT, 100);
+	m_list_Bibliotecarios->InsertColumn(2, "Estado", wxLIST_FORMAT_LEFT, 100);
+	m_list_Bibliotecarios->InsertColumn(3, "Dni", wxLIST_FORMAT_LEFT, 100);
 	
 	m_list_Bibliotecarios->SetSingleStyle(wxLC_HRULES); // Líneas horizontales
 	m_list_Bibliotecarios->SetSingleStyle(wxLC_VRULES); // Líneas verticaless
@@ -121,6 +129,28 @@ void VentanaParaAlumno::CargarListaInfoLibros(wxListCtrl* lista){
 	///Mostrar todo de golpe
 	lista->Thaw();
 }
+void VentanaParaAlumno::CargarListaReservar(wxListCtrl* lista){
+	//Limpiamos la tabla
+	lista->DeleteAllItems();
+	
+	//
+	lista->Freeze();
+	
+	vReservas = sistema->VerContenido<Reservar>(sistema->reservar(),true);
+	for(int i=0;i<vReservas.size();i++) { 
+		
+		/// ID (Casteado a int)
+		long index = lista->InsertItem(i, wxString::Format("%d", (size_t)vReservas[i].VerID()));
+		
+		///Nombre	
+		lista->SetItem(index, 1, vReservas[i].VerNombre() );
+		
+		///Existencia (Casteado a int)
+		lista->SetItem(index, 2, wxString::Format("%d", (int)vReservas[i].Existencia()) );			}
+	///Mostrar todo de golpe
+	lista->Thaw();
+}
+
 void VentanaParaAlumno::CargarListaEtiquetas(wxListCtrl* lista){
 	//Limpiamos la tabla
 	lista->DeleteAllItems();
@@ -150,18 +180,23 @@ void VentanaParaAlumno::OnRadioButton_CambiaPestana(wxCommandEvent& event){
 		m_Bibliotecario_frameActual->SetSelection(1);
 		CargarListaInfoLibros(m_list_InfoLibros);
 	}
-	if(m_radio_Etiquetas->GetValue()){
+	if(m_radio_Reservar->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(2);
+		CargarListaReservar(m_list_Reservas);
+	}
+	if(m_radio_Etiquetas->GetValue()){
+		m_Bibliotecario_frameActual->SetSelection(3);
 		CargarListaEtiquetas(m_list_Etiquetas);
 	}
 	else if(m_radio_Alumnos->GetValue()){
-		m_Bibliotecario_frameActual->SetSelection(3);
+		m_Bibliotecario_frameActual->SetSelection(4);
 		CargarListaAlumnos(m_list_Alumnos);
 	}				
 	else if(m_radio_Bibliotecarios->GetValue()){
-		m_Bibliotecario_frameActual->SetSelection(4);
+		m_Bibliotecario_frameActual->SetSelection(5);
 		CargarListaBibliotecario(m_list_Bibliotecarios);
 	}
+
 	this->Layout();  ///Actualizamos al frame actual
 }
 
@@ -241,6 +276,18 @@ void VentanaParaAlumno::OnButtonClickEliminar( wxCommandEvent& event )  {
 				Dialogo_Eliminar *nueva= new Dialogo_Eliminar(this,id,sistema,sistema->libros(),0,vLibros[id].VerNombre());
 				if (nueva->ShowModal() == wxID_OK){
 					CargarListaInfoLibros(m_list_InfoLibros);
+				}
+			}
+		}
+	}
+	else if(m_radio_Reservar->GetValue()){
+		id = m_list_Reservas->GetNextItem(-1,wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+		
+		if(id != -1){
+			if(id >= 0 and id <= vReservas.size()){
+				Dialogo_Eliminar *nueva= new Dialogo_Eliminar(this,id,sistema,sistema->reservar(),1,vReservas[id].VerNombre());
+				if (nueva->ShowModal() == wxID_OK){
+					CargarListaReservar(m_list_Reservas);
 				}
 			}
 		}

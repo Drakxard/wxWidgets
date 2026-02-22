@@ -26,6 +26,7 @@ class System{
 	string pathalumnos ="Recursos/Binarios/alumnos.bin";
 	string pathprestamos ="Recursos/Binarios/LibrosPrestamosActivos.bin";
 	string pathlibros = "Recursos/Binarios/libros.bin";
+	string pathreservar = "Recursos/Binarios/reservar.bin";
 	string pathbibliotecarios = "Recursos/Binarios/bibliotecarios.bin";
 	string pathetiquetas = "Recursos/Binarios/Tags/Tags.bin";
 	
@@ -53,6 +54,7 @@ public:
 	bool EscribirEnBin(vector<size_t> &IdARecuperar, vector<T>&elementos, string nombreArchivo);
 	string alumnos(){return pathalumnos;}
 	string libros(){return pathlibros;}
+	string reservar(){return pathreservar;}
 	string bibliotecarios(){return pathbibliotecarios;}
 	string etiquetas(){return pathetiquetas;}
 	
