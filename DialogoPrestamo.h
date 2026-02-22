@@ -1,7 +1,8 @@
 #ifndef DIALOGOPRESTAMO_H
 #define DIALOGOPRESTAMO_H
-#include "wxfb_project.h"
+#include "ProyBasePrestamo.h"
 #include "Funcionalidades/alumno/alumno.h"
+#include <wx/listctrl.h>
 
 
 class DialogoPrestamo : public MyDialogPrestamo {

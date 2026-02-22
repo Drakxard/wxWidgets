@@ -1,6 +1,6 @@
 #ifndef DIALOGO_ELIMINAR_H
 #define DIALOGO_ELIMINAR_H
-#include "wxfb_project.h"
+#include "ProyBaseEliminar.h"
 #include <string>
 using namespace std;
 class System;

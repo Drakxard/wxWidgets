@@ -1,6 +1,6 @@
 #ifndef DIALOGOAGREGARPERSONA_H
 #define DIALOGOAGREGARPERSONA_H
-#include "wxfb_project.h"
+#include "ProyBaseAgregarPersona.h"
 #include <string>
 using namespace std;
 class Bibliotecario;
@@ -14,6 +14,7 @@ private:
 	int tipo;
 	
 protected:
+	void onTextEnter_Bienvenido_Confirmar( wxCommandEvent& event )  override;
 	void OnButtonClickCerrar( wxCommandEvent& event )  override;
 	void OnclikNuevoElemento( wxCommandEvent& event )  override;
 	

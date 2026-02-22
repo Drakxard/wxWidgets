@@ -13,12 +13,14 @@ DialogoPrestamo::DialogoPrestamo(wxWindow *parent, Alumno alumnoSeleccionado): M
 	
 	
 	///PrestamosAnteriores
+	/*Se llama "m_grid1"
 	m_list_PrestamosAnteriores->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
 	m_list_PrestamosAnteriores->InsertColumn(1, "Libro", wxLIST_FORMAT_LEFT, 200);
 	
 	m_list_PrestamosAnteriores->SetSingleStyle(wxLC_HRULES); // Líneas horizontales
 	m_list_PrestamosAnteriores->SetSingleStyle(wxLC_VRULES); // Líneas verticaless
 	CargarLista(m_list_PrestamosAnteriores);
+	*/
 }
 
 DialogoPrestamo::~DialogoPrestamo() {

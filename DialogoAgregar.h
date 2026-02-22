@@ -1,6 +1,6 @@
 #ifndef DIALOGOAGREGAR_H
 #define DIALOGOAGREGAR_H
-#include "wxfb_project.h"
+#include "ProyBaseAgregar.h"
 #include <string>
 #include "Funcionalidades/Bloques/Bloques.h"
 

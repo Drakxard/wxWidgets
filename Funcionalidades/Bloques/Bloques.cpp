@@ -41,7 +41,7 @@ Bloques::~Bloques(){
 		
 		if (!archi) {
 			ofstream crear(nombreArhivo, ios::binary);
-			crear.close();
+			/*crear.close();*/
 			archi.open(nombreArhivo, ios::binary | ios::in | ios::out);
 			
 		}

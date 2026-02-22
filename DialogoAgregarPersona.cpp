@@ -50,3 +50,7 @@ DialogoAgregarPersona::~DialogoAgregarPersona() {
 	
 }
 
+void DialogoAgregarPersona::onTextEnter_Bienvenido_Confirmar( wxCommandEvent& event )  {
+	event.Skip();
+}
+
