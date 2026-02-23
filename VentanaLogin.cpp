@@ -30,21 +30,25 @@ void VentanaLogin::OnclikBienvenido_Iniciar( wxCommandEvent& event )  {
 	int PosBibliotecario = BuscarDniEnBibliotecarios(dni, vectorBibliotecario);
 	
 	if(PosBibliotecario != -1){
-		biblio = ObjetoCorrespondienteBibliotecario(PosBibliotecario, vectorBibliotecario);
-		///cout<<"?Que Quieres Hacer "<<biblio.VerNombre()<<" ?"<<endl;
-		///menuBibliotecario
-		VentanaParaBibliotecario *ventana = new VentanaParaBibliotecario(NULL);
-		ventana->Show();
-		this->Close();
+		if(vectorBibliotecario[PosBibliotecario].Existencia()){
+			biblio = ObjetoCorrespondienteBibliotecario(PosBibliotecario, vectorBibliotecario);
+			///cout<<"?Que Quieres Hacer "<<biblio.VerNombre()<<" ?"<<endl;
+			///menuBibliotecario
+			VentanaParaBibliotecario *ventana = new VentanaParaBibliotecario(NULL);
+			ventana->Show();
+			this->Close();
+		}
 	}
 	else{
 		int PosAlumno = BuscarDniEnAlumnos(dni,vectorAlumnos);
 		if(PosAlumno!= -1){
-			alumn = ObjetoCorrespondienteAlumno(PosAlumno, vectorAlumnos); 
-			///MenuAlumno
-			VentanaParaAlumno *ventana = new VentanaParaAlumno(NULL);
-			ventana->Show();
-			this->Close();
+			if(vectorAlumnos[PosAlumno].Existencia()){
+				alumn = ObjetoCorrespondienteAlumno(PosAlumno, vectorAlumnos); 
+				///MenuAlumno
+				VentanaParaAlumno *ventana = new VentanaParaAlumno(NULL);
+				ventana->Show();
+				this->Close();
+			}
 		}else{
 			///cout<<"No est?s en el sistema... Registrandote"<<endl;
 			///cant=1; PARA VENTANA CREAR CUENTA
