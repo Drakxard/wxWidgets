@@ -102,12 +102,12 @@ void VentanaParaAlumno::CargarListaBibliotecario(wxListCtrl* lista){
 		///Llenamos con ID (Casteado a int)
 		long index = lista->InsertItem(i, wxString::Format("%d", (int)vBibliotecario[i].VerID()));
 		
-		///CargarNombreDelAlumno
+		///CargarNombreDel Bibliotecario
 		lista->SetItem(index, 1, vBibliotecario[i].VerNombre() );
 		
 		///CargamosDni (Envuelto en wxString)
 		lista->SetItem(index, 2, wxString(to_string(vBibliotecario[i].VerDNI())));	
-		lista->SetItem(index, 3, wxString::Format("%d", (int)vBibliotecario[i].Existencia()) );				
+					
 	}
 	///Mostrar todo de golpe
 	lista->Thaw();
@@ -127,7 +127,7 @@ void VentanaParaAlumno::CargarListaInfoLibros(wxListCtrl* lista){
 		lista->SetItem(index, 1, vLibros[i].VerNombre() );
 		
 		///Antes estadoDisponibibldad (Casteado a int)
-		lista->SetItem(index, 2, wxString::Format("%d", (int)vLibros[i].Existencia()) );		
+		lista->SetItem(index, 2, wxString::Format("%d", (int)vLibros[i].EstadoDisponibilidad()) );		
 
 	}
 	///Mostrar todo de golpe
@@ -135,45 +135,45 @@ void VentanaParaAlumno::CargarListaInfoLibros(wxListCtrl* lista){
 }
 void VentanaParaAlumno::CargarListaReservar(wxListCtrl* lista){
 	//Limpiamos la tabla
-	lista->DeleteAllItems();
-	
-	//
-	lista->Freeze();
-	
-	vReservas = sistema->VerContenido<Reservar>(sistema->reservar(),true);
-	for(int i=0;i<vReservas.size();i++) { 
-		
-		/// ID (Casteado a int)
-		long index = lista->InsertItem(i, wxString::Format("%d", (size_t)vReservas[i].VerID()));
-		
-		///Nombre	
-		lista->SetItem(index, 1, vReservas[i].VerNombre() );
-		
-		///Existencia (Casteado a int)
-		lista->SetItem(index, 2, wxString::Format("%d", (int)vReservas[i].Existencia()) );			}
-	///Mostrar todo de golpe
-	lista->Thaw();
+//	lista->DeleteAllItems();
+//	
+//	//
+//	lista->Freeze();
+//	
+//	vReservas = sistema->VerContenido<Reservar>(sistema->reservar(),true);
+//	for(int i=0;i<vReservas.size();i++) { 
+//		
+//		/// ID (Casteado a int)
+//		long index = lista->InsertItem(i, wxString::Format("%d", (size_t)vReservas[i].VerID()));
+//		
+//		///Nombre	
+//		lista->SetItem(index, 1, vReservas[i].VerNombre() );
+//		
+//		///Existencia (Casteado a int)
+//		lista->SetItem(index, 2, wxString::Format("%d", (int)vReservas[i].Existencia()) );			}
+//	///Mostrar todo de golpe
+//	lista->Thaw();
 }
 
 void VentanaParaAlumno::CargarListaEtiquetas(wxListCtrl* lista){
-	//Limpiamos la tabla
-	lista->DeleteAllItems();
-	//¿¿
-	lista->Freeze();
-	tagsActuales = sistema->VerContenido<Tags>(sistema->etiquetas(),true);
-	for(int i=0;i<tagsActuales.size();i++) { 
-		
-		/// ID (Casteado a int)
-		long index = lista->InsertItem(i, wxString::Format("%d", (int)tagsActuales[i].IdTag));
-		
-		///Nombre	
-		lista->SetItem(index, 1, tagsActuales[i].NombreTag );
-		
-		///Existencia (Casteado a int)
-		lista->SetItem(index, 2, wxString::Format("%d", (int)tagsActuales[i].Existencia()) );			
-	}
-	///Mostrar todo de golpe
-	lista->Thaw();
+//	//Limpiamos la tabla
+//	lista->DeleteAllItems();
+//	//¿¿
+//	lista->Freeze();
+//	tagsActuales = sistema->VerContenido<Tags>(sistema->etiquetas(),true);
+//	for(int i=0;i<tagsActuales.size();i++) { 
+//		
+//		/// ID (Casteado a int)
+//		long index = lista->InsertItem(i, wxString::Format("%d", (int)tagsActuales[i].IdTag));
+//		
+//		///Nombre	
+//		lista->SetItem(index, 1, tagsActuales[i].NombreTag );
+//		
+//		///Existencia (Casteado a int)
+//		lista->SetItem(index, 2, wxString::Format("%d", (int)tagsActuales[i].Existencia()) );			
+//	}
+//	///Mostrar todo de golpe
+//	lista->Thaw();
 }
 
 void VentanaParaAlumno::OnRadioButton_CambiaPestana(wxCommandEvent& event){
@@ -247,7 +247,7 @@ void VentanaParaAlumno::OnButtonClickAgregar( wxCommandEvent& event )  {
 	}
 	if(m_radio_Etiquetas->GetValue()){
 		tipo=1;
-		DialogoAgregar *nueva= new DialogoAgregar(this,sistema,admin,tipo,sistema->etiquetas());
+		DialogoAgregar *nueva= new DialogoAgregar(this,sistema,admin,tipo,"Recursos/Binarios/Tags/Tags.bin");
 		if (nueva->ShowModal() == wxID_OK){
 			CargarListaEtiquetas(m_list_Etiquetas);
 		}
@@ -289,7 +289,7 @@ void VentanaParaAlumno::OnButtonClickEliminar( wxCommandEvent& event )  {
 		
 		if(id != -1){
 			if(id >= 0 and id <= vReservas.size()){
-				Dialogo_Eliminar *nueva= new Dialogo_Eliminar(this,id,sistema,sistema->reservar(),1,vReservas[id].VerNombre());
+				Dialogo_Eliminar *nueva= new Dialogo_Eliminar(this,id,sistema,"Recursos/Binarios/reservar.bin",1,vReservas[id].VerNombre());
 				if (nueva->ShowModal() == wxID_OK){
 					CargarListaReservar(m_list_Reservas);
 				}
@@ -301,7 +301,7 @@ void VentanaParaAlumno::OnButtonClickEliminar( wxCommandEvent& event )  {
 		
 		if(id != -1){
 			if(id >= 0 and id <= tagsActuales.size()){
-				Dialogo_Eliminar *nueva= new Dialogo_Eliminar(this,id,sistema,sistema->etiquetas(),2,tagsActuales[id].NombreTag);
+				Dialogo_Eliminar *nueva= new Dialogo_Eliminar(this,id,sistema,"Recursos/Binarios/Tags/Tags.bin",2,tagsActuales[id].NombreTag);
 				if (nueva->ShowModal() == wxID_OK){
 					CargarListaEtiquetas(m_list_Etiquetas);
 				}

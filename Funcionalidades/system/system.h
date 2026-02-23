@@ -51,12 +51,10 @@ public:
 	template <typename T>
 	vector<T> LeerDelBin(vector<size_t> &IdARecuperar, string nombreArchivo);
 	template <typename T>
-	bool EscribirEnBin(vector<size_t> &IdARecuperar, vector<T>&elementos, string nombreArchivo);
+	bool EscribirEnBin(vector<int> &IdARecuperar, vector<T>&elementos, string nombreArchivo);
 	string alumnos(){return pathalumnos;}
 	string libros(){return pathlibros;}
-	string reservar(){return pathreservar;}
 	string bibliotecarios(){return pathbibliotecarios;}
-	string etiquetas(){return pathetiquetas;}
 	
 	template<typename S>
 		int Verificar_Existencia_Vector(int dni, vector<S>&v);
@@ -65,10 +63,8 @@ public:
 	
 	///Cabeceras para libros
 	vector<Cabecera> CargarDesdeTxt(string nombreArchivo);
-
 	template<typename T>
 	bool AlUltimo(string nombreArchivo, T elemento);
-	
 };
 
 #include "../libro/libro.h"
@@ -81,23 +77,22 @@ public:
 
 
 template <typename T>  ///Cambiar a Guardar al final
-bool System::Guardar(string nombreArhivo, vector<T> &A_Guardar, bool sobreEscribir)
-{
+bool System::Guardar(string nombreArhivo, vector<T> &A_Guardar, bool sobreEscribir){
 	ofstream archi;
-	if(sobreEscribir){
-		archi.open(nombreArhivo, ios::binary);
-	}else{
-		archi.open(nombreArhivo, ios::binary|ios::app);
-	}
+		if(sobreEscribir){
+			archi.open(nombreArhivo, ios::binary);
+		}else{
+			archi.open(nombreArhivo, ios::binary|ios::app);
+		}
 	if (!archi){
-		cerr<<"Error al guardar en " + nombreArhivo;
-		return false;
+	cerr<<"Error al guardar en " + nombreArhivo;
+	return false;
 	}
-	
+
 	for (size_t i = 0; i < A_Guardar.size(); ++i)
 	{
-		//cout<<endl<<"En guardar :"<<aux.VerNombre()<<endl;
-		archi.write(reinterpret_cast<const char *>(&(A_Guardar[i])), sizeof(A_Guardar[i]));
+	//cout<<endl<<"En guardar :"<<aux.VerNombre()<<endl;
+	archi.write(reinterpret_cast<const char *>(&(A_Guardar[i])), sizeof(A_Guardar[i]));
 	}
 	archi.close();
 	return true;
@@ -108,13 +103,13 @@ bool System::Guardar(string nombreArhivo, vector<T> &A_Guardar, bool sobreEscrib
 template <typename T>
 bool System::Eliminar(size_t id, vector<T>&v){
 	typename vector<T>::iterator itBorrar = find_if(v.begin(),v.end(),[id](const T& a){
-		return a.VerID() == id;
+	return a.VerID() == id;
 	});
 	if(itBorrar!=v.end()){
-		itBorrar->NoExiste();
-		return true;//borrado
+	v.erase(itBorrar);
+	return true;//borrado
 	}else{
-		return false;//no se encontro xD
+	return false;//no se encontro xD
 	}
 }
 
@@ -122,11 +117,11 @@ template <typename T> ///Cambiar a solo leer N cosas
 vector<T> System::VerContenido(string nombreArchivo,bool crear){
 	ifstream archi(nombreArchivo,ios::binary);
 	if(crear){
-		//nada
+	//nada
 	}
 	else{
-		if(!archi)
-			throw runtime_error("Error al Recuperar de " + nombreArchivo);
+	if(!archi)
+		throw runtime_error("Error al Recuperar de " + nombreArchivo);
 	}
 	vector<T>Resultado;
 	T aux;
@@ -140,59 +135,60 @@ vector<T> System::VerContenido(string nombreArchivo,bool crear){
 
 
 
+
+
 template <typename T>
-vector<T> System::LeerDelBin(vector<size_t> &IdARecuperar, string nombreArchivo)
-{  
-	vector<T> resultado;
-	int ultimo = VerUltimo<T>(nombreArchivo);
-	
-	if (ultimo < 0 || IdARecuperar.empty()) return resultado;
-	
+vector<T> System::LeerDelBin(vector<size_t> &IdARecuperar, string nombreArchivo){  
 	ifstream archi(nombreArchivo, ios::binary);
 	if (!archi)
+	throw runtime_error("Error al Recuperar de " + nombreArchivo);
+
+
+	T aux;
+	vector<T>resultado;
+	int ultimo= VerUltimo<T>(nombreArchivo);
+	for (size_t i = 0; i < IdARecuperar.size();++i)
+	{
+	if(IdARecuperar[i]>= 0 and IdARecuperar[i]<= ultimo){
+	archi.seekg((IdARecuperar[i]) * (sizeof(T))); // vamos a la posicion
+	archi.read(reinterpret_cast<char*>(&aux), sizeof(aux));
+	resultado.push_back(aux);
+	}
+	}
+	return resultado;
+};
+
+template <typename T>
+bool System::EscribirEnBin(vector<int> &IdARecuperar, vector<T>&elementos, string nombreArchivo){ 
+	if(IdARecuperar.size() != 0){
+	ofstream archi(nombreArchivo, ios::binary);
+	if (!archi)
 		throw runtime_error("Error al Recuperar de " + nombreArchivo);
-	
+
 	T aux;
 	for (size_t i = 0; i < IdARecuperar.size(); ++i)
 	{
-		// size_t siempre es >= 0. Comparamos con ultimo de forma segura.
-		if (IdARecuperar[i] <= static_cast<size_t>(ultimo)) {
-			archi.seekg(IdARecuperar[i] * sizeof(T)); 
-			archi.read(reinterpret_cast<char*>(&aux), sizeof(T));
-			resultado.push_back(aux);
-		}
-	}
-	archi.close();
-	return resultado;
-}
-
-template <typename T>
-bool System::EscribirEnBin(vector<size_t> &IdARecuperar, vector<T>& elementos, string nombreArchivo)
-{ 
-	if (IdARecuperar.empty() || IdARecuperar.size() != elementos.size()) return false;
-	
-	ofstream archi(nombreArchivo, ios::binary | ios::in | ios::out);
-	if (!archi) return false;
-	
-	for (size_t i = 0; i < IdARecuperar.size(); ++i)
-	{
-		archi.seekp(IdARecuperar[i] * sizeof(T)); 
-		archi.write(reinterpret_cast<const char *>(&elementos[i]), sizeof(T));
-		cout<<endl<<"Existencia guardada: "<<elementos[i].Existencia()<<endl;
+			archi.seekp((IdARecuperar[i]) * (sizeof(T))); // vamos a la posicion
+			archi.write(reinterpret_cast<const char *>(&aux), sizeof(aux));
 	} 
-	archi.close();  
+	archi.close();    
+	}else{
+	return false;
+	}
 	return true;	
-}
+};
+
+
 template<typename T>
 int System::VerUltimo(string nombreArchivo){
-	
+
 	ifstream archi(nombreArchivo,ios::binary|ios::ate);
 	if(archi.tellg()<=0){
-		archi.close();
-		return -1;
+	archi.close();
+	return -1;
 	}
 	if(!archi)
-	   throw runtime_error("error al abrir para VerUltimo-> "+nombreArchivo);
+	throw runtime_error("error al abrir para VerUltimo-> "+nombreArchivo);
 	int resultado;
 	int tam = static_cast<int>(sizeof(T));///Antes desfases por esto
 	///Size_of convierte a size_t, el cual solo tiene positivos, por ello
@@ -234,7 +230,10 @@ bool Verificar_Existencia_Binario(int Id,string nombreArchivo){
 	archi.close();
 	return false;
 }
-	
+
+
+
+
 	template<typename T>
 		bool System::AlUltimo(string nombreArchivo, T elemento){
 		ofstream archi(nombreArchivo, ios::binary | ios::app);
@@ -253,7 +252,4 @@ bool Verificar_Existencia_Binario(int Id,string nombreArchivo){
 		return true;
 	}
 	
-	
-	
-#endif // 3. Fin de la condici?n
-	
+	#endif // 3. Fin de la condici?n
