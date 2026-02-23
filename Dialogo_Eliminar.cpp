@@ -36,10 +36,10 @@ void Dialogo_Eliminar::OnclikContinuar_Eliminar( wxCommandEvent& event) {
 	vector<size_t>recuperarId={id};
 	string nombreArchivo;
 	if(tipo==0){
-		nombreArchivo = sistema->libros();
-		vector<Libro> resultados = sistema->LeerDelBin<Libro>(recuperarId,nombreArchivo);
-		sistema->EscribirEnBin<Libro>(recuperarId,resultados,nombreArchivo);
-	
+		vector<Libro> VLibros=sistema->VerContenido<Libro>(path,true);
+		sistema->Eliminar<Libro>(id, VLibros);
+		sistema->Guardar<Libro>(path,VLibros,true);
+		
 	}
 	
 	if(tipo==1){
@@ -55,12 +55,12 @@ void Dialogo_Eliminar::OnclikContinuar_Eliminar( wxCommandEvent& event) {
 	if(tipo==3){
 	vector<Alumno> Valumnos=sistema->VerContenido<Alumno>(path,true);
 	sistema->Eliminar<Alumno>(id, Valumnos);
-	sistema->Guardar<Alumno>(path,Valumnos);
+	sistema->Guardar<Alumno>(path,Valumnos,true);
 	}
 	if(tipo==4){
 		vector<Bibliotecario>vBibliotecario =sistema->VerContenido<Bibliotecario>(path,true);
 		sistema->Eliminar<Bibliotecario>(id, vBibliotecario);
-		sistema->Guardar<Bibliotecario>(path,vBibliotecario);
+		sistema->Guardar<Bibliotecario>(path,vBibliotecario,true);
 	}
 	EndModal(wxID_OK);
 	
