@@ -1,4 +1,4 @@
-#include "reservar.h"
+#include "Reservar.h"
 
 Reservar::Reservar() {
 	
