@@ -15,6 +15,7 @@ tab_use_spaces=0
 explorer_path=.
 inspection_improving_template=wxString|>printf "%ls",${EXP}.m_impl._M_data()
 inherits_from=
+current_source=Funcionalidades\bibliotecario\bibliotecario.cpp
 path_char=\
 [source]
 path=Application.cpp
@@ -45,6 +46,7 @@ cursor=43:21
 [source]
 path=Funcionalidades\bibliotecario\bibliotecario.cpp
 cursor=82:2
+open=true
 [source]
 path=VentanaParaBibliotecario.cpp
 cursor=44:2

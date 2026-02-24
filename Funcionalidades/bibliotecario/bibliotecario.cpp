@@ -1,5 +1,6 @@
 #include "bibliotecario.h"
 #include "../system/system.h"
+#include "../Historial/Historial.h"
 
 using namespace std;
 
@@ -64,10 +65,10 @@ bool Bibliotecario::PrestarLibros(size_t idLibro, size_t idAlumno, vector<Libro>
 {
 	// 1. Buscar si el alumno por ID si existe
 	///No esta siendo usado
-	/*auto itAlumno = find_if(Alumnos.begin(), Alumnos.end(), [idAlumno](const Alumno& a) {
+	auto itAlumno = find_if(Alumnos.begin(), Alumnos.end(), [idAlumno](const Alumno& a) {
 			return a.VerID() == idAlumno;
 		});
-	*/
+	
 	if(idLibro>Alumnos.size()){
 			cout<<"C�digo de libro inexistente, Libro no encontrado." << endl;
 			return false; //no existe el libro o est� prestado
@@ -101,6 +102,10 @@ bool Bibliotecario::PrestarLibros(size_t idLibro, size_t idAlumno, vector<Libro>
 				
 				cout << "Libro prestado exitosamente. Dias para devolucion: " << diasCalculados << endl;
 				AgregarLibroPrestado(idLibro,Id_Prestamos);
+				string nom_usu= itAlumno->VerNombre();
+				string nom_lib= itlibro->VerNombre();
+				Historial h;
+				h.Cargar_Historial(idLibro,idAlumno,nom_usu,nom_lib,dia,mes,anio);
 				return true;
 				
 			} else {

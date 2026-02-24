@@ -1,6 +1,6 @@
 #include "Historial.h"
 #include <cstdlib>
-//#include <vector>
+#include <vector>
 #include "../system/system.h"
 using namespace std;
 
