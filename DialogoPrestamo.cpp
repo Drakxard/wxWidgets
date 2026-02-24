@@ -1,6 +1,7 @@
 #include "DialogoPrestamo.h"
 #include <wx/msgdlg.h>
 #include <wx/variant.h>
+#include "Funcionalidades/system/system.h"
 
 // IMPORTANTE: Aquí llamamos a MyDialogPrestamo (tu ventana real)
 DialogoPrestamo::DialogoPrestamo(wxWindow *parent, Alumno alumnoSeleccionado)
@@ -57,9 +58,8 @@ void DialogoPrestamo::OnBuscarLibro(wxCommandEvent& event) {
 	
 	// --- AQUÍ ESTÁ EL CAMBIO ---
 	// Le agregamos un tercer parámetro ("Cervantes" y "Stewart") para cumplir con el nuevo constructor
-	std::vector<Libro> todosLosLibros;
-	todosLosLibros.push_back(Libro(1, "El Quijote", "Cervantes"));
-	todosLosLibros.push_back(Libro(2, "Calculo I - Stewart", "James Stewart"));
+	System sistema;
+	std::vector<Libro> todosLosLibros= sistema.VerContenido<Libro>(sistema.libros(),true);
 	
 	for (Libro& libro : todosLosLibros) {
 		wxString titulo = wxString(libro.VerNombre()).Lower();

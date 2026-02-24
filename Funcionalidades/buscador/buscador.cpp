@@ -1,7 +1,13 @@
 #include "buscador.h"
-
+#include "../libro/libro.h"
+#include "../system/system.h"
+#include <algorithm>
+#include "../Bloques/Bloques.h"
+#include "../bibliotecario/bibliotecario.h"
+#include "../alumno/alumno.h"
 using namespace std;
-vector<size_t> Buscador::BusquedaSimple(string nombreBuscado){
+vector<size_t> Buscador::BusquedaSimple(string nombreBuscado)
+{
 	
 	string nombreArchivo = diccionario.VerPathEtiquetas();
 	cout<<endl<<"Archivo a abrir: "<<nombreArchivo<<endl;
@@ -59,19 +65,19 @@ vector<size_t> Buscador::OrdenarAscendente(vector<size_t>v){
 	return v;
 	
 }
-
-vector<Libro>Buscador:: Busqueda_Autor(string autorBuscado, vector<Libro>&v){
-	vector<Libro> aux;
+template <typename T>
+vector<T>Buscador:: Relacionados(string palabraBuscada, vector<T>&v){
+	vector<T> aux;
 	auto encontrado = v.begin();
 	size_t pos=0;
 	while(encontrado!=v.end()){
-		encontrado = find_if(v.begin()+pos,v.end(),[autorBuscado](const Libro& a){
+		encontrado = find_if(v.begin()+pos,v.end(),[palabraBuscada](const T& a){
 			
-			return a.VerAutor() == autorBuscado;
+			return a.VerNombre() == palabraBuscada;
 		});
 		if(encontrado== v.end()){break;}
 		
-		aux.push_back(*encontrado);
+		aux.push_back(*encontrado);//Devuelve posiciones
 		pos=(encontrado-v.begin())+1;
 	}
 	return aux;
@@ -117,7 +123,11 @@ vector<Libro>Buscador:: Busqueda_Autor(string autorBuscado, vector<Libro>&v){
 		return resultado;
 }	
 	
+template vector<Alumno>Buscador:: Relacionados(string palabraBuscada, vector<Alumno>&v);
+template vector<Libro>Buscador:: Relacionados(string palabraBuscada, vector<Libro>&v);
+template vector<Bibliotecario>Buscador:: Relacionados(string palabraBuscada, vector<Bibliotecario>&v);
 
-		
+	
+	
 	
 	
