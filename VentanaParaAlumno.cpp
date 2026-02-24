@@ -10,6 +10,8 @@
 #include "DialogoVerLibro.h"
 #include <wx/dcmemory.h>
 #include <wx/wrapsizer.h>
+#include "ProyBaseAlumno.h"
+#include "ProyBaseEditarLibro.h"
 using namespace std;
 
 VentanaParaAlumno::VentanaParaAlumno(wxWindow *parent) : MyFrameInicioCorrectoAlumno(parent) {
@@ -194,9 +196,9 @@ void VentanaParaAlumno::CargarListaInfoLibros(wxListCtrl* lista){
 		///Antes estadoDisponibibldad (Casteado a int)
 		lista->SetItem(index, 2, wxString::Format("%d", (int)vLibros[i].Existencia()) );		
 
-		lista->SetItem(index, 3, vLibros[i].VerDescripcion() );
+//		lista->SetItem(index, 3, vLibros[i].VerDescripcion() );
 		
-		lista->SetItem(index, 4, vLibros[i].VerAutores() );
+		lista->SetItem(index, 4, vLibros[i].VerAutor() );
 		
 		///lista->SetItem(index, 5, vLibros[i].VerEtiquetas() );
 		

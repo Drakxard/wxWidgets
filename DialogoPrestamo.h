@@ -1,22 +1,26 @@
 #ifndef DIALOGOPRESTAMO_H
 #define DIALOGOPRESTAMO_H
+
 #include "ProyBasePrestamo.h"
 #include "Funcionalidades/alumno/alumno.h"
-#include <wx/listctrl.h>
+#include "Funcionalidades/libro/libro.h"
+#include <vector>
+#include <wx/dataview.h>
 
-
-class DialogoPrestamo : public MyDialogPrestamo {
-	
-private:
-	
+class DialogoPrestamo : public MyDialogPrestamo { 
 protected:
 	Alumno alumnoSeleccionado;
-public:
+	std::vector<Libro> m_librosEncontrados;
 	
+	// Eventos (sin la palabra override para evitar errores)
+	void OnBuscarLibro(wxCommandEvent& event);
+	void OnConfirmarPrestamoClick(wxCommandEvent& event);
+	
+public:
 	DialogoPrestamo(wxWindow *parent, Alumno alumnoSeleccionado);
 	~DialogoPrestamo();
-	void CargarLista(wxListCtrl* lista);
+	
+	void CargarHistorialEnGrilla();
 };
 
 #endif
-

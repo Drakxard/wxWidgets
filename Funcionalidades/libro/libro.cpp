@@ -4,18 +4,17 @@ size_t Libro::VerID() const
     return id;
 }
 const char* Libro::VerNombre() const{
-	return this->nombre;
+    return this->nombre;
 }
-const char* Libro::VerDescripcion() const{
-	return this->descripcion;
-}
-const char* Libro::VerAutores() const{
-	return this->autores;
+const char* Libro::VerAutor() const{
+    return this->autor;
 }
 const char* Libro::VerPath() const{
 	return this->path;
 }
-
+const char* Libro::VerDescripcion() const{
+	return this->descripcion;
+}
 // Corrección: Ahora retorna el atributo de la clase
 bool Libro::EstadoDisponibilidad() const {
     return this->disponible;
@@ -54,22 +53,20 @@ void Libro::DiasRestantes(int dias){
     diasRestantes = dias;
 }
 
+void Libro::CambiarNombreAutor(const char *NuevoNombre){
+	strncpy(this->autor, NuevoNombre,49);
+	this->autor[49]='\0';
+}
 void Libro::CambiarNombre(const char *NuevoNombre){
 	strncpy(this->nombre, NuevoNombre,49);
 	this->nombre[49]='\0';
 }
+
+
+
 void Libro::CambiarDescripcion(const char *NuevoNombre){
 	strncpy(this->descripcion, NuevoNombre,49);
 	this->descripcion[99]='\0';
-}
-void Libro::CambiarAutores(const char *NuevoNombre){
-	strncpy(this->autores, NuevoNombre,49);
-	this->autores[99]='\0';
-}
-
-void Libro::CambiarPath(const char *NuevoNombre){
-	strncpy(this->path, NuevoNombre,99);
-	this->path[99]='\0';
 }
 
 

@@ -68,7 +68,7 @@ public:
 	
 	///Cabeceras para libros
 	vector<Cabecera> CargarDesdeTxt(string nombreArchivo);
-
+	
 	template<typename T>
 	bool AlUltimo(string nombreArchivo, T elemento);
 	

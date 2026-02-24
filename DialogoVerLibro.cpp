@@ -5,7 +5,7 @@ DialogoVerLibro::DialogoVerLibro(wxWindow *parent, Libro& actual) : MyDialogVerL
 	/// 1. Asignar textos (ajusta los métodos Get a los de tu clase)
 	m_staticNombreLibro->SetLabel(actual.VerNombre());
 	m_staticText_DescripcionValor->SetLabel(actual.VerDescripcion());
-	m_staticAutorValor->SetLabel(actual.VerAutores());
+	m_staticAutorValor->SetLabel(actual.VerAutor());
 	
 	/// 2. Asignar imagen
 	wxImage img;
@@ -70,7 +70,7 @@ void DialogoVerLibro::OnclikButtonClickEdicion( wxCommandEvent& event )  {
 		
 		m_botonEditar->SetLabel("Editar");
 		actual.CambiarDescripcion(m_textCtrlEdicionDescipcion->GetValue().utf8_str());
-		actual.CambiarAutores(m_textCtrlEdicionAutor->GetValue().utf8_str());
+		actual.CambiarNombreAutor(m_textCtrlEdicionAutor->GetValue().utf8_str());
 		System sistema;
 		vector<size_t>ids={actual.VerID()};
 		vector<Libro>Lib ={actual};

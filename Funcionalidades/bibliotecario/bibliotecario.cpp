@@ -35,18 +35,20 @@ vector<Libro> Bibliotecario::AgregarElementos(int Agregar,string nombreArchivo)
 {
 	vector<Libro> resultado;
 	string nombre = "";
+	string autor = "";
 	int idElemento = sistema->VerUltimo<Libro>(nombreArchivo);
 	while (Agregar > 0)
 	{
 		cout << "Nombre: ";cin>>nombre;		
+		cout << "Autor: ";cin>>autor;		
 		
 				/// Generar ID
 		++idElemento;
-		Libro aux(idElemento, nombre.c_str());
+		Libro aux(idElemento, nombre.c_str(),autor.c_str());
 		resultado.push_back(aux);
 		--Agregar;
 		cout<<endl<<"DesdeAgregarElementosLibro"<<endl;
-		cout<<"Nombre del nuevo: "<<aux.VerNombre()<<endl;
+		cout<<"Nombre del nuevo: "<<aux.VerNombre()<<"/ Autor: "<<aux.VerAutor()<<endl;
 	
 	}
 	return resultado;

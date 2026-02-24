@@ -18,7 +18,7 @@
 #include <wx/sizer.h>
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
-#include <wx/bmpcbox.h>
+#include <wx/dataview.h>
 #include <wx/button.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
@@ -44,14 +44,21 @@ class MyDialogPrestamo : public wxDialog
 		wxStaticText* m_staticPrestar_DniAlumno;
 		wxStaticText* m_staticPrestar_DniAlumno_Valor;
 		wxStaticText* m_staticText9;
-		wxBitmapComboBox* m_bcomboBox1;
-		wxButton* m_button15;
+		wxTextCtrl* m_txtBuscarLibro;
+		wxStaticText* m_staticText8;
+		wxDataViewListCtrl* m_listaResultadosLibros;
+		wxButton* m_btnConfirmar;
 		wxStaticText* m_staticText23;
-		wxGrid* m_grid1;
+		wxGrid* m_gridHistorial;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void OnBuscarLibro( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnConfirmarPrestamoClick( wxCommandEvent& event ) { event.Skip(); }
+
 
 	public:
 
-		MyDialogPrestamo( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 773,515 ), long style = wxDEFAULT_DIALOG_STYLE );
+		MyDialogPrestamo( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("PRESTAMO"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 773,515 ), long style = wxDEFAULT_DIALOG_STYLE );
 
 		~MyDialogPrestamo();
 
