@@ -10,6 +10,10 @@ class Libro
 	bool existe;
 	size_t id;
 	char nombre[50];
+	char descripcion[100];
+	char autores[100];
+	char path[100];
+	
 	int diasRestantes;
 	bool disponible; // Quitamos la inicializaci�n aqu� para hacerlo en el constructor
 	bool caduco;
@@ -32,11 +36,22 @@ public:
 		this->caduco = false;
 		this->diasRestantes = 0;
 		existe = true;
+		
 	}
 	
 	size_t VerID() const;
 	const char* VerNombre() const;
 	void CambiarNombre(const char* NuevoNombre);
+	
+	const char* VerDescripcion() const;
+	void CambiarDescripcion(const char* NuevoNombre);
+	
+	const char* VerAutores() const;
+	void CambiarAutores(const char* NuevoNombre);
+	
+	
+	const char* VerPath() const;
+	void CambiarPath(const char* NuevoNombre);
 	
 	// M�todos corregidos
 	bool EstadoDisponibilidad() const; 

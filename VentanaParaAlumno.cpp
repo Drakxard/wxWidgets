@@ -7,60 +7,125 @@
 #include "Funcionalidades/system/system.h"
 #include "Funcionalidades/bibliotecario/bibliotecario.h"
 #include "DialogoAgregarPersona.h"
-
+#include "DialogoVerLibro.h"
+#include <wx/dcmemory.h>
+#include <wx/wrapsizer.h>
 using namespace std;
 
 VentanaParaAlumno::VentanaParaAlumno(wxWindow *parent) : MyFrameInicioCorrectoAlumno(parent) {
-	///Para crear columnas a la Tabla, en diseñador no encontre opcion
 	sistema = new System();
 	this->Maximize(true);
-	///LIBRO
 	
 	m_list_InfoLibros->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
 	m_list_InfoLibros->InsertColumn(1, "Nombre", wxLIST_FORMAT_LEFT, 200);
 	m_list_InfoLibros->InsertColumn(2, "Estado", wxLIST_FORMAT_LEFT, 100);
+	m_list_InfoLibros->InsertColumn(3, "Descripcion", wxLIST_FORMAT_LEFT, 100);
+	m_list_InfoLibros->InsertColumn(4, "Autores", wxLIST_FORMAT_LEFT, 100);
+	m_list_InfoLibros->InsertColumn(5, "Etiquetas", wxLIST_FORMAT_LEFT, 100);
 	
-	m_list_InfoLibros->SetSingleStyle(wxLC_HRULES); // Líneas horizontales
-	m_list_InfoLibros->SetSingleStyle(wxLC_VRULES); // Líneas verticaless
+	m_list_InfoLibros->SetSingleStyle(wxLC_HRULES); 
+	m_list_InfoLibros->SetSingleStyle(wxLC_VRULES); 
 	
-	///Reservas
 	m_list_Reservas->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
 	m_list_Reservas->InsertColumn(1, "Nombre", wxLIST_FORMAT_LEFT, 200);
 	m_list_Reservas->InsertColumn(2, "Estado", wxLIST_FORMAT_LEFT, 200);
 	
-	
-	///Etiquetas
-	
 	m_list_Etiquetas->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
 	m_list_Etiquetas->InsertColumn(1, "Nombre", wxLIST_FORMAT_LEFT, 200);
 	m_list_Etiquetas->InsertColumn(2, "Estado", wxLIST_FORMAT_LEFT, 200);
+	m_list_Etiquetas->SetSingleStyle(wxLC_HRULES); 
+	m_list_Etiquetas->SetSingleStyle(wxLC_VRULES); 
 	
-	m_list_Etiquetas->SetSingleStyle(wxLC_HRULES); // Líneas horizontales
-	m_list_Etiquetas->SetSingleStyle(wxLC_VRULES); // Líneas verticaless
-	
-	
-	///AlUMNO
 	m_list_Alumnos->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
 	m_list_Alumnos->InsertColumn(1, "Nombre", wxLIST_FORMAT_LEFT, 200);
 	m_list_Alumnos->InsertColumn(2, "Dni", wxLIST_FORMAT_LEFT, 100);
 	m_list_Alumnos->InsertColumn(3, "Estado", wxLIST_FORMAT_LEFT, 100);
+	m_list_Alumnos->SetSingleStyle(wxLC_HRULES); 
+	m_list_Alumnos->SetSingleStyle(wxLC_VRULES); 
 	
-	
-	m_list_Alumnos->SetSingleStyle(wxLC_HRULES); // Líneas horizontales
-	m_list_Alumnos->SetSingleStyle(wxLC_VRULES); // Líneas verticaless
-	
-	///BIBLIOTECARIO
 	m_list_Bibliotecarios->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
 	m_list_Bibliotecarios->InsertColumn(1, "Nombre", wxLIST_FORMAT_LEFT, 200);
 	m_list_Bibliotecarios->InsertColumn(2, "Dni", wxLIST_FORMAT_LEFT, 100);
 	m_list_Bibliotecarios->InsertColumn(3, "Estado", wxLIST_FORMAT_LEFT, 100);
-	
-	m_list_Bibliotecarios->SetSingleStyle(wxLC_HRULES); // Líneas horizontales
-	m_list_Bibliotecarios->SetSingleStyle(wxLC_VRULES); // Líneas verticaless
-	
+	m_list_Bibliotecarios->SetSingleStyle(wxLC_HRULES); 
+	m_list_Bibliotecarios->SetSingleStyle(wxLC_VRULES); 
+
+	m_panel_Bibliotecario_Libros->Bind(wxEVT_SIZE, [this](wxSizeEvent& evento) {
+		evento.Skip();
+		m_panel_Bibliotecario_Libros->Layout();
+		if (m_panel_Bibliotecario_Libros->GetSizer()) {
+			m_panel_Bibliotecario_Libros->SetVirtualSize(m_panel_Bibliotecario_Libros->GetSizer()->CalcMin());
+		}
+	});
+	MostrarLibros();
 }
 
-
+void VentanaParaAlumno::MostrarLibros(){
+	m_panel_Bibliotecario_Libros->DestroyChildren(); 
+	
+	vLibros = sistema->VerContenido<Libro>(sistema->libros(), true);
+	wxWrapSizer* sizerGrilla = new wxWrapSizer(wxHORIZONTAL);
+	
+	for (size_t i = 0; i < vLibros.size(); i++) {
+		wxBoxSizer* sizerLibroIndividual = new wxBoxSizer(wxVERTICAL);
+		
+		wxString nombreStr = wxString::FromUTF8(vLibros[i].VerNombre());
+		wxString rutaStr = wxString::FromUTF8(vLibros[i].VerPath());
+		
+		wxStaticText* textoTitulo = new wxStaticText(m_panel_Bibliotecario_Libros, wxID_ANY, nombreStr);
+		wxFont fuenteTitulo = textoTitulo->GetFont();
+		fuenteTitulo.SetWeight(wxFONTWEIGHT_BOLD);
+		textoTitulo->SetFont(fuenteTitulo);
+		
+		wxBitmap bitmapPortada;
+		wxImage image;
+		
+		if (!wxFileName::Exists(rutaStr)) {
+			rutaStr = wxString::FromUTF8(sistema->noLibroImg().c_str());
+		}
+		
+		if (image.LoadFile(rutaStr, wxBITMAP_TYPE_ANY)) {
+			int anchoDeseado = 150;
+			int altoCalculado = image.GetHeight() * anchoDeseado / image.GetWidth();
+			image.Rescale(anchoDeseado, altoCalculado, wxIMAGE_QUALITY_HIGH);
+			bitmapPortada = wxBitmap(image);
+		} else {
+			bitmapPortada.Create(150, 200);
+			wxMemoryDC dc(bitmapPortada);
+			dc.SetBackground(*wxWHITE_BRUSH);
+			dc.Clear();
+			dc.SetTextForeground(*wxRED);
+			dc.DrawText("Sin Portada", 40, 90);
+			dc.SelectObject(wxNullBitmap);
+		}
+		
+		int idImagen = 2000 + i;
+		wxStaticBitmap* imagenPortada = new wxStaticBitmap(m_panel_Bibliotecario_Libros, idImagen, bitmapPortada);
+		
+		imagenPortada->SetCursor(wxCursor(wxCURSOR_HAND));
+		imagenPortada->Bind(wxEVT_LEFT_DOWN, &VentanaParaAlumno::OnLeftUpVerLibro, this);
+		
+		sizerLibroIndividual->Add(textoTitulo, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, 5);
+		sizerLibroIndividual->Add(imagenPortada, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, 5);
+		
+		sizerGrilla->Add(sizerLibroIndividual, 0, wxALL, 15);
+	}
+	
+	m_panel_Bibliotecario_Libros->SetSizer(sizerGrilla);
+	m_panel_Bibliotecario_Libros->Layout();
+	m_panel_Bibliotecario_Libros->SetScrollRate(0, 20);
+	
+	m_panel_Bibliotecario_Libros->SetVirtualSize(sizerGrilla->CalcMin());
+}
+void VentanaParaAlumno::OnLeftUpVerLibro(wxMouseEvent& event) {
+	int indiceVector = event.GetId() - 2000; // Restamos 2000 para recuperar el índice (0, 1, 2...)
+	
+	if (indiceVector >= 0 && indiceVector < vLibros.size()) {
+		DialogoVerLibro *nueva = new DialogoVerLibro(this, vLibros[indiceVector]);
+		nueva->ShowModal();
+		nueva->Destroy();
+	}
+}
 VentanaParaAlumno::~VentanaParaAlumno() {	
 	if (sistema) {
 		delete sistema;
@@ -129,6 +194,12 @@ void VentanaParaAlumno::CargarListaInfoLibros(wxListCtrl* lista){
 		///Antes estadoDisponibibldad (Casteado a int)
 		lista->SetItem(index, 2, wxString::Format("%d", (int)vLibros[i].Existencia()) );		
 
+		lista->SetItem(index, 3, vLibros[i].VerDescripcion() );
+		
+		lista->SetItem(index, 4, vLibros[i].VerAutores() );
+		
+		///lista->SetItem(index, 5, vLibros[i].VerEtiquetas() );
+		
 	}
 	///Mostrar todo de golpe
 	lista->Thaw();
@@ -178,7 +249,9 @@ void VentanaParaAlumno::CargarListaEtiquetas(wxListCtrl* lista){
 
 void VentanaParaAlumno::OnRadioButton_CambiaPestana(wxCommandEvent& event){
 	if(m_radio_Libros->GetValue()){
+		MostrarLibros();
 		m_Bibliotecario_frameActual->SetSelection(0);
+		
 	}
 	if(m_radio_InfoLibros->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(1);
@@ -332,5 +405,4 @@ void VentanaParaAlumno::OnButtonClickEliminar( wxCommandEvent& event )  {
 		}
 	}
 } 
-
 

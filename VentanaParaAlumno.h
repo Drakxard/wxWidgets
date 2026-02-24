@@ -22,6 +22,8 @@ private:
 	vector<Reservar>vReservas;
 	
 protected:
+	void MostrarLibros();
+	void OnLeftUpVerLibro( wxMouseEvent& event ) ;
 	void OnButtonClickAgregar( wxCommandEvent& event )  override;
 	void OnButtonClickEliminar( wxCommandEvent& event )  override;
 	void onclickbutton_eliminar( wxCommandEvent& event )  ;

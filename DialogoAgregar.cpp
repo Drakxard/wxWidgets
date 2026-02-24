@@ -25,6 +25,8 @@ void DialogoAgregar::OnclikNuevoElemento( wxCommandEvent& event )  {
 	if(tipo==0){
 	
 		Libro aux(sistema->VerUltimo<Libro>(path)+1,nombre.c_str());
+		///agregar path de imagen
+		aux.CambiarPath(sistema->noLibroImg().c_str());
 		sistema->AlUltimo<Libro>(sistema->libros(),aux);
 		
 	}

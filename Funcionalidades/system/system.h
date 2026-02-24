@@ -30,6 +30,8 @@ class System{
 	string pathbibliotecarios = "Recursos/Binarios/bibliotecarios.bin";
 	string pathetiquetas = "Recursos/Binarios/Tags/Tags.bin";
 	
+	
+	string pathLibroNotFount ="Recursos/img/not_found.jpg";
 public:
 	System(){};
 	template<typename T>
@@ -54,6 +56,7 @@ public:
 	bool EscribirEnBin(vector<size_t> &IdARecuperar, vector<T>&elementos, string nombreArchivo);
 	string alumnos(){return pathalumnos;}
 	string libros(){return pathlibros;}
+	string noLibroImg(){return pathLibroNotFount;}
 	string reservar(){return pathreservar;}
 	string bibliotecarios(){return pathbibliotecarios;}
 	string etiquetas(){return pathetiquetas;}
@@ -178,7 +181,7 @@ bool System::EscribirEnBin(vector<size_t> &IdARecuperar, vector<T>& elementos, s
 	{
 		archi.seekp(IdARecuperar[i] * sizeof(T)); 
 		archi.write(reinterpret_cast<const char *>(&elementos[i]), sizeof(T));
-		cout<<endl<<"Existencia guardada: "<<elementos[i].Existencia()<<endl;
+		
 	} 
 	archi.close();  
 	return true;	
