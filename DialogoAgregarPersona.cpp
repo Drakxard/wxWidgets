@@ -30,11 +30,11 @@ void DialogoAgregarPersona::OnclikNuevoElemento( wxCommandEvent& event )  {
 	int EnteroDni = static_cast<int>(dni);
 	if(tipo==0){
 		Alumno aux(sistema->VerUltimo<Alumno>(path)+1,nombreCompleto.c_str(),dni);
-		sistema->AlUltimo<Alumno>(sistema->alumnos(),aux);
+		sistema->VerUltimo<Alumno>(sistema->alumnos());
 	}
 	if(tipo==1){
 		Bibliotecario aux(sistema->VerUltimo<Bibliotecario>(path)+1,nombreCompleto.c_str(),dni);
-		sistema->AlUltimo<Bibliotecario>(sistema->bibliotecarios(),aux);
+		sistema->VerUltimo<Bibliotecario>(sistema->bibliotecarios());
 	}
 	
 	EndModal(wxID_OK);
