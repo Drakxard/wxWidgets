@@ -44,7 +44,7 @@ path=Funcionalidades\Bloques\Bloques.cpp
 cursor=43:21
 [source]
 path=Funcionalidades\bibliotecario\bibliotecario.cpp
-cursor=106:9
+cursor=82:2
 [source]
 path=VentanaParaBibliotecario.cpp
 cursor=44:2
@@ -65,7 +65,7 @@ path=DialogoHistorial.cpp
 cursor=0:0
 [source]
 path=DialogoPrestamo.cpp
-cursor=62:1
+cursor=41:1
 [source]
 path=VentanaCrearCuenta.cpp
 cursor=30:2
@@ -74,7 +74,7 @@ path=VentanaLogin.cpp
 cursor=47:0
 [source]
 path=VentanaParaAlumno.cpp
-cursor=167:2
+cursor=335:0
 [source]
 path=VentanaPrincipal.cpp
 cursor=0:0
@@ -92,7 +92,7 @@ path=ProyCrearBaseCuenta.cpp
 cursor=7:0
 [source]
 path=DialogoAgregar.cpp
-cursor=21:17
+cursor=46:0
 [source]
 path=DialogoAgregarPersona.cpp
 cursor=46:0
@@ -157,7 +157,7 @@ path=Funcionalidades\login\login.h
 cursor=0:0
 [header]
 path=Funcionalidades\system\system.h
-cursor=33:9
+cursor=36:0
 [header]
 path=Funcionalidades\alumno\alumno.h
 cursor=8:7
@@ -166,10 +166,10 @@ path=Dialogo_Eliminar.h
 cursor=2:20
 [header]
 path=DialogoHistorial.h
-cursor=2:30
+cursor=8:1
 [header]
 path=DialogoPrestamo.h
-cursor=25:6
+cursor=17:21
 [header]
 path=VentanaCrearCuenta.h
 cursor=4:0
@@ -244,6 +244,9 @@ path=wxfb_Reservar.fbp
 cursor=0:0
 [other]
 path=wxfb_prestamo.fbp
+cursor=0:0
+[other]
+path=wxfb_Historial.fbp
 cursor=0:0
 [config]
 name=Linux_Debug
