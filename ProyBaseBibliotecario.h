@@ -57,6 +57,7 @@ class MyFrameInicioCorrectoBibliotecario : public wxFrame
 		wxButton* m_button131;
 		wxButton* m_button21;
 		wxButton* m_button201;
+		wxButton* m_button16;
 		wxButton* m_button141;
 		wxPanel* m_panel_DetallesEtiquetas;
 		wxListCtrl* m_list_Alumnos11;

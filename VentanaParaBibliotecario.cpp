@@ -30,7 +30,7 @@ VentanaParaBibliotecario::VentanaParaBibliotecario(wxWindow *parent) : MyFrameIn
 	m_list_libros->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
 	m_list_libros->InsertColumn(1, "Nombre", wxLIST_FORMAT_LEFT, 200);
 	m_list_libros->InsertColumn(2, "Estado", wxLIST_FORMAT_LEFT, 100);
-	m_list_libros->InsertColumn(3, "Autores", wxLIST_FORMAT_LEFT, 100);
+	m_list_libros->InsertColumn(3, "Autor", wxLIST_FORMAT_LEFT, 100);
 	
 	m_list_libros->SetSingleStyle(wxLC_HRULES); 
 	m_list_libros->SetSingleStyle(wxLC_VRULES); 
@@ -147,12 +147,22 @@ void VentanaParaBibliotecario::OnButtonClickPrestarLibro( wxCommandEvent& event 
 	}
 }
 
+void VentanaParaBibliotecario::OnButtonClickHistorialLibro( wxCommandEvent& event )  {
+	long id = m_list_libros->GetNextItem(-1,wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	if(id != -1){
+		if(id >= 0 and id <= vLibro.size()){
+			
+			DialogoHistorial *nueva= new DialogoHistorial(this,vLibro[id]);
+			nueva->ShowModal();
+		}
+	}
+}
 void VentanaParaBibliotecario::OnButtonClickHistorialAlumno( wxCommandEvent& event )  {
-	long id = m_list_Alumnos->GetNextItem(-1,wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	long id = m_list_libros->GetNextItem(-1,wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 	if(id != -1){
 		if(id >= 0 and id <= vAlumno.size()){
 			
-			DialogoHistorial *nueva= new DialogoHistorial(this,vAlumno[id]);
+			DialogoHistorial *nueva= new DialogoHistorial(this,vLibro[id]);
 			nueva->ShowModal();
 		}
 	}
@@ -234,11 +244,11 @@ void VentanaParaBibliotecario::MuestraListaResultadoLibro(wxListCtrl* lista){
 			lista-> SetItem(index, 1,vResultadoLibro[i].VerNombre() );
 			
 			///Cargamos Autor
-			lista-> SetItem(index,2, wxString::Format("%d", vLibro[i].VerAutor()) );		
+			lista-> SetItem(index,2, wxString::Format("%d", vLibro[i].EstadoDisponibilidad()) );		
 			
 			///Cargamos disponibilidad
 			
-			lista-> SetItem(index,3, wxString::Format("%d", vLibro[i].EstadoDisponibilidad()) );	
+			lista-> SetItem(index,3, ("%d", vLibro[i].VerAutor()) );	
 		}
 	}
 	///Mostrar todo de golpe

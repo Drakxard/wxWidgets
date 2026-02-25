@@ -125,6 +125,9 @@ MyFrameInicioCorrectoBibliotecario::MyFrameInicioCorrectoBibliotecario( wxWindow
 	m_button201 = new wxButton( m_panel_DetallesLibros, wxID_ANY, wxT("Lectores"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer451->Add( m_button201, 0, wxALL, 5 );
 
+	m_button16 = new wxButton( m_panel_DetallesLibros, wxID_ANY, wxT("Historial"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer451->Add( m_button16, 0, wxALL, 5 );
+
 	m_button141 = new wxButton( m_panel_DetallesLibros, wxID_ANY, wxT("Eliminar"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer451->Add( m_button141, 0, wxALL, 5 );
 
