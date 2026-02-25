@@ -16,8 +16,8 @@ DialogoPrestamo::DialogoPrestamo(wxWindow *parent, Alumno alumnoSeleccionado)
 		m_gridHistorial->AppendCols(5);
 		m_gridHistorial->SetColLabelValue(0, "ID");
 		m_gridHistorial->SetColLabelValue(1, "Nombre Libro");
-		m_gridHistorial->SetColLabelValue(2, "Fecha Prï¿½stamo");
-		m_gridHistorial->SetColLabelValue(3, "Fecha Devoluciï¿½n");
+		m_gridHistorial->SetColLabelValue(2, "Fecha Préstamo");
+		m_gridHistorial->SetColLabelValue(3, "Fecha Devolución");
 		m_gridHistorial->SetColLabelValue(4, "Estado");
 		
 		m_gridHistorial->SetColSize(1, 200);
@@ -29,7 +29,7 @@ DialogoPrestamo::DialogoPrestamo(wxWindow *parent, Alumno alumnoSeleccionado)
 	// 3. Configurar Lista de Resultados
 	if (m_listaResultadosLibros->GetColumnCount() == 0) {
 		m_listaResultadosLibros->AppendTextColumn("ID", wxDATAVIEW_CELL_INERT, 50);
-		m_listaResultadosLibros->AppendTextColumn("Tï¿½tulo", wxDATAVIEW_CELL_INERT, 250);
+		m_listaResultadosLibros->AppendTextColumn("Título", wxDATAVIEW_CELL_INERT, 250);
 		m_listaResultadosLibros->AppendTextColumn("Disponible", wxDATAVIEW_CELL_INERT, 80);
 	}
 	
@@ -37,7 +37,7 @@ DialogoPrestamo::DialogoPrestamo(wxWindow *parent, Alumno alumnoSeleccionado)
 	m_btnConfirmar->Enable(false);
 	m_libroEsSeleccionado = false;
 	
-	// 5. VINCULACIï¿½N DE EVENTOS
+	// 5. VINCULACIÓN DE EVENTOS
 	m_txtBuscarLibro->Bind(wxEVT_TEXT, &DialogoPrestamo::OnBuscarLibro, this);
 	m_btnConfirmar->Bind(wxEVT_BUTTON, &DialogoPrestamo::OnConfirmarPrestamoClick, this);
 	m_listaResultadosLibros->Bind(wxEVT_DATAVIEW_SELECTION_CHANGED, &DialogoPrestamo::OnListaLibrosSelectionChanged, this);
@@ -60,10 +60,10 @@ void DialogoPrestamo::CargarHistorialEnGrilla() {
 	System sistema;
 	Historial historial;
 	int filaActual = 0;
-	std::vector<size_t> librosActivosIDs; // Para evitar duplicados en la visualizaciï¿½n
+	std::vector<size_t> librosActivosIDs; // Para evitar duplicados en la visualización
 	
 	// ---------------------------------------------------------
-	// FASE 1: CARGAR PRï¿½STAMOS ACTIVOS (Aï¿½n no devueltos)
+	// FASE 1: CARGAR PRÉSTAMOS ACTIVOS (Aún no devueltos)
 	// ---------------------------------------------------------
 	try {
 		std::vector<Libros_en_Prestamo> activos = sistema.VerContenido<Libros_en_Prestamo>("Recursos/Binarios/LibrosPrestamosActivos.bin", true);
@@ -85,14 +85,14 @@ void DialogoPrestamo::CargarHistorialEnGrilla() {
 				
 				wxString fechaDev = wxString::Format("%02d/%02d/%04d", prestamo.dia_Devolucion, prestamo.mes_Devolucion, prestamo.anio_Devolucion);
 				
-				// AGREGA ESTA Lï¿½NEA:
+				// AGREGA ESTA LÍNEA:
 				m_gridHistorial->SetCellValue(filaActual, 0, wxString::Format("%d", (int)prestamo.id_Libro));
 				m_gridHistorial->SetCellValue(filaActual, 1, nombreLibro);
 				m_gridHistorial->SetCellValue(filaActual, 2, "-"); // No hay fecha inicio en el struct
 				m_gridHistorial->SetCellValue(filaActual, 3, fechaDev);
-				m_gridHistorial->SetCellValue(filaActual, 4, "EN PRï¿½STAMO");
+				m_gridHistorial->SetCellValue(filaActual, 4, "EN PRÉSTAMO");
 				
-				// Pintar la fila de amarillo claro para resaltar que estï¿½ activo
+				// Pintar la fila de amarillo claro para resaltar que está activo
 				for (int c = 0; c < 5; c++) {
 					m_gridHistorial->SetCellBackgroundColour(filaActual, c, wxColour(255, 255, 200)); 
 				}
@@ -111,7 +111,7 @@ void DialogoPrestamo::CargarHistorialEnGrilla() {
 		std::vector<Registro> registros = historial.Mostrar_Historial(alumnoSeleccionado.VerID());
 		
 		for (const auto& reg : registros) {
-			// Verificamos si este registro ya se mostrï¿½ como activo para no duplicarlo
+			// Verificamos si este registro ya se mostró como activo para no duplicarlo
 			bool esActivo = false;
 			for (size_t idActivo : librosActivosIDs) {
 				if (reg.id_libro == idActivo) {
@@ -119,13 +119,13 @@ void DialogoPrestamo::CargarHistorialEnGrilla() {
 					break;
 				}
 			}
-			if (esActivo) continue; // Si estï¿½ activo, saltamos al siguiente
+			if (esActivo) continue; // Si está activo, saltamos al siguiente
 			
-			// Si no estï¿½ activo, lo agregamos como historial pasado
+			// Si no está activo, lo agregamos como historial pasado
 			m_gridHistorial->AppendRows(1);
 			wxString fecha = wxString::Format("%02d/%02d/%04d", reg.dia, reg.mes, reg.anio);
 			
-			// AGREGA ESTA Lï¿½NEA:
+			// AGREGA ESTA LÍNEA:
 			m_gridHistorial->SetCellValue(filaActual, 0, wxString::Format("%d", (int)reg.id_libro));
 			m_gridHistorial->SetCellValue(filaActual, 1, wxString(reg.nombre_libro));
 			m_gridHistorial->SetCellValue(filaActual, 2, "-"); 
@@ -167,23 +167,34 @@ void DialogoPrestamo::OnBuscarLibro(wxCommandEvent& event) {
 			m_librosEncontrados.push_back(libro);
 			
 			wxVector<wxVariant> fila;
-			// AGREGA ESTA Lï¿½NEA:
+			// AGREGA ESTA LÍNEA:
 			fila.push_back(wxVariant(wxString::Format("%d", (int)libro.VerID())));
 			fila.push_back(wxVariant(wxString(libro.VerNombre())));
-			fila.push_back(wxVariant(libro.EstadoDisponibilidad() ? "Sï¿½" : "No"));
+			fila.push_back(wxVariant(libro.EstadoDisponibilidad() ? "Sí" : "No"));
 			
 			m_listaResultadosLibros->AppendItem(fila);
 		}
 	}
 }
 
-void DialogoPrestamo::OnConfirmarPrestamoClick(wxCommandEvent& event) {
-	
-	int seleccionIndex = m_listaResultadosLibros->GetSelectedRow();
-	
-	if (seleccionIndex  == wxNOT_FOUND) {
-		wxMessageBox("Por favor selecciona un libro de la lista.", "Aviso");
-		return;
+void DialogoPrestamo::OnListaLibrosSelectionChanged(wxDataViewEvent& event) {
+	if (m_listaResultadosLibros->GetSelectedRow() != wxNOT_FOUND) {
+		m_libroEsSeleccionado = true;
+	} else {
+		m_libroEsSeleccionado = false;
+	}
+	ValidarPrestamo();
+}
+
+void DialogoPrestamo::OnFechaDevolucionChanged(wxDateEvent& event) {
+	ValidarPrestamo();
+	event.Skip();
+}
+
+void DialogoPrestamo::ValidarPrestamo() {
+	bool fechaValida = false;
+	if (m_datePickerDevolucion) {
+		fechaValida = m_datePickerDevolucion->GetValue().IsValid();
 	}
 	
 	if (m_libroEsSeleccionado && fechaValida) {
@@ -191,7 +202,6 @@ void DialogoPrestamo::OnConfirmarPrestamoClick(wxCommandEvent& event) {
 	} else {
 		m_btnConfirmar->Enable(false);
 	}
-	
 }
 
 void DialogoPrestamo::OnConfirmarPrestamoClick(wxCommandEvent& event) {
@@ -210,11 +220,11 @@ void DialogoPrestamo::OnConfirmarPrestamoClick(wxCommandEvent& event) {
 	Libro libroAPrestar = m_librosEncontrados[0];
 //	
 	if (!libroAPrestar.EstadoDisponibilidad()) {
-		wxMessageBox("El libro ya estï¿½ prestado o no disponible.", "Error", wxICON_ERROR);
+		wxMessageBox("El libro ya está prestado o no disponible.", "Error", wxICON_ERROR);
 		return;
 	}
 //	
-//	 SOLUCIï¿½N 1: Quitamos el "wxString()" de adentro para que el %s no rompa el programa
+//	 SOLUCIÓN 1: Quitamos el "wxString()" de adentro para que el %s no rompa el programa
 	
 	
 	
@@ -243,7 +253,7 @@ void DialogoPrestamo::OnConfirmarPrestamoClick(wxCommandEvent& event) {
 			
 			std::vector<Libros_en_Prestamo> activosPrevios;
 			 
-			activosPrevios = sistema.VerContenido<Libros_en_Prestamo>("Recursos/Binarios/LibrosPrestamosActivos.bin", true); // Ignoramos si el archivo aï¿½n no existe
+			activosPrevios = sistema.VerContenido<Libros_en_Prestamo>("Recursos/Binarios/LibrosPrestamosActivos.bin", true); // Ignoramos si el archivo aún no existe
 			
 			nuevoPrestamo.id_Prestamo = activosPrevios.size() + 1;
 			sistema.AlUltimo("Recursos/Binarios/LibrosPrestamosActivos.bin", nuevoPrestamo);
@@ -258,7 +268,7 @@ void DialogoPrestamo::OnConfirmarPrestamoClick(wxCommandEvent& event) {
 			}
 			sistema.Guardar(sistema.libros(), todos, true); // Sobreescribimos con el nuevo estado
 			
-			wxMessageBox("Prï¿½stamo registrado exitosamente.");
+			wxMessageBox("Préstamo registrado exitosamente.");
 			EndModal(wxID_OK); 
 			
 

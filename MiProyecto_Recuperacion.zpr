@@ -68,7 +68,7 @@ path=DialogoHistorial.cpp
 cursor=0:0
 [source]
 path=DialogoPrestamo.cpp
-cursor=12:1
+cursor=188:41
 open=true
 [source]
 path=VentanaCrearCuenta.cpp
