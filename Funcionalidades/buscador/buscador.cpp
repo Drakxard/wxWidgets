@@ -65,23 +65,7 @@ vector<size_t> Buscador::OrdenarAscendente(vector<size_t>v){
 	return v;
 	
 }
-template <typename T>
-vector<T>Buscador:: Relacionados(string palabraBuscada, vector<T>&v){
-	vector<T> aux;
-	auto encontrado = v.begin();
-	size_t pos=0;
-	while(encontrado!=v.end()){
-		encontrado = find_if(v.begin()+pos,v.end(),[palabraBuscada](const T& a){
-			
-			return a.VerNombre() == palabraBuscada;
-		});
-		if(encontrado== v.end()){break;}
-		
-		aux.push_back(*encontrado);//Devuelve posiciones
-		pos=(encontrado-v.begin())+1;
-	}
-	return aux;
-}
+
 	
 	
 
@@ -123,9 +107,7 @@ vector<T>Buscador:: Relacionados(string palabraBuscada, vector<T>&v){
 		return resultado;
 }	
 	
-template vector<Alumno>Buscador:: Relacionados(string palabraBuscada, vector<Alumno>&v);
-template vector<Libro>Buscador:: Relacionados(string palabraBuscada, vector<Libro>&v);
-template vector<Bibliotecario>Buscador:: Relacionados(string palabraBuscada, vector<Bibliotecario>&v);
+
 
 	
 	

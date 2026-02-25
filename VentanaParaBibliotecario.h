@@ -19,7 +19,7 @@ private:
 	
 	vector<Bibliotecario>vResultadoBibliotecario;
 	vector<Alumno>vResultadoAlumno;
-//	vector<Libro>vResultadoLibro;
+	vector<Libro>vResultadoLibro;
 	
 protected:
 	void onclickbutton_eliminar( wxCommandEvent& event )  override;
@@ -29,6 +29,7 @@ protected:
 	void OnRadioButton_CambiaPestana(wxCommandEvent& event);
 	void CargarListaAlumnos(wxListCtrl* lista);
 	void CargarListaBibliotecario(wxListCtrl* lista);
+	void CargarListaLibros(wxListCtrl* lista);
 	void MuestraListaResultadoBibliotecario(wxListCtrl* lista);
 	void MuestraListaResultadoAlumno(wxListCtrl* lista);
 	void MuestraListaResultadoLibro(wxListCtrl* lista);

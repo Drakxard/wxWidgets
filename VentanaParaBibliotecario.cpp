@@ -26,7 +26,14 @@ VentanaParaBibliotecario::VentanaParaBibliotecario(wxWindow *parent) : MyFrameIn
 	
 	m_list_Bibliotecarios->SetSingleStyle(wxLC_HRULES); // Líneas horizontales
 	m_list_Bibliotecarios->SetSingleStyle(wxLC_VRULES); // Líneas verticaless
-		
+	/// Libros 
+	m_list_libros->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
+	m_list_libros->InsertColumn(1, "Nombre", wxLIST_FORMAT_LEFT, 200);
+	m_list_libros->InsertColumn(2, "Estado", wxLIST_FORMAT_LEFT, 100);
+	m_list_libros->InsertColumn(3, "Autores", wxLIST_FORMAT_LEFT, 100);
+	
+	m_list_libros->SetSingleStyle(wxLC_HRULES); 
+	m_list_libros->SetSingleStyle(wxLC_VRULES); 
 }
 
 
@@ -49,6 +56,31 @@ void VentanaParaBibliotecario::CargarListaAlumnos(wxListCtrl* lista){
 		
 		///CargamosDni
 		lista-> SetItem(index,2, wxString::Format("%d", vAlumno[i].VerDNI()) );		
+	}
+	///Mostrar todo de golpe
+	lista->Thaw();	
+}
+void VentanaParaBibliotecario::CargarListaLibros(wxListCtrl* lista){
+	//Limpiamos la tabla
+	lista->DeleteAllItems();
+	
+	//
+	lista->Freeze();
+	vLibro = sistema->VerContenido<Libro>(sistema->libros(),true);
+	for(int i=0;i<vLibro.size();i++) { 
+		///Llenamos con ID
+		long index = lista -> InsertItem(i, wxString::Format("%d",vLibro[i].VerID()));
+		
+		///CargarNombre Del Libro
+	
+		lista-> SetItem(index, 1, vLibro[i].VerNombre() );
+		
+		///Cargamos Autor
+		lista-> SetItem(index,2, wxString::Format("%d", vLibro[i].VerAutor()) );		
+		
+		///Cargamos disponibilidad
+		
+		lista-> SetItem(index,3, wxString::Format("%d", vLibro[i].EstadoDisponibilidad()) );		
 	}
 	///Mostrar todo de golpe
 	lista->Thaw();	
@@ -82,9 +114,11 @@ void VentanaParaBibliotecario::CargarListaBibliotecario(wxListCtrl* lista){
 void VentanaParaBibliotecario::OnRadioButton_CambiaPestana(wxCommandEvent& event){
 	if(m_radio_Libros->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(0);
+		
 	}
 	if(m_radio_InfoLibros->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(1);
+		CargarListaLibros(m_list_libros);
 	}
 	if(m_radio_Etiquetas->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(2);
@@ -183,29 +217,33 @@ void VentanaParaBibliotecario::MuestraListaResultadoAlumno(wxListCtrl* lista){
 
 
 void VentanaParaBibliotecario::MuestraListaResultadoLibro(wxListCtrl* lista){
-//	//Limpiamos la tabla
-//	lista->DeleteAllItems();
-//	lista->Freeze();
-//	if(vResultadoLibro.size()==0){
-//		wxMessageBox("No hay nadie con ese nombre","Sin coincidencias",wxOK|wxICON_INFORMATION);
-//		return;
-//		
-//	}else{
-//		for(int i=0;i<vResultadoLibro.size();i++) { 
-//			///Llenamos con ID
-//			long index = lista -> InsertItem(i, wxString::Format("%d",vResultadoLibro[i].VerID()));
-//			
-//			///CargarNombreDelAlumno
-//			
-//			lista-> SetItem(index, 1,vResultadoLibro[i].VerNombre() );
-//			
-//			///CargamosDni
-//			lista-> SetItem(index,2, wxString::Format("%d",vResultadoLibro[i].VerDNI()) );		
-//		}
-//	}
-//	///Mostrar todo de golpe
-//	lista->Thaw();
-//	
+	//Limpiamos la tabla
+	lista->DeleteAllItems();
+	lista->Freeze();
+	if(vResultadoLibro.size()==0){
+		wxMessageBox("No hay ningun libro con ese nombre","Sin coincidencias",wxOK|wxICON_INFORMATION);
+		return;
+		
+	}else{
+		for(int i=0;i<vResultadoLibro.size();i++) { 
+			///Llenamos con ID
+			long index = lista -> InsertItem(i, wxString::Format("%d",vResultadoLibro[i].VerID()));
+			
+			///CargarNombreDelLibro
+			
+			lista-> SetItem(index, 1,vResultadoLibro[i].VerNombre() );
+			
+			///Cargamos Autor
+			lista-> SetItem(index,2, wxString::Format("%d", vLibro[i].VerAutor()) );		
+			
+			///Cargamos disponibilidad
+			
+			lista-> SetItem(index,3, wxString::Format("%d", vLibro[i].EstadoDisponibilidad()) );	
+		}
+	}
+	///Mostrar todo de golpe
+	lista->Thaw();
+	
 }
 
 
@@ -213,14 +251,14 @@ void VentanaParaBibliotecario::MuestraListaResultadoLibro(wxListCtrl* lista){
 void VentanaParaBibliotecario::Onclick_Boton_Buscar_Frase( wxCommandEvent& event )  {
 	string palabra;
 	if(m_radio_Libros->GetValue()){
-//		string palabra;
-//		palabra=mtext_Buscador_frase->GetValue().ToStdString();
-//		vResultadoLibro = navega.Relacionados<Alumno>(palabra,vLibro );
-//		MuestraListaResultadoLibro(m_list_Libro);
 		
 	}
 	else if(m_radio_InfoLibros->GetValue()){
-		m_Bibliotecario_frameActual->SetSelection(1);
+		string palabra;
+		palabra=mtext_Buscador_frase->GetValue().ToStdString();
+		vResultadoLibro = navega.Relacionados<Libro>(palabra,vLibro );
+		MuestraListaResultadoLibro(m_list_libros);
+		
 	}
 	else if(m_radio_Etiquetas->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(2);

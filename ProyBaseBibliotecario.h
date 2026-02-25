@@ -53,7 +53,7 @@ class MyFrameInicioCorrectoBibliotecario : public wxFrame
 		wxStaticText* m_staticText18;
 		wxButton* m_button20;
 		wxPanel* m_panel_DetallesLibros;
-		wxListCtrl* m_list_Alumnos1;
+		wxListCtrl* m_list_libros;
 		wxButton* m_button131;
 		wxButton* m_button21;
 		wxButton* m_button201;
@@ -67,6 +67,8 @@ class MyFrameInicioCorrectoBibliotecario : public wxFrame
 		wxListCtrl* m_list_Alumnos;
 		wxButton* m_button13;
 		wxButton* m_button14;
+		wxButton* m_button142;
+		wxButton* m_button15;
 		wxPanel* m_panel_Bibliotecarios;
 		wxListCtrl* m_list_Bibliotecarios;
 		wxButton* button_eliminar;

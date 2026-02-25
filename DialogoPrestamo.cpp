@@ -78,9 +78,10 @@ void DialogoPrestamo::OnBuscarLibro(wxCommandEvent& event) {
 }
 
 void DialogoPrestamo::OnConfirmarPrestamoClick(wxCommandEvent& event) {
+	
 	int seleccionIndex = m_listaResultadosLibros->GetSelectedRow();
 	
-	if (seleccionIndex == wxNOT_FOUND) {
+	if (seleccionIndex  == wxNOT_FOUND) {
 		wxMessageBox("Por favor selecciona un libro de la lista.", "Aviso");
 		return;
 	}
@@ -91,4 +92,5 @@ void DialogoPrestamo::OnConfirmarPrestamoClick(wxCommandEvent& event) {
 	if (wxMessageBox(msj, "Confirmar", wxYES_NO) == wxYES) {
 		wxMessageBox("¡El código funciona! Falta guardar en binario.");
 	}
+	
 }
