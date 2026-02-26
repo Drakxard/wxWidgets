@@ -180,29 +180,25 @@ void VentanaParaAlumno::CargarListaBibliotecario(wxListCtrl* lista){
 	lista->Thaw();
 }
 void VentanaParaAlumno::CargarListaInfoLibros(wxListCtrl* lista){
-	//Limpiamos la tabla
 	lista->DeleteAllItems();
-	
-	//
 	lista->Freeze();
+	
 	vLibros = sistema->VerContenido<Libro>(sistema->libros(),true);
 	for(int i=0;i<vLibros.size();i++) { 
-		///Llenamos con ID
-		long index = lista -> InsertItem(i, wxString::Format("%d",vLibros[i].VerID()));
 		
-		///CargarNombre Del Libro
+		/// 1. Llenamos con ID (USAR %zu PARA size_t)
+		long index = lista->InsertItem(i, wxString::Format("%zu", vLibros[i].VerID())); 
 		
-		lista-> SetItem(index, 1, vLibros[i].VerNombre() );
+		/// 2. Cargar Nombre Del Libro 
+		lista->SetItem(index, 1, vLibros[i].VerNombre()); 
 		
-		///Cargamos Autor
-		lista-> SetItem(index,2, wxString::Format("%d", vLibros[i].VerAutor()) );		
+		/// 3. Cargamos Autor (SIN FORMATO, directo como texto)
+		lista->SetItem(index, 2, vLibros[i].VerAutor());         
 		
-		///Cargamos disponibilidad
-		
-		lista-> SetItem(index,3, wxString::Format("%d", vLibros[i].EstadoDisponibilidad()) );
-		
+		/// 4. Cargamos disponibilidad (Forzamos a int por si devuelve bool u otro tipo)
+		lista->SetItem(index, 3, wxString::Format("%d", (int)vLibros[i].EstadoDisponibilidad()));
 	}
-	///Mostrar todo de golpe
+	
 	lista->Thaw();
 }
 void VentanaParaAlumno::CargarListaReservar(wxListCtrl* lista){

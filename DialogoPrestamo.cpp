@@ -9,7 +9,7 @@ DialogoPrestamo::DialogoPrestamo(wxWindow *parent, Alumno alumnoSeleccionado)
 {
 	// 1. Mostrar datos del alumno
 	m_staticPrestar_NombreAlumno_Valor->SetLabel(wxString(this->alumnoSeleccionado.VerNombre()));
-	m_staticPrestar_DniAlumno_Valor->SetLabel(wxString::Format("%d", this->alumnoSeleccionado.VerDNI()));
+	m_staticPrestar_DniAlumno_Valor->SetLabel(wxString::Format("%d", (int)this->alumnoSeleccionado.VerDNI()));
 	
 	// 2. Configurar Grilla (m_gridHistorial)
 	if(m_gridHistorial->GetNumberCols() == 0) {
@@ -83,7 +83,7 @@ void DialogoPrestamo::CargarHistorialEnGrilla() {
 					}
 				}
 				
-				wxString fechaDev = wxString::Format("%02d/%02d/%04d", prestamo.dia_Devolucion, prestamo.mes_Devolucion, prestamo.anio_Devolucion);
+				wxString fechaDev = wxString::Format("%02d/%02d/%04d", (int)prestamo.dia_Devolucion, (int)prestamo.mes_Devolucion, (int)prestamo.anio_Devolucion);
 				
 				// AGREGA ESTA LÍNEA:
 				m_gridHistorial->SetCellValue(filaActual, 0, wxString::Format("%d", (int)prestamo.id_Libro));
@@ -123,7 +123,7 @@ void DialogoPrestamo::CargarHistorialEnGrilla() {
 			
 			// Si no está activo, lo agregamos como historial pasado
 			m_gridHistorial->AppendRows(1);
-			wxString fecha = wxString::Format("%02d/%02d/%04d", reg.dia, reg.mes, reg.anio);
+			wxString fecha = wxString::Format("%02d/%02d/%04d", (int)reg.dia, (int)reg.mes, (int)reg.anio);
 			
 			// AGREGA ESTA LÍNEA:
 			m_gridHistorial->SetCellValue(filaActual, 0, wxString::Format("%d", (int)reg.id_libro));
