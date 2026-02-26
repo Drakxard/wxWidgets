@@ -20,20 +20,19 @@ void DialogoAgregar::OnButtonClickCerrar( wxCommandEvent& event )  {
 void DialogoAgregar::OnclikNuevoElemento( wxCommandEvent& event )  {
 	
 	string nombre = m_text_NuevoTag_Valor->GetValue().ToStdString();
-	string autor = m_text_NuevoTag_Valor->GetValue().ToStdString();
 	///0 -> Libro
 	///1 -> etiquetas
 	if(tipo==0){
-	
-		Libro aux(sistema->VerUltimo<Libro>(path)+1,nombre.c_str(),autor.c_str());
+		
+		Libro aux(sistema->VerUltimo<Libro>(path)+1,nombre.c_str());
+		///agregar path de imagen
+		aux.CambiarPath(sistema->noLibroImg().c_str());
 		sistema->AlUltimo<Libro>(sistema->libros(),aux);
 		
 	}
 	if(tipo==1){
 		Tags aux;
 		strncpy(aux.NombreTag,nombre.c_str(),49);
-		aux.NombreTag[50]='\0';
-		strncpy(aux.NombreTag,autor.c_str(),49);
 		aux.NombreTag[50]='\0';
 		aux.Existe();
 		aux.IdTag=sistema->VerUltimo<Tags>(path)+1;

@@ -79,6 +79,7 @@ class MyFrameInicioCorrectoAlumno : public wxFrame
 		virtual void Onclick_Boton_Buscar_Frase( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRadioButton_CambiaPestana( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickAgregar( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonClickHistorialLibro( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickEliminar( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickPrestarLibro( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickHistorialAlumno( wxCommandEvent& event ) { event.Skip(); }

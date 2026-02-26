@@ -9,11 +9,13 @@ class Libro
 {
 	bool existe;
 	size_t id;
-	char nombre[50];char autor[50];
-	char path[100];
+	char nombre[50];
 	char descripcion[100];
+	char autores[100];
+	char path[100];
+	
 	int diasRestantes;
-	bool disponible; // Quitamos la inicializaci�n aqu� para hacerlo en el constructor
+	bool disponible; // Quitamos la inicializaci?n aqu? para hacerlo en el constructor
 	bool caduco;
 	
 public:
@@ -25,31 +27,35 @@ public:
 		existe= true;
 	};
 	
-	Libro(size_t id, const char* nombre,const char* autor)
+	Libro(size_t id, const char* nombre)
 	{
 		this->id = id;
 		strncpy(this->nombre, nombre, 49);
-		this->nombre[49] = '\0';
-		strncpy(this->autor, autor, 49);
 		this->nombre[49] = '\0';
 		this->disponible = true; // Por defecto disponible
 		this->caduco = false;
 		this->diasRestantes = 0;
 		existe = true;
+		
 	}
 	
 	size_t VerID() const;
 	const char* VerNombre() const;
 	void CambiarNombre(const char* NuevoNombre);
-	const char* VerAutor() const;
-	void CambiarNombreAutor(const char *NuevoNombre);
+	
 	const char* VerDescripcion() const;
 	void CambiarDescripcion(const char* NuevoNombre);
+	
+	const char* VerAutores() const;
+	void CambiarAutores(const char* NuevoNombre);
+	
+	
 	const char* VerPath() const;
 	void CambiarPath(const char* NuevoNombre);
-	// M�todos corregidos
+	
+	// M?todos corregidos
 	bool EstadoDisponibilidad() const; 
-	void SetDisponible(bool d); // Nuevo m�todo necesario para PrestarLibros
+	void SetDisponible(bool d); // Nuevo m?todo necesario para PrestarLibros
 	
 	void CambiarEstado(bool estado); // 1 expirado, 0 no expirado
 	void RestarDia(); 
@@ -57,7 +63,7 @@ public:
 	void Existe(){existe = true;}
 	void NoExiste(){existe = false;}
 	bool Existencia(){return existe;}
-		
+	
 	bool operator==(const Libro& otro) const;
 };
 #endif

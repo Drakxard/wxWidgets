@@ -76,7 +76,7 @@ void VentanaParaBibliotecario::CargarListaLibros(wxListCtrl* lista){
 		lista-> SetItem(index, 1, vLibro[i].VerNombre() );
 		
 		///Cargamos Autor
-		lista-> SetItem(index,2, wxString::Format("%d", vLibro[i].VerAutor()) );		
+		lista-> SetItem(index,2, wxString::Format("%d", vLibro[i].VerAutores()) );		
 		
 		///Cargamos disponibilidad
 		
@@ -248,7 +248,7 @@ void VentanaParaBibliotecario::MuestraListaResultadoLibro(wxListCtrl* lista){
 			
 			///Cargamos disponibilidad
 			
-			lista-> SetItem(index,3, ("%d", vLibro[i].VerAutor()) );	
+			lista-> SetItem(index,3, ("%d", vLibro[i].VerAutores()) );	
 		}
 	}
 	///Mostrar todo de golpe

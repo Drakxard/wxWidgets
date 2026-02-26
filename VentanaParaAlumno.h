@@ -5,26 +5,24 @@
 #include "Reservar.h"
 #include "Funcionalidades/Bloques/Bloques.h"
 #include "ProyBaseAlumno.h"
-#include "Funcionalidades/buscador/buscador.h"
-#include "Funcionalidades/system/system.h"
 class System;
 class Bibliotecario;
 
 class VentanaParaAlumno : public MyFrameInicioCorrectoAlumno {
 	
 private:
-	System *sistema; Buscador navega;
+	System *sistema;
 	Bibliotecario *admin;
 	Bloques allTags;
 	vector<Tags> tagsActuales;
 	vector<size_t> idTags;
 	vector<Alumno> vAlumno; 
 	vector<Bibliotecario> vBibliotecario;
-	vector<Libro>vLibros; vector<Libro>vResultadoLibro;
+	vector<Libro>vLibros;
 	vector<Reservar>vReservas;
 	
 protected:
-	void MostrarLibros(wxListCtrl* lista);
+	void MostrarLibros();
 	void OnLeftUpVerLibro( wxMouseEvent& event ) ;
 	void OnButtonClickAgregar( wxCommandEvent& event )  override;
 	void OnButtonClickEliminar( wxCommandEvent& event )  override;
@@ -33,6 +31,7 @@ protected:
 	void OnRadioButton_CambiaPestana( wxCommandEvent& event )  override;
 	void OnButtonClickPrestarLibro( wxCommandEvent& event )  override;
 	void OnButtonClickHistorialAlumno( wxCommandEvent& event )  override;
+	void OnButtonClickHistorialLibro( wxCommandEvent& event )  ;
 	
 	
 	void CargarListaInfoLibros(wxListCtrl* lista);

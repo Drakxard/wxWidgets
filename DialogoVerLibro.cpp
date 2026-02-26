@@ -5,7 +5,7 @@ DialogoVerLibro::DialogoVerLibro(wxWindow *parent, Libro& actual) : MyDialogVerL
 	/// 1. Asignar textos (ajusta los métodos Get a los de tu clase)
 	m_staticNombreLibro->SetLabel(actual.VerNombre());
 	m_staticText_DescripcionValor->SetLabel(actual.VerDescripcion());
-	m_staticAutorValor->SetLabel(actual.VerAutor());
+	m_staticAutorValor->SetLabel(actual.VerAutores());
 	
 	/// 2. Asignar imagen
 	wxImage img;
@@ -15,14 +15,15 @@ DialogoVerLibro::DialogoVerLibro(wxWindow *parent, Libro& actual) : MyDialogVerL
 	
 	/// 3. Crear botones dinámicos de tags (máximo 3)
 	/// Asegúrate de borrar los botones "Tags1" y "Tag2" de prueba en wxFormBuilder
-	std::vector<int> tags = {2, 5, 8}; // Tus 3 tags de prueba
-	int cantTags = tags.size();
+	int a = 2;
+	int *tags = &a; 
+	int cantTags = 3;
 	
 	for (int i = 0; i < cantTags; i++) {
-		// También es buena práctica convertirlo directamente con wxString::Format
-		wxString label = wxString::Format("%d", tags[i]);
-		wxButton* btnTag = new wxButton(this, wxID_ANY, label);
-		bSizerContendorTags->Add(btnTag, 0, wxALL, 5); 
+		wxButton* btnTag = new wxButton(this, wxID_ANY, std::to_string(tags[i]));
+		bSizerContendorTags->Add(btnTag, 0, wxALL, 5); /// bSizer28 es donde van los tags según tu imagen
+		
+		/// Vincular al evento común
 		btnTag->Bind(wxEVT_BUTTON, &DialogoVerLibro::OnTagClick, this);
 	}
 	
@@ -69,7 +70,7 @@ void DialogoVerLibro::OnclikButtonClickEdicion( wxCommandEvent& event )  {
 		
 		m_botonEditar->SetLabel("Editar");
 		actual.CambiarDescripcion(m_textCtrlEdicionDescipcion->GetValue().utf8_str());
-		actual.CambiarNombreAutor(m_textCtrlEdicionAutor->GetValue().utf8_str());
+		actual.CambiarAutores(m_textCtrlEdicionAutor->GetValue().utf8_str());
 		System sistema;
 		vector<size_t>ids={actual.VerID()};
 		vector<Libro>Lib ={actual};

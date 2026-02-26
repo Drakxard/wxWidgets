@@ -10,8 +10,6 @@
 #include "DialogoVerLibro.h"
 #include <wx/dcmemory.h>
 #include <wx/wrapsizer.h>
-#include "ProyBaseAlumno.h"
-#include "ProyBaseEditarLibro.h"
 using namespace std;
 
 VentanaParaAlumno::VentanaParaAlumno(wxWindow *parent) : MyFrameInicioCorrectoAlumno(parent) {
@@ -51,7 +49,7 @@ VentanaParaAlumno::VentanaParaAlumno(wxWindow *parent) : MyFrameInicioCorrectoAl
 	m_list_Bibliotecarios->InsertColumn(3, "Estado", wxLIST_FORMAT_LEFT, 100);
 	m_list_Bibliotecarios->SetSingleStyle(wxLC_HRULES); 
 	m_list_Bibliotecarios->SetSingleStyle(wxLC_VRULES); 
-
+	
 	m_panel_Bibliotecario_Libros->Bind(wxEVT_SIZE, [this](wxSizeEvent& evento) {
 		evento.Skip();
 		m_panel_Bibliotecario_Libros->Layout();
@@ -59,10 +57,10 @@ VentanaParaAlumno::VentanaParaAlumno(wxWindow *parent) : MyFrameInicioCorrectoAl
 			m_panel_Bibliotecario_Libros->SetVirtualSize(m_panel_Bibliotecario_Libros->GetSizer()->CalcMin());
 		}
 	});
-	
+	MostrarLibros();
 }
 
-void VentanaParaAlumno::MostrarLibros(wxListCtrl* lista){
+void VentanaParaAlumno::MostrarLibros(){
 	m_panel_Bibliotecario_Libros->DestroyChildren(); 
 	
 	vLibros = sistema->VerContenido<Libro>(sistema->libros(), true);
@@ -180,25 +178,30 @@ void VentanaParaAlumno::CargarListaBibliotecario(wxListCtrl* lista){
 	lista->Thaw();
 }
 void VentanaParaAlumno::CargarListaInfoLibros(wxListCtrl* lista){
+	//Limpiamos la tabla
 	lista->DeleteAllItems();
-	lista->Freeze();
 	
+	//
+	lista->Freeze();
 	vLibros = sistema->VerContenido<Libro>(sistema->libros(),true);
 	for(int i=0;i<vLibros.size();i++) { 
+		///Llenamos con ID (Casteado a int)
+		long index = lista->InsertItem(i, wxString::Format("%d", (int)vLibros[i].VerID()));
 		
-		/// 1. Llenamos con ID (USAR %zu PARA size_t)
-		long index = lista->InsertItem(i, wxString::Format("%zu", vLibros[i].VerID())); 
+		///CargarNombreDelAlumno
+		lista->SetItem(index, 1, vLibros[i].VerNombre() );
 		
-		/// 2. Cargar Nombre Del Libro 
-		lista->SetItem(index, 1, vLibros[i].VerNombre()); 
+		///Antes estadoDisponibibldad (Casteado a int)
+		lista->SetItem(index, 2, wxString::Format("%d", (int)vLibros[i].Existencia()) );		
 		
-		/// 3. Cargamos Autor (SIN FORMATO, directo como texto)
-		lista->SetItem(index, 2, vLibros[i].VerAutor());         
+		lista->SetItem(index, 3, vLibros[i].VerDescripcion() );
 		
-		/// 4. Cargamos disponibilidad (Forzamos a int por si devuelve bool u otro tipo)
-		lista->SetItem(index, 3, wxString::Format("%d", (int)vLibros[i].EstadoDisponibilidad()));
+		lista->SetItem(index, 4, vLibros[i].VerAutores() );
+		
+		///lista->SetItem(index, 5, vLibros[i].VerEtiquetas() );
+		
 	}
-	
+	///Mostrar todo de golpe
 	lista->Thaw();
 }
 void VentanaParaAlumno::CargarListaReservar(wxListCtrl* lista){
@@ -246,7 +249,7 @@ void VentanaParaAlumno::CargarListaEtiquetas(wxListCtrl* lista){
 
 void VentanaParaAlumno::OnRadioButton_CambiaPestana(wxCommandEvent& event){
 	if(m_radio_Libros->GetValue()){
-		
+		MostrarLibros();
 		m_Bibliotecario_frameActual->SetSelection(0);
 		
 	}
@@ -270,7 +273,7 @@ void VentanaParaAlumno::OnRadioButton_CambiaPestana(wxCommandEvent& event){
 		m_Bibliotecario_frameActual->SetSelection(5);
 		CargarListaBibliotecario(m_list_Bibliotecarios);
 	}
-
+	
 	this->Layout();  ///Actualizamos al frame actual
 }
 
@@ -287,6 +290,16 @@ void VentanaParaAlumno::OnButtonClickPrestarLibro( wxCommandEvent& event )  {
 	}
 }
 
+void VentanaParaAlumno::OnButtonClickHistorialLibro( wxCommandEvent& event )  {
+	long id = m_list_InfoLibros->GetNextItem(-1,wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	if(id != -1){
+		if(id >= 0 and id <= vLibros.size()){
+			
+			DialogoHistorial *nueva= new DialogoHistorial(this,vLibros[id]);
+			nueva->ShowModal();
+		}
+	}
+}
 void VentanaParaAlumno::OnButtonClickHistorialAlumno( wxCommandEvent& event )  {
 	long id = m_list_Alumnos->GetNextItem(-1,wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 	if(id != -1){
@@ -299,68 +312,11 @@ void VentanaParaAlumno::OnButtonClickHistorialAlumno( wxCommandEvent& event )  {
 }
 
 void VentanaParaAlumno::Onclick_Boton_Buscar_Frase( wxCommandEvent& event )  {
-	string palabra;
-	if(m_radio_Libros->GetValue()){
 	
-		
-	}
-	else if(m_radio_InfoLibros->GetValue()){
-		string palabra;
-		palabra=mtext_Buscador_frase->GetValue().ToStdString();
-		vResultadoLibro = navega.Relacionados<Libro>(palabra,vLibros );
-		MostrarLibros(m_list_InfoLibros);
-	}
-	else if(m_radio_Reservar->GetValue()){
-		m_Bibliotecario_frameActual->SetSelection(2);
-		CargarListaReservar(m_list_Reservas);
-	}
-	else if(m_radio_Etiquetas->GetValue()){
-		m_Bibliotecario_frameActual->SetSelection(2);
-	}
-	else if(m_radio_Alumnos->GetValue()){
-		
-//		palabra=mtext_Buscador_frase->GetValue().ToStdString();
-//		vResultadoAlumno = navega.Relacionados<Alumno>(palabra,vAlumno );
-//		MuestraListaResultadoAlumno(m_list_Alumnos);
-	}				
-	else if(m_radio_Bibliotecarios->GetValue()){
-		
-//		palabra=mtext_Buscador_frase->GetValue().ToStdString();
-//		vResultadoBibliotecario = navega.Relacionados<Bibliotecario>(palabra,vBibliotecario );
-//		MuestraListaResultadoBibliotecario(m_list_Bibliotecarios);
-		
-	}
-	this->Layout();
 }
 
 void VentanaParaAlumno::onclickbutton_eliminar( wxCommandEvent& event )  {
-	if(m_radio_Libros->GetValue()){
-		
-		m_Bibliotecario_frameActual->SetSelection(0);
-		
-	}
-	if(m_radio_InfoLibros->GetValue()){
-		m_Bibliotecario_frameActual->SetSelection(1);
-		CargarListaInfoLibros(m_list_InfoLibros);
-	}
-	if(m_radio_Reservar->GetValue()){
-		m_Bibliotecario_frameActual->SetSelection(2);
-		CargarListaReservar(m_list_Reservas);
-	}
-	if(m_radio_Etiquetas->GetValue()){
-		m_Bibliotecario_frameActual->SetSelection(3);
-		CargarListaEtiquetas(m_list_Etiquetas);
-	}
-	else if(m_radio_Alumnos->GetValue()){
-		m_Bibliotecario_frameActual->SetSelection(4);
-		CargarListaAlumnos(m_list_Alumnos);
-	}				
-	else if(m_radio_Bibliotecarios->GetValue()){
-		m_Bibliotecario_frameActual->SetSelection(5);
-		CargarListaBibliotecario(m_list_Bibliotecarios);
-	}
-	
-	this->Layout();  ///Actualizamos al frame actual
+	event.Skip();
 }
 
 void VentanaParaAlumno::OnButtonClickAgregar( wxCommandEvent& event )  {
