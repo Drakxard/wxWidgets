@@ -41,7 +41,8 @@ DialogoPrestamo::DialogoPrestamo(wxWindow *parent, Alumno alumnoSeleccionado)
 	m_txtBuscarLibro->Bind(wxEVT_TEXT, &DialogoPrestamo::OnBuscarLibro, this);
 	m_btnConfirmar->Bind(wxEVT_BUTTON, &DialogoPrestamo::OnConfirmarPrestamoClick, this);
 	m_listaResultadosLibros->Bind(wxEVT_DATAVIEW_SELECTION_CHANGED, &DialogoPrestamo::OnListaLibrosSelectionChanged, this);
-	
+	m_listaResultadosLibros->SetMinSize(wxSize(-1, 120));
+	this->Layout();
 	if (m_datePickerDevolucion) {
 		m_datePickerDevolucion->Bind(wxEVT_DATE_CHANGED, &DialogoPrestamo::OnFechaDevolucionChanged, this);
 	}
