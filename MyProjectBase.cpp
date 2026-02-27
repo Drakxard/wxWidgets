@@ -5,11 +5,11 @@
 // PLEASE DO *NOT* EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
 
-#include "ProyBasePrestamo.h"
+#include "MyProjectBase.h"
 
 ///////////////////////////////////////////////////////////////////////////
 
-MyDialogPrestamo::MyDialogPrestamo( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+MyDialogDevolucion::MyDialogDevolucion( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
@@ -22,7 +22,7 @@ MyDialogPrestamo::MyDialogPrestamo( wxWindow* parent, wxWindowID id, const wxStr
 	wxBoxSizer* bSizer35;
 	bSizer35 = new wxBoxSizer( wxHORIZONTAL );
 
-	m_radioBtn7 = new wxRadioButton( this, wxID_ANY, wxT("Sancionado"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_radioBtn7 = new wxRadioButton( this, wxID_ANY, _("Sancionado"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer35->Add( m_radioBtn7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
@@ -31,7 +31,7 @@ MyDialogPrestamo::MyDialogPrestamo( wxWindow* parent, wxWindowID id, const wxStr
 	wxBoxSizer* bSizer36;
 	bSizer36 = new wxBoxSizer( wxHORIZONTAL );
 
-	m_staticText10 = new wxStaticText( this, wxID_ANY, wxT("Seleccionar Fecha Devolucion"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText10 = new wxStaticText( this, wxID_ANY, _("Seleccionar Fecha Devolucion"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText10->Wrap( -1 );
 	bSizer36->Add( m_staticText10, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
@@ -53,11 +53,11 @@ MyDialogPrestamo::MyDialogPrestamo( wxWindow* parent, wxWindowID id, const wxStr
 	wxBoxSizer* bSizer58;
 	bSizer58 = new wxBoxSizer( wxHORIZONTAL );
 
-	m_staticPrestar_NombreAlumno = new wxStaticText( this, wxID_ANY, wxT("Nombre: "), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticPrestar_NombreAlumno = new wxStaticText( this, wxID_ANY, _("Nombre: "), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticPrestar_NombreAlumno->Wrap( -1 );
 	bSizer58->Add( m_staticPrestar_NombreAlumno, 0, wxALL, 5 );
 
-	m_staticPrestar_NombreAlumno_Valor = new wxStaticText( this, wxID_ANY, wxT("NombreEjemplo"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticPrestar_NombreAlumno_Valor = new wxStaticText( this, wxID_ANY, _("NombreEjemplo"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticPrestar_NombreAlumno_Valor->Wrap( -1 );
 	bSizer58->Add( m_staticPrestar_NombreAlumno_Valor, 0, wxALL, 5 );
 
@@ -67,11 +67,11 @@ MyDialogPrestamo::MyDialogPrestamo( wxWindow* parent, wxWindowID id, const wxStr
 	wxBoxSizer* bSizer57;
 	bSizer57 = new wxBoxSizer( wxHORIZONTAL );
 
-	m_staticPrestar_DniAlumno = new wxStaticText( this, wxID_ANY, wxT("Dni: "), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticPrestar_DniAlumno = new wxStaticText( this, wxID_ANY, _("Dni: "), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticPrestar_DniAlumno->Wrap( -1 );
 	bSizer57->Add( m_staticPrestar_DniAlumno, 0, wxALL, 5 );
 
-	m_staticPrestar_DniAlumno_Valor = new wxStaticText( this, wxID_ANY, wxT("DniDeEjemplo"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticPrestar_DniAlumno_Valor = new wxStaticText( this, wxID_ANY, _("DniDeEjemplo"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticPrestar_DniAlumno_Valor->Wrap( -1 );
 	bSizer57->Add( m_staticPrestar_DniAlumno_Valor, 0, wxALL, 5 );
 
@@ -93,7 +93,7 @@ MyDialogPrestamo::MyDialogPrestamo( wxWindow* parent, wxWindowID id, const wxStr
 	wxBoxSizer* bSizer63;
 	bSizer63 = new wxBoxSizer( wxHORIZONTAL );
 
-	m_staticText9 = new wxStaticText( this, wxID_ANY, wxT("Prestar Libro:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText9 = new wxStaticText( this, wxID_ANY, _("Buscar Libro:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText9->Wrap( -1 );
 	bSizer63->Add( m_staticText9, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 
@@ -106,7 +106,7 @@ MyDialogPrestamo::MyDialogPrestamo( wxWindow* parent, wxWindowID id, const wxStr
 	wxBoxSizer* bSizer17;
 	bSizer17 = new wxBoxSizer( wxHORIZONTAL );
 
-	m_staticText8 = new wxStaticText( this, wxID_ANY, wxT("Resultados Busqueda"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText8 = new wxStaticText( this, wxID_ANY, _("Resultados Prestamo:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText8->Wrap( -1 );
 	bSizer17->Add( m_staticText8, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 
@@ -122,7 +122,7 @@ MyDialogPrestamo::MyDialogPrestamo( wxWindow* parent, wxWindowID id, const wxStr
 	wxBoxSizer* bSizer62;
 	bSizer62 = new wxBoxSizer( wxHORIZONTAL );
 
-	m_btnConfirmar = new wxButton( this, wxID_ANY, wxT("Confirmar"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_btnConfirmar = new wxButton( this, wxID_ANY, _("Confirmar"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer62->Add( m_btnConfirmar, 0, wxALL, 5 );
 
 
@@ -137,7 +137,7 @@ MyDialogPrestamo::MyDialogPrestamo( wxWindow* parent, wxWindowID id, const wxStr
 	wxBoxSizer* bSizer70;
 	bSizer70 = new wxBoxSizer( wxVERTICAL );
 
-	m_staticText23 = new wxStaticText( this, wxID_ANY, wxT("Libros Recientes"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText23 = new wxStaticText( this, wxID_ANY, _("Libros Recientes"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText23->Wrap( -1 );
 	bSizer70->Add( m_staticText23, 0, wxALL, 5 );
 
@@ -164,11 +164,11 @@ MyDialogPrestamo::MyDialogPrestamo( wxWindow* parent, wxWindowID id, const wxStr
 	m_gridHistorial->SetColSize( 4, 205 );
 	m_gridHistorial->EnableDragColMove( false );
 	m_gridHistorial->EnableDragColSize( true );
-	m_gridHistorial->SetColLabelValue( 0, wxT("ID") );
-	m_gridHistorial->SetColLabelValue( 1, wxT("Nombre Libro") );
-	m_gridHistorial->SetColLabelValue( 2, wxT("Fecha Prestamo") );
-	m_gridHistorial->SetColLabelValue( 3, wxT("Fecha Devolucion") );
-	m_gridHistorial->SetColLabelValue( 4, wxT("Fecha Devuelto Alumno") );
+	m_gridHistorial->SetColLabelValue( 0, _("ID") );
+	m_gridHistorial->SetColLabelValue( 1, _("Nombre Libro") );
+	m_gridHistorial->SetColLabelValue( 2, _("Fecha Prestamo") );
+	m_gridHistorial->SetColLabelValue( 3, _("Fecha Devolucion") );
+	m_gridHistorial->SetColLabelValue( 4, _("Fecha Devuelto Alumno") );
 	m_gridHistorial->SetColLabelAlignment( wxALIGN_CENTER, wxALIGN_CENTER );
 
 	// Rows
@@ -200,16 +200,11 @@ MyDialogPrestamo::MyDialogPrestamo( wxWindow* parent, wxWindowID id, const wxStr
 	this->Centre( wxBOTH );
 
 	// Connect Events
-	m_datePickerDevolucion->Connect( wxEVT_DATE_CHANGED, wxDateEventHandler( MyDialogPrestamo::OnFechaDevolucionChanged ), NULL, this );
-	m_txtBuscarLibro->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( MyDialogPrestamo::OnBuscarLibro ), NULL, this );
-	m_btnConfirmar->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyDialogPrestamo::OnConfirmarPrestamoClick ), NULL, this );
+	m_datePickerDevolucion->Connect( wxEVT_DATE_CHANGED, wxDateEventHandler( MyDialogDevolucion::OnFechaDevolucionChanged ), NULL, this );
+	m_txtBuscarLibro->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( MyDialogDevolucion::OnBuscarLibro ), NULL, this );
+	m_btnConfirmar->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyDialogDevolucion::OnConfirmarPrestamoClick ), NULL, this );
 }
 
-MyDialogPrestamo::~MyDialogPrestamo()
+MyDialogDevolucion::~MyDialogDevolucion()
 {
-	// Disconnect Events
-	m_datePickerDevolucion->Disconnect( wxEVT_DATE_CHANGED, wxDateEventHandler( MyDialogPrestamo::OnFechaDevolucionChanged ), NULL, this );
-	m_txtBuscarLibro->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( MyDialogPrestamo::OnBuscarLibro ), NULL, this );
-	m_btnConfirmar->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyDialogPrestamo::OnConfirmarPrestamoClick ), NULL, this );
-
 }

@@ -82,6 +82,7 @@ class MyFrameInicioCorrectoAlumno : public wxFrame
 		virtual void OnButtonClickHistorialLibro( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickEliminar( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickPrestarLibro( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonClickDevolucion( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickHistorialAlumno( wxCommandEvent& event ) { event.Skip(); }
 
 

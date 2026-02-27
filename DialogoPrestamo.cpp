@@ -41,8 +41,7 @@ DialogoPrestamo::DialogoPrestamo(wxWindow *parent, Alumno alumnoSeleccionado)
 	m_txtBuscarLibro->Bind(wxEVT_TEXT, &DialogoPrestamo::OnBuscarLibro, this);
 	m_btnConfirmar->Bind(wxEVT_BUTTON, &DialogoPrestamo::OnConfirmarPrestamoClick, this);
 	m_listaResultadosLibros->Bind(wxEVT_DATAVIEW_SELECTION_CHANGED, &DialogoPrestamo::OnListaLibrosSelectionChanged, this);
-	m_listaResultadosLibros->SetMinSize(wxSize(-1, 120));
-	this->Layout();
+	
 	if (m_datePickerDevolucion) {
 		m_datePickerDevolucion->Bind(wxEVT_DATE_CHANGED, &DialogoPrestamo::OnFechaDevolucionChanged, this);
 	}
@@ -86,10 +85,15 @@ void DialogoPrestamo::CargarHistorialEnGrilla() {
 				
 				wxString fechaDev = wxString::Format("%02d/%02d/%04d", (int)prestamo.dia_Devolucion, (int)prestamo.mes_Devolucion, (int)prestamo.anio_Devolucion);
 				
-				// AGREGA ESTA LÍNEA:
+				// NUEVO: Formateamos la fecha de inicio
+				wxString fechaInicio = wxString::Format("%02d/%02d/%04d", (int)prestamo.dia_Prestamo, (int)prestamo.mes_Prestamo, (int)prestamo.anio_Prestamo);
+				
 				m_gridHistorial->SetCellValue(filaActual, 0, wxString::Format("%d", (int)prestamo.id_Libro));
 				m_gridHistorial->SetCellValue(filaActual, 1, nombreLibro);
-				m_gridHistorial->SetCellValue(filaActual, 2, "-"); // No hay fecha inicio en el struct
+				
+				// REEMPLAZA EL "-" POR fechaInicio:
+				m_gridHistorial->SetCellValue(filaActual, 2, fechaInicio); 
+				
 				m_gridHistorial->SetCellValue(filaActual, 3, fechaDev);
 				m_gridHistorial->SetCellValue(filaActual, 4, "EN PRÉSTAMO");
 				
@@ -124,13 +128,18 @@ void DialogoPrestamo::CargarHistorialEnGrilla() {
 			
 			// Si no está activo, lo agregamos como historial pasado
 			m_gridHistorial->AppendRows(1);
-			wxString fecha = wxString::Format("%02d/%02d/%04d", (int)reg.dia, (int)reg.mes, (int)reg.anio);
+			wxString fechaDev = wxString::Format("%02d/%02d/%04d", (int)reg.dia, (int)reg.mes, (int)reg.anio);
 			
-			// AGREGA ESTA LÍNEA:
+			// NUEVO: Calculamos la fecha en la que se prestó
+			wxString fechaInicio = wxString::Format("%02d/%02d/%04d", (int)reg.dia_prestamo, (int)reg.mes_prestamo, (int)reg.anio_prestamo);
+			
 			m_gridHistorial->SetCellValue(filaActual, 0, wxString::Format("%d", (int)reg.id_libro));
 			m_gridHistorial->SetCellValue(filaActual, 1, wxString(reg.nombre_libro));
-			m_gridHistorial->SetCellValue(filaActual, 2, "-"); 
-			m_gridHistorial->SetCellValue(filaActual, 3, fecha);
+			
+			// ACÁ REEMPLAZAMOS EL "-"
+			m_gridHistorial->SetCellValue(filaActual, 2, fechaInicio); 
+			
+			m_gridHistorial->SetCellValue(filaActual, 3, fechaDev);
 			m_gridHistorial->SetCellValue(filaActual, 4, "Devuelto/Historial");
 			
 			filaActual++;
@@ -235,14 +244,20 @@ void DialogoPrestamo::OnConfirmarPrestamoClick(wxCommandEvent& event) {
 			System sistema;
 			
 			 
-			Historial historial;
-			historial.Cargar_Historial(
-									   libroAPrestar.VerID(), 
-									   alumnoSeleccionado.VerID(),
-									   alumnoSeleccionado.VerNombre(), 
-									   libroAPrestar.VerNombre(),
-									   dia, mes, anio
-									   );
+	// Calculamos la fecha actual (hoy) si no la habías calculado antes en la función
+	wxDateTime fechaHoy = wxDateTime::Today();
+	
+	Historial historial;
+	historial.Cargar_Historial(
+							   libroAPrestar.VerID(), 
+							   alumnoSeleccionado.VerID(),
+							   alumnoSeleccionado.VerNombre(), 
+							   libroAPrestar.VerNombre(),
+							   dia, mes, anio, // Fechas de Devolución
+							   fechaHoy.GetDay(), fechaHoy.GetMonth() + 1, fechaHoy.GetYear() // Fechas de Inicio
+							   );
+			
+			
 			
 			
 			Libros_en_Prestamo nuevoPrestamo;
@@ -251,6 +266,11 @@ void DialogoPrestamo::OnConfirmarPrestamoClick(wxCommandEvent& event) {
 			nuevoPrestamo.dia_Devolucion = dia;
 			nuevoPrestamo.mes_Devolucion = mes;
 			nuevoPrestamo.anio_Devolucion = anio;
+			
+			// NUEVO: Guardamos la fecha de inicio del préstamo
+			nuevoPrestamo.dia_Prestamo = fechaHoy.GetDay();
+			nuevoPrestamo.mes_Prestamo = fechaHoy.GetMonth() + 1; // Meses de 0 a 11
+			nuevoPrestamo.anio_Prestamo = fechaHoy.GetYear();
 			
 			std::vector<Libros_en_Prestamo> activosPrevios;
 			 

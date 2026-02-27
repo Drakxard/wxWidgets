@@ -11,6 +11,7 @@
 #include <wx/dcmemory.h>
 #include <wx/wrapsizer.h>
 #include "DialogoAgregarEditar.h"
+#include <wx/msgdlg.h>
 using namespace std;
 
 VentanaParaAlumno::VentanaParaAlumno(wxWindow *parent) : MyFrameInicioCorrectoAlumno(parent) {
@@ -419,4 +420,25 @@ void VentanaParaAlumno::OnButtonClickEliminar( wxCommandEvent& event )  {
 		}
 	}
 } 
+
+void VentanaParaAlumno::OnButtonClickDevolucion( wxCommandEvent& event )  {
+	// Obtenemos qué fila (alumno) está seleccionada
+	long id = m_list_Alumnos->GetNextItem(-1,wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	
+	if(id != -1){
+		// Verificamos el tamaño del vector para que no haya desbordes en memoria
+		if(id >= 0 && id < vAlumno.size()){
+			
+			// Llamamos a la ventana correcta: DialogoDevolucion
+			DialogoDevolucion *nueva = new DialogoDevolucion(this, vAlumno[id]);
+			nueva->ShowModal();
+			nueva->Destroy(); 
+		}
+	} else {
+		// Aviso por si aprietan el botón sin seleccionar a nadie
+		wxMessageBox("Por favor, selecciona un alumno de la lista primero.", "Aviso", wxICON_INFORMATION);
+	}
+}
+
+
 

@@ -5,6 +5,7 @@
 #include "Reservar.h"
 #include "Funcionalidades/Bloques/Bloques.h"
 #include "ProyBaseAlumno.h"
+#include "DialogoDevolucion.h"
 class System;
 class Bibliotecario;
 
@@ -22,6 +23,7 @@ private:
 	vector<Reservar>vReservas;
 	
 protected:
+	void OnButtonClickDevolucion( wxCommandEvent& event )  override;
 	void MostrarLibros();
 	void OnLeftUpVerLibro( wxMouseEvent& event ) ;
 	void OnButtonClickAgregar( wxCommandEvent& event )  override;
