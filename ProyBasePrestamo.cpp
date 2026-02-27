@@ -139,7 +139,7 @@ MyDialogPrestamo::MyDialogPrestamo( wxWindow* parent, wxWindowID id, const wxStr
 
 	m_staticText23 = new wxStaticText( this, wxID_ANY, wxT("Libros Recientes"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText23->Wrap( -1 );
-	bSizer70->Add( m_staticText23, 0, wxALL, 5 );
+	bSizer70->Add( m_staticText23, 1, wxALL|wxEXPAND, 5 );
 
 
 	bSizer64->Add( bSizer70, 0, 0, 5 );
