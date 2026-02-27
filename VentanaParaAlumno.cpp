@@ -10,6 +10,7 @@
 #include "DialogoVerLibro.h"
 #include <wx/dcmemory.h>
 #include <wx/wrapsizer.h>
+#include "DialogoAgregarEditar.h"
 using namespace std;
 
 VentanaParaAlumno::VentanaParaAlumno(wxWindow *parent) : MyFrameInicioCorrectoAlumno(parent) {
@@ -121,8 +122,11 @@ void VentanaParaAlumno::OnLeftUpVerLibro(wxMouseEvent& event) {
 	int indiceVector = event.GetId() - 2000; // Restamos 2000 para recuperar el índice (0, 1, 2...)
 	
 	if (indiceVector >= 0 && indiceVector < vLibros.size()) {
+		
 		DialogoVerLibro *nueva = new DialogoVerLibro(this, vLibros[indiceVector]);
-		nueva->ShowModal();
+		if (nueva->ShowModal() == wxID_OK){
+			MostrarLibros();
+		}
 		nueva->Destroy();
 	}
 }
@@ -323,7 +327,7 @@ void VentanaParaAlumno::OnButtonClickAgregar( wxCommandEvent& event )  {
 	int tipo=0;
 	if(m_radio_InfoLibros->GetValue()){
 		tipo=0;
-		DialogoAgregar *nueva= new DialogoAgregar(this,sistema,admin,tipo,sistema->libros());
+		DialogoAgregarEditar *nueva= new DialogoAgregarEditar(this);
 		if (nueva->ShowModal() == wxID_OK){
 			CargarListaInfoLibros(m_list_InfoLibros);
 		}

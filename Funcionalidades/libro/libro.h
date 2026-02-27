@@ -13,12 +13,12 @@ class Libro
 	char descripcion[100];
 	char autores[100];
 	char path[100];
-	
 	int diasRestantes;
 	bool disponible; // Quitamos la inicializaci?n aqu? para hacerlo en el constructor
 	bool caduco;
 	
 public:
+	
 	Libro()
 	{
 		id = -1;

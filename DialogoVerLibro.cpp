@@ -44,10 +44,15 @@ DialogoVerLibro::~DialogoVerLibro() {
 	
 }
 void DialogoVerLibro::OnclikButtonClickEdicion( wxCommandEvent& event )  {
+	wxSimplebook* bookNom = static_cast<wxSimplebook*>(m_staticNombreLibro->GetParent()->GetParent());
 	wxSimplebook* bookDesc = static_cast<wxSimplebook*>(m_staticText_DescripcionValor->GetParent()->GetParent());
 	wxSimplebook* bookAutor = static_cast<wxSimplebook*>(m_staticAutorValor->GetParent()->GetParent());
 	
 	if (m_botonEditar->GetLabel() == "Editar") {
+		///Edicion Nombre
+		m_textCtrlNombreLibro->SetValue(m_staticNombreLibro->GetLabel());
+		bookNom->SetSelection(1); 
+		
 		///Edicion descripcion
 		m_textCtrlEdicionDescipcion->SetValue(m_staticText_DescripcionValor->GetLabel());
 		bookDesc->SetSelection(1); 
@@ -61,6 +66,10 @@ void DialogoVerLibro::OnclikButtonClickEdicion( wxCommandEvent& event )  {
 		/// Pasar a modo vista (Confirmar)
 		
 		///Descripcion confirmacion
+		m_staticNombreLibro->SetLabel(m_textCtrlNombreLibro->GetValue());
+		bookNom->SetSelection(0); 
+		
+		///Descripcion confirmacion
 		m_staticText_DescripcionValor->SetLabel(m_textCtrlEdicionDescipcion->GetValue());
 		bookDesc->SetSelection(0); 
 		
@@ -69,14 +78,21 @@ void DialogoVerLibro::OnclikButtonClickEdicion( wxCommandEvent& event )  {
 		bookAutor->SetSelection(0); 
 		
 		m_botonEditar->SetLabel("Editar");
+		
+		actual.CambiarNombre(m_textCtrlNombreLibro->GetValue().utf8_str());
 		actual.CambiarDescripcion(m_textCtrlEdicionDescipcion->GetValue().utf8_str());
 		actual.CambiarAutores(m_textCtrlEdicionAutor->GetValue().utf8_str());
 		System sistema;
 		vector<size_t>ids={actual.VerID()};
 		vector<Libro>Lib ={actual};
 		sistema.EscribirEnBin<Libro>(ids,Lib,sistema.libros());
-		
+		EndModal(wxID_OK);
 	}
 	
-	this->Layout(); 
+	
 }
+
+void DialogoVerLibro::OnButtonClickReservar( wxCommandEvent& event )  {
+	event.Skip();
+}
+

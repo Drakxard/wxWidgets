@@ -8,6 +8,7 @@ class DialogoVerLibro : public MyDialogVerLibro {
 private:
 	Libro actual;
 protected:
+	void OnButtonClickReservar( wxCommandEvent& event )  override;
 	void OnclikButtonClickEdicion( wxCommandEvent& event )  override;
 	
 public:

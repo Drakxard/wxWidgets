@@ -16,15 +16,6 @@ MyDialogVerLibro::MyDialogVerLibro( wxWindow* parent, wxWindowID id, const wxStr
 	wxBoxSizer* bSizer26;
 	bSizer26 = new wxBoxSizer( wxVERTICAL );
 
-	wxBoxSizer* bSizer34;
-	bSizer34 = new wxBoxSizer( wxVERTICAL );
-
-	m_botonEditar = new wxButton( this, wxID_ANY, wxT("Editar"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer34->Add( m_botonEditar, 0, wxALL|wxALIGN_RIGHT, 5 );
-
-
-	bSizer26->Add( bSizer34, 1, wxEXPAND, 5 );
-
 	wxBoxSizer* bSizer29;
 	bSizer29 = new wxBoxSizer( wxHORIZONTAL );
 
@@ -39,12 +30,37 @@ MyDialogVerLibro::MyDialogVerLibro( wxWindow* parent, wxWindowID id, const wxStr
 
 	bSizer31->Add( m_bitmapCabeceraLbro, 1, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
 
-	m_staticNombreLibro = new wxStaticText( this, wxID_ANY, wxT("Don Quijote de la Mancha"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_simplebook3 = new wxSimplebook( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
+	m_panel5 = new wxPanel( m_simplebook3, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxBoxSizer* bSizer15;
+	bSizer15 = new wxBoxSizer( wxVERTICAL );
+
+	m_staticNombreLibro = new wxStaticText( m_panel5, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticNombreLibro->Wrap( -1 );
-	bSizer31->Add( m_staticNombreLibro, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
+	bSizer15->Add( m_staticNombreLibro, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
 
 
-	bSizer30->Add( bSizer31, 1, wxEXPAND, 5 );
+	m_panel5->SetSizer( bSizer15 );
+	m_panel5->Layout();
+	bSizer15->Fit( m_panel5 );
+	m_simplebook3->AddPage( m_panel5, wxT("a page"), false );
+	m_panel6 = new wxPanel( m_simplebook3, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxBoxSizer* bSizer17;
+	bSizer17 = new wxBoxSizer( wxVERTICAL );
+
+	m_textCtrlNombreLibro = new wxTextCtrl( m_panel6, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer17->Add( m_textCtrlNombreLibro, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
+
+
+	m_panel6->SetSizer( bSizer17 );
+	m_panel6->Layout();
+	bSizer17->Fit( m_panel6 );
+	m_simplebook3->AddPage( m_panel6, wxT("a page"), false );
+
+	bSizer31->Add( m_simplebook3, 0, wxALL, 5 );
+
+
+	bSizer30->Add( bSizer31, 0, 0, 5 );
 
 	wxBoxSizer* bSizer32;
 	bSizer32 = new wxBoxSizer( wxVERTICAL );
@@ -78,8 +94,17 @@ MyDialogVerLibro::MyDialogVerLibro( wxWindow* parent, wxWindowID id, const wxStr
 	m_staticEstadoValor->Wrap( -1 );
 	bSizer37->Add( m_staticEstadoValor, 0, wxALL, 5 );
 
+	wxBoxSizer* bSizer34;
+	bSizer34 = new wxBoxSizer( wxVERTICAL );
 
-	bSizer27->Add( bSizer37, 0, 0, 5 );
+	m_botonEditar = new wxButton( this, wxID_ANY, wxT("Editar"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer34->Add( m_botonEditar, 0, wxALL|wxALIGN_RIGHT, 5 );
+
+
+	bSizer37->Add( bSizer34, 1, 0, 5 );
+
+
+	bSizer27->Add( bSizer37, 0, wxEXPAND, 5 );
 
 	m_staticText3 = new wxStaticText( this, wxID_ANY, wxT("Descripción"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText3->Wrap( -1 );
@@ -90,7 +115,7 @@ MyDialogVerLibro::MyDialogVerLibro( wxWindow* parent, wxWindowID id, const wxStr
 	wxBoxSizer* bSizer11;
 	bSizer11 = new wxBoxSizer( wxVERTICAL );
 
-	m_staticText_DescripcionValor = new wxStaticText( m_panel1, wxID_ANY, wxT("\"Info del libro, \""), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText_DescripcionValor = new wxStaticText( m_panel1, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText_DescripcionValor->Wrap( -1 );
 	bSizer11->Add( m_staticText_DescripcionValor, 1, wxALL|wxEXPAND, 5 );
 
@@ -123,7 +148,7 @@ MyDialogVerLibro::MyDialogVerLibro( wxWindow* parent, wxWindowID id, const wxStr
 	wxBoxSizer* bSizer112;
 	bSizer112 = new wxBoxSizer( wxVERTICAL );
 
-	m_staticAutorValor = new wxStaticText( m_panel12, wxID_ANY, wxT("\"Autores\""), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticAutorValor = new wxStaticText( m_panel12, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticAutorValor->Wrap( -1 );
 	bSizer112->Add( m_staticAutorValor, 1, wxALL|wxEXPAND, 5 );
 
@@ -170,11 +195,13 @@ MyDialogVerLibro::MyDialogVerLibro( wxWindow* parent, wxWindowID id, const wxStr
 
 	// Connect Events
 	m_botonEditar->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyDialogVerLibro::OnclikButtonClickEdicion ), NULL, this );
+	m_button19->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyDialogVerLibro::OnButtonClickReservar ), NULL, this );
 }
 
 MyDialogVerLibro::~MyDialogVerLibro()
 {
 	// Disconnect Events
 	m_botonEditar->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyDialogVerLibro::OnclikButtonClickEdicion ), NULL, this );
+	m_button19->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyDialogVerLibro::OnButtonClickReservar ), NULL, this );
 
 }
