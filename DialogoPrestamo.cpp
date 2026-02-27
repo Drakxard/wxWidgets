@@ -228,7 +228,7 @@ void DialogoPrestamo::OnConfirmarPrestamoClick(wxCommandEvent& event) {
 	int mes = fechaDev.GetMonth() + 1; // wxDateTime va de 0 a 11
 	int anio = fechaDev.GetYear();
 	cout<<"llegamos hasta aca"<<endl;
-	Libro libroAPrestar = m_librosEncontrados[0];
+	Libro libroAPrestar = m_librosEncontrados[seleccionIndex];
 //	
 	if (!libroAPrestar.EstadoDisponibilidad()) {
 		wxMessageBox("El libro ya está prestado o no disponible.", "Error", wxICON_ERROR);

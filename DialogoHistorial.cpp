@@ -48,8 +48,9 @@ void DialogoHistorial::CargarListaLibro(wxListCtrl* lista){
 	
 	Historial h;
 	vector<Registro>Ver_historial;
-	Ver_historial = h.Mostrar_Historial(libroSeleccionado.VerID());
+	Ver_historial = h.Mostrar_Historial_libro(libroSeleccionado.VerID());
 	if(Ver_historial.size()==0){
+		lista->Thaw();
 		wxMessageBox("No ha tenido lectores aun","Error",wxOK|wxICON_INFORMATION);
 		return;
 	}else{
@@ -58,7 +59,7 @@ void DialogoHistorial::CargarListaLibro(wxListCtrl* lista){
 			
 			lista->SetItem(index, 1,wxString(Ver_historial[i].nombre_usuario));
 			
-			lista->SetItem(index, 2,wxString::Format("%d",Ver_historial[i].dia,"%d",Ver_historial[i].mes,"%d",Ver_historial[i].anio));
+			lista->SetItem(index, 2,wxString::Format("%02d/%02d/%04d",Ver_historial[i].dia,Ver_historial[i].mes,Ver_historial[i].anio));
 			
 		}
 	}
@@ -71,7 +72,10 @@ void DialogoHistorial::CargarListaUsuario(wxListCtrl* lista){
 	Historial h;
 	vector<Registro>Ver_historial;
 	Ver_historial = h.Mostrar_Historial(alumnoSeleccionado.VerID());
+	
+	
 	if(Ver_historial.size()==0){
+		lista->Thaw();
 		wxMessageBox("No ha tenido lecturas aun","Error",wxOK|wxICON_INFORMATION);
 		return;
 	}else{
@@ -79,7 +83,7 @@ void DialogoHistorial::CargarListaUsuario(wxListCtrl* lista){
 			long index = lista->InsertItem(i,wxString::Format("%d", Ver_historial[i].id_libro));
 			
 			lista->SetItem(index, 1,wxString(Ver_historial[i].nombre_libro));
-			lista->SetItem(index, 2,wxString::Format("%d",Ver_historial[i].dia,"%d",Ver_historial[i].mes,"%d",Ver_historial[i].anio));
+			lista->SetItem(index, 2,wxString::Format("%02d/%02d/%04d",Ver_historial[i].dia,Ver_historial[i].mes,Ver_historial[i].anio));
 		}
 	}
 	lista->Thaw();

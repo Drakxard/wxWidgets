@@ -31,6 +31,7 @@ class System{
 	string pathreservar = "Recursos/Binarios/reservar.bin";
 	string pathbibliotecarios = "Recursos/Binarios/bibliotecarios.bin";
 	string pathetiquetas = "Recursos/Binarios/Tags/Tags.bin";
+	string pathHistorial= "Recursos/Binarios/Historial.bin";
 	
 	
 	string pathLibroNotFount ="Recursos/img/not_found.jpg";
@@ -62,6 +63,7 @@ public:
 	string reservar(){return pathreservar;}
 	string bibliotecarios(){return pathbibliotecarios;}
 	string etiquetas(){return pathetiquetas;}
+	string historial(){return pathHistorial;}
 	
 	template<typename S>
 		int Verificar_Existencia_Vector(int dni, vector<S>&v);

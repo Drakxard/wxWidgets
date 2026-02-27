@@ -24,7 +24,7 @@ public:
 	
 	// ACTUALIZADO: Le agregamos los parámetros de inicio (dia_pres, mes_pres, anio_pres)
 	void Cargar_Historial(size_t idLibro, size_t idAlumno, string nom_usu, string nom_lib, int dia_dev, int mes_dev, int anio_dev, int dia_pres = 0, int mes_pres = 0, int anio_pres = 0, string nombreArchivo="Recursos/Binarios/Historial.bin" );
-
+	
 };
 
 #endif
