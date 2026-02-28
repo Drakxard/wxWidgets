@@ -55,7 +55,7 @@ void DialogoHistorial::CargarListaLibro(wxListCtrl* lista){
 		return;
 	}else{
 		for(size_t i = 0; i < Ver_historial.size(); i++){
-			long index = lista->InsertItem(i,wxString::Format("%d", Ver_historial[i].id_usuario));
+			long index = lista->InsertItem(i, wxString(std::to_string(Ver_historial[i].id_usuario)));
 			
 			lista->SetItem(index, 1,wxString(Ver_historial[i].nombre_usuario));
 			
@@ -80,7 +80,7 @@ void DialogoHistorial::CargarListaUsuario(wxListCtrl* lista){
 		return;
 	}else{
 		for(size_t i = 0; i < Ver_historial.size(); i++){
-			long index = lista->InsertItem(i,wxString::Format("%d", Ver_historial[i].id_libro));
+			long index = lista->InsertItem(i, wxString(std::to_string(Ver_historial[i].id_libro)));
 			
 			lista->SetItem(index, 1,wxString(Ver_historial[i].nombre_libro));
 			lista->SetItem(index, 2,wxString::Format("%02d/%02d/%04d",Ver_historial[i].dia,Ver_historial[i].mes,Ver_historial[i].anio));
