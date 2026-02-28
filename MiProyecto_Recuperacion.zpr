@@ -15,6 +15,7 @@ tab_use_spaces=0
 explorer_path=.
 inspection_improving_template=wxString|>printf "%ls",${EXP}.m_impl._M_data()
 inherits_from=
+current_source=VentanaParaAlumno.cpp
 path_char=\
 [source]
 path=Application.cpp
@@ -74,7 +75,8 @@ path=VentanaLogin.cpp
 cursor=47:0
 [source]
 path=VentanaParaAlumno.cpp
-cursor=13:22
+cursor=199:2
+open=true
 [source]
 path=VentanaPrincipal.cpp
 cursor=0:0

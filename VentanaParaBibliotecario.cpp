@@ -172,54 +172,49 @@ void VentanaParaBibliotecario::OnButtonClickHistorialAlumno( wxCommandEvent& eve
 
 
 void VentanaParaBibliotecario::MuestraListaResultadoBibliotecario(wxListCtrl* lista){
-	//Limpiamos la tabla
+	if(vResultadoBibliotecario.size()==0){
+		wxMessageBox("No hay nadie con ese nombre","Sin coincidencias",wxOK|wxICON_INFORMATION);
+		return;
+	}
+	
+	// recién ahora tocamos la lista
+	lista->Freeze();
 	lista->DeleteAllItems();
 	
-	//
-	lista->Freeze();
-	if(vResultadoBibliotecario.size()==0){
-			wxMessageBox("No hay nadie con ese nombre","Sin coincidencias",wxOK|wxICON_INFORMATION);
-			return;
+	for(int i=0;i<vResultadoBibliotecario.size();i++) { 
+		long index = lista->InsertItem(i,wxString::Format("%d",vResultadoBibliotecario[i].VerID()));
 		
-	}else{
-		for(int i=0;i<vResultadoBibliotecario.size();i++) { 
-		///Llenamos con ID
-		long index = lista -> InsertItem(i, wxString::Format("%d",vResultadoBibliotecario[i].VerID()));
+		lista->SetItem(index, 1,vResultadoBibliotecario[i].VerNombre());
 		
-		///CargarNombreDelAlumno
-		
-		lista-> SetItem(index, 1,vResultadoBibliotecario[i].VerNombre() );
-		
-		///CargamosDni
-		lista-> SetItem(index,2, wxString::Format("%d", vResultadoBibliotecario[i].VerDNI()) );		
-		}
+		lista->SetItem(index,2,wxString::Format("%d", vResultadoBibliotecario[i].VerDNI()));
 	}
-		///Mostrar todo de golpe
+	
 	lista->Thaw();
 	
 }
 
 void VentanaParaBibliotecario::MuestraListaResultadoAlumno(wxListCtrl* lista){
-	//Limpiamos la tabla
-	lista->DeleteAllItems();
-	lista->Freeze();
 	if(vResultadoAlumno.size()==0){
+		
 		wxMessageBox("No hay nadie con ese nombre","Sin coincidencias",wxOK|wxICON_INFORMATION);
 		return;
 		
-	}else{
-		for(int i=0;i<vResultadoAlumno.size();i++) { 
-			///Llenamos con ID
-			long index = lista -> InsertItem(i, wxString::Format("%d",vResultadoAlumno[i].VerID()));
-			
-			///CargarNombreDelAlumno
-			
-			lista-> SetItem(index, 1,vResultadoAlumno[i].VerNombre() );
-			
-			///CargamosDni
-			lista-> SetItem(index,2, wxString::Format("%d", vResultadoAlumno[i].VerDNI()) );		
-		}
 	}
+	//Limpiamos la tabla
+	lista->DeleteAllItems();
+	lista->Freeze();
+	for(int i=0;i<vResultadoAlumno.size();i++) { 
+		///Llenamos con ID
+		long index = lista -> InsertItem(i, wxString::Format("%d",vResultadoAlumno[i].VerID()));
+		
+		///CargarNombreDelAlumno
+		
+		lista-> SetItem(index, 1,vResultadoAlumno[i].VerNombre() );
+		
+		///CargamosDni
+		lista-> SetItem(index,2, wxString::Format("%d", vResultadoAlumno[i].VerDNI()) );		
+	}
+	
 	///Mostrar todo de golpe
 	lista->Thaw();
 	
@@ -227,30 +222,31 @@ void VentanaParaBibliotecario::MuestraListaResultadoAlumno(wxListCtrl* lista){
 
 
 void VentanaParaBibliotecario::MuestraListaResultadoLibro(wxListCtrl* lista){
-	//Limpiamos la tabla
-	lista->DeleteAllItems();
-	lista->Freeze();
 	if(vResultadoLibro.size()==0){
+		
 		wxMessageBox("No hay ningun libro con ese nombre","Sin coincidencias",wxOK|wxICON_INFORMATION);
 		return;
 		
-	}else{
-		for(int i=0;i<vResultadoLibro.size();i++) { 
-			///Llenamos con ID
-			long index = lista -> InsertItem(i, wxString::Format("%d",vResultadoLibro[i].VerID()));
-			
-			///CargarNombreDelLibro
-			
-			lista-> SetItem(index, 1,vResultadoLibro[i].VerNombre() );
-			
-			///Cargamos Autor
-			lista-> SetItem(index,2, wxString::Format("%d", vLibro[i].EstadoDisponibilidad()) );		
-			
-			///Cargamos disponibilidad
-			
-			lista-> SetItem(index,3, ("%d", vLibro[i].VerAutores()) );	
-		}
 	}
+	//Limpiamos la tabla
+	lista->DeleteAllItems();
+	lista->Freeze();
+	for(int i=0;i<vResultadoLibro.size();i++) { 
+		///Llenamos con ID
+		long index = lista -> InsertItem(i, wxString::Format("%d",vResultadoLibro[i].VerID()));
+		
+		///CargarNombreDelLibro
+		
+		lista-> SetItem(index, 1,vResultadoLibro[i].VerNombre() );
+		
+		///Cargamos Autor
+		lista-> SetItem(index,2, wxString::Format("%d", vLibro[i].EstadoDisponibilidad()) );		
+		
+		///Cargamos disponibilidad
+		
+		lista-> SetItem(index,3, ("%d", vLibro[i].VerAutores()) );	
+	}
+	
 	///Mostrar todo de golpe
 	lista->Thaw();
 	

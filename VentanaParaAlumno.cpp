@@ -197,7 +197,14 @@ void VentanaParaAlumno::CargarListaInfoLibros(wxListCtrl* lista){
 		lista->SetItem(index, 1, vLibros[i].VerNombre() );
 		
 		///Antes estadoDisponibibldad (Casteado a int)
-		lista->SetItem(index, 2, wxString::Format("%d", (int)vLibros[i].Existencia()) );		
+		
+		if(vLibros[i].EstadoDisponibilidad()==true){
+			lista-> SetItem(index, 2,"Disponible" );
+		}else{
+			lista-> SetItem(index, 2,"No Disponible" );
+		}
+		
+//		lista->SetItem(index, 2, wxString::Format("%d", (int)vLibros[i].Existencia()) );		
 		
 		lista->SetItem(index, 3, vLibros[i].VerDescripcion() );
 		
@@ -317,7 +324,37 @@ void VentanaParaAlumno::OnButtonClickHistorialAlumno( wxCommandEvent& event )  {
 }
 
 void VentanaParaAlumno::Onclick_Boton_Buscar_Frase( wxCommandEvent& event )  {
+	string palabra;
+	if(m_radio_Libros->GetValue()){
+		
+	}
+	if(m_radio_InfoLibros->GetValue()){
+		palabra=mtext_Buscador_frase->GetValue().ToStdString();
+		 vResultadoLibro = navega.Relacionados<Libro>(palabra,vLibros );
+		MuestraListaResultadoLibro(m_list_InfoLibros);
+		}
+	if(m_radio_Reservar->GetValue()){
+		m_Bibliotecario_frameActual->SetSelection(2);
+		CargarListaReservar(m_list_Reservas);
+	}
+	if(m_radio_Etiquetas->GetValue()){
+		m_Bibliotecario_frameActual->SetSelection(3);
+		CargarListaEtiquetas(m_list_Etiquetas);
+	}
+	else if(m_radio_Alumnos->GetValue()){
+		palabra=mtext_Buscador_frase->GetValue().ToStdString();
+		 vResultadoAlumno = navega.Relacionados<Alumno>(palabra,vAlumno );
+		MuestraListaResultadoAlumno(m_list_Alumnos);
+		CargarListaAlumnos(m_list_Alumnos);
+	}				
+	else if(m_radio_Bibliotecarios->GetValue()){
+		palabra=mtext_Buscador_frase->GetValue().ToStdString();
+		 vResultadoBibliotecario = navega.Relacionados<Bibliotecario>(palabra,vBibliotecario );
+		MuestraListaResultadoBibliotecario(m_list_Bibliotecarios);
+		CargarListaBibliotecario(m_list_Bibliotecarios);
+	}
 	
+	this->Layout();
 }
 
 void VentanaParaAlumno::onclickbutton_eliminar( wxCommandEvent& event )  {
@@ -442,3 +479,83 @@ void VentanaParaAlumno::OnButtonClickDevolucion( wxCommandEvent& event )  {
 
 
 
+void VentanaParaAlumno::MuestraListaResultadoBibliotecario(wxListCtrl* lista){
+	if(vResultadoBibliotecario.size()==0){
+		wxMessageBox("No hay nadie con ese nombre","Sin coincidencias",wxOK|wxICON_INFORMATION);
+		return;
+		
+	}
+	//Limpiamos la tabla
+	lista->DeleteAllItems();
+	
+	//
+	lista->Freeze();
+	for(int i=0;i<vResultadoBibliotecario.size();i++) { 
+		///Llenamos con ID
+		long index = lista -> InsertItem(i, wxString::Format("%d",vResultadoBibliotecario[i].VerID()));
+		
+		///CargarNombreDelAlumno
+		
+		lista-> SetItem(index, 1,vResultadoBibliotecario[i].VerNombre() );
+		
+		///CargamosDni
+		lista-> SetItem(index,2, wxString::Format("%d", vResultadoBibliotecario[i].VerDNI()) );		
+	}
+	
+	///Mostrar todo de golpe
+	lista->Thaw();
+}
+void VentanaParaAlumno::MuestraListaResultadoAlumno(wxListCtrl* lista){
+	if(vResultadoAlumno.size()==0){
+		wxMessageBox("No hay nadie con ese nombre","Sin coincidencias",wxOK|wxICON_INFORMATION);
+		return;
+		
+	}
+	//Limpiamos la tabla
+	lista->DeleteAllItems();
+	lista->Freeze();
+	for(int i=0;i<vResultadoAlumno.size();i++) { 
+		///Llenamos con ID
+		long index = lista -> InsertItem(i, wxString::Format("%d",vResultadoAlumno[i].VerID()));
+		
+		///CargarNombreDelAlumno
+		
+		lista-> SetItem(index, 1,vResultadoAlumno[i].VerNombre() );
+		
+		///CargamosDni
+		lista-> SetItem(index,2, wxString::Format("%d", vResultadoAlumno[i].VerDNI()) );		
+	}
+	
+	///Mostrar todo de golpe
+	lista->Thaw();	
+}
+void VentanaParaAlumno::MuestraListaResultadoLibro(wxListCtrl* lista){
+	if(vResultadoLibro.size()==0){
+		wxMessageBox("No hay ningun libro con ese nombre","Sin coincidencias",wxOK|wxICON_INFORMATION);
+		return;
+		
+	}
+	//Limpiamos la tabla
+	lista->DeleteAllItems();
+	lista->Freeze();
+	for(int i=0;i<vResultadoLibro.size();i++) { 
+		///Llenamos con ID
+		long index = lista -> InsertItem(i, wxString::Format("%d",vResultadoLibro[i].VerID()));
+		
+		///CargarNombreDelLibro
+		
+		lista-> SetItem(index, 1,vResultadoLibro[i].VerNombre() );
+		
+		///Cargamos disponibilidad
+		
+		lista-> SetItem(index,2, wxString::Format("%d", vResultadoLibro[i].EstadoDisponibilidad()) );		
+		
+		///Cargamos  Autor
+		
+		lista-> SetItem(index,3, vResultadoLibro[i].VerAutores()) ;	
+	}
+	
+	///Mostrar todo de golpe
+	lista->Thaw();
+	
+}

@@ -6,20 +6,21 @@
 #include "Funcionalidades/Bloques/Bloques.h"
 #include "ProyBaseAlumno.h"
 #include "DialogoDevolucion.h"
+#include "Funcionalidades/buscador/buscador.h"
 class System;
 class Bibliotecario;
 
 class VentanaParaAlumno : public MyFrameInicioCorrectoAlumno {
 	
 private:
-	System *sistema;
+	System *sistema; Buscador navega;
 	Bibliotecario *admin;
 	Bloques allTags;
 	vector<Tags> tagsActuales;
 	vector<size_t> idTags;
-	vector<Alumno> vAlumno; 
-	vector<Bibliotecario> vBibliotecario;
-	vector<Libro>vLibros;
+	vector<Alumno> vAlumno; vector<Alumno>vResultadoAlumno;
+	vector<Bibliotecario> vBibliotecario;vector<Bibliotecario>vResultadoBibliotecario;
+	vector<Libro>vLibros; vector<Libro> vResultadoLibro;
 	vector<Reservar>vReservas;
 	
 protected:
@@ -41,6 +42,10 @@ protected:
 	void CargarListaEtiquetas(wxListCtrl* lista);
 	void CargarListaAlumnos(wxListCtrl* lista);
 	void CargarListaBibliotecario(wxListCtrl* lista);
+	
+	void MuestraListaResultadoBibliotecario(wxListCtrl* lista);
+	void MuestraListaResultadoAlumno(wxListCtrl* lista);
+	void MuestraListaResultadoLibro(wxListCtrl* lista);
 	
 public:
 	VentanaParaAlumno(wxWindow *parent=NULL);
