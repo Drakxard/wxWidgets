@@ -9,26 +9,29 @@
 #include "ProyBaseBibliotecario.h"
 using namespace std;
 
-
 class VentanaParaBibliotecario : public MyFrameInicioCorrectoBibliotecario {
 	
 private:
-	System *sistema; Buscador navega;
-	vector<Alumno> vAlumno; vector<Bibliotecario> vBibliotecario;
+	System *sistema; 
+	Buscador navega;
+	vector<Alumno> vAlumno; 
+	vector<Bibliotecario> vBibliotecario;
 	vector<Libro> vLibro;
+	Bibliotecario biblio; // <-- Recuperado del backup
 	
 	vector<Bibliotecario>vResultadoBibliotecario;
 	vector<Alumno>vResultadoAlumno;
 	vector<Libro>vResultadoLibro;
 	
 protected:
-	void onclickbutton_eliminar( wxCommandEvent& event )  override;
-	void Onclick_Boton_Buscar_Frase( wxCommandEvent& event )  override;
-	void OnButtonClickPrestarLibro( wxCommandEvent& event )  override;
-	void OnButtonClickHistorialAlumno( wxCommandEvent& event )  override;
-	void OnButtonClickHistorialLibro( wxCommandEvent& event )  ;
-	void OnButtonclick_Sancionar( wxCommandEvent& event )  ;
-	void OnButtonclick_Sacar_Sancion( wxCommandEvent& event )  ;
+	// Mantenidos los override de sanciones y eliminadas las declaraciones duplicadas sin override
+	void OnButtonclick_Sancionar( wxCommandEvent& event ) override;
+	void OnButtonclick_Sacar_Sancion( wxCommandEvent& event ) override;
+	void onclickbutton_eliminar( wxCommandEvent& event ) override;
+	void Onclick_Boton_Buscar_Frase( wxCommandEvent& event ) override;
+	void OnButtonClickPrestarLibro( wxCommandEvent& event ) override;
+	void OnButtonClickHistorialAlumno( wxCommandEvent& event ) override;
+	void OnButtonClickHistorialLibro( wxCommandEvent& event );
 	
 	void OnRadioButton_CambiaPestana(wxCommandEvent& event);
 	
@@ -41,10 +44,9 @@ protected:
 	void MuestraListaResultadoLibro(wxListCtrl* lista);
 public:
 	VentanaParaBibliotecario(wxWindow *parent=NULL);
+	VentanaParaBibliotecario(wxWindow *parent, Bibliotecario biblio); // <-- Recuperado del backup
 	~VentanaParaBibliotecario();
-	
 	
 };
 
 #endif
-
