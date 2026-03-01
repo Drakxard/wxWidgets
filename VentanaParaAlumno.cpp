@@ -50,11 +50,18 @@ VentanaParaAlumno::VentanaParaAlumno(wxWindow *parent, Alumno actualAlumno) : My
 	m_list_Alumnos->InsertColumn(3, "Estado", wxLIST_FORMAT_LEFT, 100);
 	m_list_Alumnos->SetSingleStyle(wxLC_HRULES | wxLC_VRULES); 
 	
+	
+	m_list_Sancionados->DeleteAllColumns();
+	m_list_Sancionados->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
+	m_list_Sancionados->InsertColumn(1, "Nombre", wxLIST_FORMAT_LEFT, 200);
+	m_list_Sancionados->InsertColumn(2, "Dni", wxLIST_FORMAT_LEFT, 100);
+	m_list_Sancionados->SetSingleStyle(wxLC_HRULES | wxLC_VRULES); 
+	
 	m_list_Bibliotecarios->DeleteAllColumns();
 	m_list_Bibliotecarios->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
 	m_list_Bibliotecarios->InsertColumn(1, "Nombre", wxLIST_FORMAT_LEFT, 200);
 	m_list_Bibliotecarios->InsertColumn(2, "Dni", wxLIST_FORMAT_LEFT, 100);
-	m_list_Bibliotecarios->InsertColumn(3, "Estado", wxLIST_FORMAT_LEFT, 100);
+	
 	m_list_Bibliotecarios->SetSingleStyle(wxLC_HRULES | wxLC_VRULES); 
 	
 	m_panel_Bibliotecario_Libros->Bind(wxEVT_SIZE, [this](wxSizeEvent& evento) {
@@ -163,6 +170,19 @@ void VentanaParaAlumno::CargarListaAlumnos(wxListCtrl* lista){
 	}
 	lista->Thaw();	
 }
+void VentanaParaAlumno::CargarListaSancionados(wxListCtrl* lista){
+	lista->DeleteAllItems();
+	lista->Freeze();
+	vector<Alumno>sancionados=sistema->VerContenido<Alumno>(sistema->alumnos(),true);
+	for(int i=0;i<sancionados.size();i++) { 
+			if(sancionados[i].VerEstadoDeSancion()){
+				long index = lista->InsertItem(i, wxString::Format("%d", (int)sancionados[i].VerID()));
+				lista->SetItem(index, 1, sancionados[i].VerNombre() );
+				lista->SetItem(index, 2, wxString(to_string(sancionados[i].VerDNI())));
+			}
+		}
+	lista->Thaw();	
+}
 
 void VentanaParaAlumno::CargarListaBibliotecario(wxListCtrl* lista){
 	lista->DeleteAllItems();
@@ -243,15 +263,15 @@ void VentanaParaAlumno::OnRadioButton_CambiaPestana(wxCommandEvent& event){
 		MostrarLibros();
 		m_Bibliotecario_frameActual->SetSelection(0);
 	}
-	if(m_radio_InfoLibros->GetValue()){
+	else if(m_radio_InfoLibros->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(1);
 		CargarListaInfoLibros(m_list_InfoLibros);
 	}
-	if(m_radio_Reservar->GetValue()){
+	else if(m_radio_Reservar->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(2);
 		CargarListaReservar(m_list_Reservas);
 	}
-	if(m_radio_Etiquetas->GetValue()){
+	else if(m_radio_Etiquetas->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(3);
 		CargarListaEtiquetas(m_list_Etiquetas);
 	}
@@ -262,6 +282,10 @@ void VentanaParaAlumno::OnRadioButton_CambiaPestana(wxCommandEvent& event){
 	else if(m_radio_Bibliotecarios->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(5);
 		CargarListaBibliotecario(m_list_Bibliotecarios);
+	}
+	else if(m_radio_Sancionados->GetValue()){
+		m_Bibliotecario_frameActual->SetSelection(6);
+		CargarListaSancionados(m_list_Sancionados);
 	}
 	this->Layout();
 }
@@ -528,4 +552,35 @@ void VentanaParaAlumno::MuestraListaResultadoLibro(wxListCtrl* lista){
 
 	
 	lista->Thaw();
+}
+
+
+void VentanaParaAlumno::OnButtonclick_Sancionar( wxCommandEvent& event )  {
+	long fila = m_list_Alumnos->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	
+	if(fila != -1){
+		wxString idStr = m_list_Alumnos->GetItemText(fila, 0);
+		long idReal;
+		idStr.ToLong(&idReal);
+		
+		Bibliotecario admin(sistema);
+		admin.Sancionar(idReal, true);
+		wxMessageBox("Sancionado", "Ejecucion Realizada", wxOK|wxICON_INFORMATION);
+	}
+	CargarListaAlumnos(m_list_Alumnos);
+}
+
+void VentanaParaAlumno::OnButtonclick_Sacar_Sancion( wxCommandEvent& event )  {
+	long fila = m_list_Alumnos->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	
+	if(fila != -1){
+		wxString idStr = m_list_Alumnos->GetItemText(fila, 0);
+		long idReal;
+		idStr.ToLong(&idReal);
+		
+		Bibliotecario admin(sistema);
+		admin.Sancionar(idReal, false);
+		wxMessageBox("Sancion Eliminada", "Ejecucion Realizada", wxOK|wxICON_INFORMATION);
+	}
+	CargarListaAlumnos(m_list_Alumnos);
 }

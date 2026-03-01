@@ -37,12 +37,15 @@ protected:
 	void OnButtonClickHistorialAlumno( wxCommandEvent& event )  ;
 	void OnButtonClickHistorialLibro( wxCommandEvent& event )  ;
 	
+	void OnButtonclick_Sancionar( wxCommandEvent& event ) ;
+	void OnButtonclick_Sacar_Sancion( wxCommandEvent& event ) ;
 	
 	void CargarListaInfoLibros(wxListCtrl* lista);
 	void CargarListaReservar(wxListCtrl* lista);
 	void CargarListaEtiquetas(wxListCtrl* lista);
 	void CargarListaAlumnos(wxListCtrl* lista);
 	void CargarListaBibliotecario(wxListCtrl* lista);
+	void CargarListaSancionados(wxListCtrl* lista);
 	
 	void MuestraListaResultadoBibliotecario(wxListCtrl* lista);
 	void MuestraListaResultadoAlumno(wxListCtrl* lista);

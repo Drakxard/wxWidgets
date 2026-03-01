@@ -270,32 +270,17 @@ void VentanaParaBibliotecario::onclickbutton_eliminar( wxCommandEvent& event )  
 	this->Layout();
 }
 
+
+
+void VentanaParaBibliotecario::OnButtonClickHistorialAlumno( wxCommandEvent& event )  {
+	event.Skip();
+}
+
 void VentanaParaBibliotecario::OnButtonclick_Sancionar( wxCommandEvent& event )  {
-	long fila = m_list_Alumnos->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
-	
-	if(fila != -1){
-		wxString idStr = m_list_Alumnos->GetItemText(fila, 0);
-		long idReal;
-		idStr.ToLong(&idReal);
-		
-		Bibliotecario admin(sistema);
-		admin.Sancionar(idReal, true);
-		wxMessageBox("Sancionado", "Ejecucion Realizada", wxOK|wxICON_INFORMATION);
-	}
-	CargarListaAlumnos(m_list_Alumnos);
+	event.Skip();
 }
 
 void VentanaParaBibliotecario::OnButtonclick_Sacar_Sancion( wxCommandEvent& event )  {
-	long fila = m_list_Alumnos->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
-	
-	if(fila != -1){
-		wxString idStr = m_list_Alumnos->GetItemText(fila, 0);
-		long idReal;
-		idStr.ToLong(&idReal);
-		
-		Bibliotecario admin(sistema);
-		admin.Sancionar(idReal, false);
-		wxMessageBox("Sancion Eliminada", "Ejecucion Realizada", wxOK|wxICON_INFORMATION);
-	}
-	CargarListaAlumnos(m_list_Alumnos);
+	event.Skip();
 }
+

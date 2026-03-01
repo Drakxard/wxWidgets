@@ -46,6 +46,7 @@ class MyFrameInicioCorrectoAlumno : public wxFrame
 		wxRadioButton* m_radio_Etiquetas;
 		wxRadioButton* m_radio_Alumnos;
 		wxRadioButton* m_radio_Bibliotecarios;
+		wxRadioButton* m_radio_Sancionados;
 		wxSimplebook* m_Bibliotecario_frameActual;
 		wxScrolledWindow* m_panel_Bibliotecario_Libros;
 		wxBoxSizer* bSizerLibro;
@@ -68,12 +69,16 @@ class MyFrameInicioCorrectoAlumno : public wxFrame
 		wxButton* m_button13;
 		wxButton* m_button17;
 		wxButton* m_button142;
+		wxButton* m_button170;
+		wxButton* m_button171;
 		wxButton* m_button14;
 		wxButton* m_button15;
 		wxPanel* m_panel_Bibliotecarios;
 		wxListCtrl* m_list_Bibliotecarios;
 		wxButton* m_button132;
 		wxButton* button_eliminar;
+		wxPanel* m_panel_Sancionados;
+		wxListCtrl* m_list_Sancionados;
 
 		// Virtual event handlers, override them in your derived class
 		virtual void Onclick_Boton_Buscar_Frase( wxCommandEvent& event ) { event.Skip(); }
@@ -83,6 +88,8 @@ class MyFrameInicioCorrectoAlumno : public wxFrame
 		virtual void OnButtonClickEliminar( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickPrestarLibro( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickDevolucion( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonclick_Sancionar( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonclick_Sacar_Sancion( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickHistorialAlumno( wxCommandEvent& event ) { event.Skip(); }
 
 
