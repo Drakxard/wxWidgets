@@ -4,7 +4,7 @@
 #include <vector>
 #include "Funcionalidades/Bloques/Bloques.h"
 #include "Funcionalidades/system/system.h"
-#include "Reservar.h"
+#include "Reservas.h"
 using namespace std;
 
 Dialogo_Eliminar::Dialogo_Eliminar(wxWindow *parent,size_t id,System * sistema,string path,size_t tipo,string nombre) : MyDialog_Eliminar(parent) {
@@ -43,9 +43,9 @@ void Dialogo_Eliminar::OnclikContinuar_Eliminar( wxCommandEvent& event) {
 	}
 	
 	if(tipo==1){
-		vector<Reservar> VReservars=sistema->VerContenido<Reservar>(path,true);
-		sistema->Eliminar<Reservar>(id, VReservars);
-		sistema->Guardar<Reservar>(path,VReservars,true);
+		vector<Reservas> VReservars=sistema->VerContenido<Reservas>(path,true);
+		sistema->Eliminar<Reservas>(id, VReservars);
+		sistema->Guardar<Reservas>(path,VReservars,true);
 	}
 	if(tipo==2){
 		vector<Tags> VTags=sistema->VerContenido<Tags>(path,true);

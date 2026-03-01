@@ -699,7 +699,7 @@
                 <property name="window_extra_style"></property>
                 <property name="window_name"></property>
                 <property name="window_style"></property>
-                <object class="simplebookpage" expanded="true">
+                <object class="simplebookpage" expanded="false">
                   <property name="label">a page</property>
                   <property name="select">0</property>
                   <object class="wxScrolledWindow" expanded="false">
@@ -1211,7 +1211,7 @@
                     </object>
                   </object>
                 </object>
-                <object class="simplebookpage" expanded="false">
+                <object class="simplebookpage" expanded="true">
                   <property name="label">a page</property>
                   <property name="select">0</property>
                   <object class="wxPanel" expanded="false">

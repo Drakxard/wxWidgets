@@ -2,7 +2,7 @@
 #define VENTANAPARAALUMNO_H
 #include "wxfb_project.h"
 #include "Funcionalidades/alumno/alumno.h"
-#include "Reservar.h"
+#include "Reservas.h"
 #include "Funcionalidades/Bloques/Bloques.h"
 #include "ProyBaseAlumno.h"
 #include "DialogoDevolucion.h"
@@ -13,15 +13,17 @@ class Bibliotecario;
 class VentanaParaAlumno : public MyFrameInicioCorrectoAlumno {
 	
 private:
+	int dni;
 	System *sistema; Buscador navega;
 	Bibliotecario *admin;
+	Alumno actualAlumno;
 	Bloques allTags;
 	vector<Tags> tagsActuales;
 	vector<size_t> idTags;
 	vector<Alumno> vAlumno; vector<Alumno>vResultadoAlumno;
 	vector<Bibliotecario> vBibliotecario;vector<Bibliotecario>vResultadoBibliotecario;
 	vector<Libro>vLibros; vector<Libro> vResultadoLibro;
-	vector<Reservar>vReservas;
+	vector<Reservas>vReservas;
 	
 protected:
 	void OnButtonClickDevolucion( wxCommandEvent& event )  override;
@@ -48,7 +50,7 @@ protected:
 	void MuestraListaResultadoLibro(wxListCtrl* lista);
 	
 public:
-	VentanaParaAlumno(wxWindow *parent=NULL);
+	VentanaParaAlumno(wxWindow *parent,Alumno actualAlumno);
 	~VentanaParaAlumno();
 };
 

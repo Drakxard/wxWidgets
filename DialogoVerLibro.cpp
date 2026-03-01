@@ -1,7 +1,10 @@
 #include "DialogoVerLibro.h"
 #include "Funcionalidades/system/system.h"
-DialogoVerLibro::DialogoVerLibro(wxWindow *parent, Libro& actual) : MyDialogVerLibro(parent) {
+#include "Reservas.h"
+DialogoVerLibro::DialogoVerLibro(wxWindow *parent, Libro& actual, Alumno & actualAlumno) : MyDialogVerLibro(parent) {
 	this->actual = actual;
+	this->actualAlumno =  actualAlumno;
+	
 	/// 1. Asignar textos (ajusta los métodos Get a los de tu clase)
 	m_staticNombreLibro->SetLabel(actual.VerNombre());
 	m_staticText_DescripcionValor->SetLabel(actual.VerDescripcion());
@@ -93,6 +96,12 @@ void DialogoVerLibro::OnclikButtonClickEdicion( wxCommandEvent& event )  {
 }
 
 void DialogoVerLibro::OnButtonClickReservar( wxCommandEvent& event )  {
-	event.Skip();
+	System sistema;
+	size_t ultimo =sistema.VerUltimo<Reservas>(sistema.reservar()); 
+	size_t idLibro=actual.VerID();
+	size_t idUsuario=actualAlumno.VerID();
+
+	Reservas aux(ultimo+1,idLibro,idUsuario);
+	sistema.AlUltimo(sistema.reservar(),aux);
 }
 

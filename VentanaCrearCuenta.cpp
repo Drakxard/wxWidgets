@@ -35,7 +35,7 @@ void VentanaCrearCuenta::OnclikBienvenido_Iniciar( wxCommandEvent& event )  {
 	sistema.AlUltimo<Alumno>(sistema.alumnos(),aux);
 
 	
-	VentanaParaAlumno *ventanaAlum = new VentanaParaAlumno(NULL);
+	VentanaParaAlumno *ventanaAlum = new VentanaParaAlumno(NULL,aux);
 	ventanaAlum->Show();
 	this->Close();
 }

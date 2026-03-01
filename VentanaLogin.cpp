@@ -34,7 +34,7 @@ void VentanaLogin::OnclikBienvenido_Iniciar( wxCommandEvent& event )  {
 			biblio = ObjetoCorrespondienteBibliotecario(PosBibliotecario, vectorBibliotecario);
 			///cout<<"?Que Quieres Hacer "<<biblio.VerNombre()<<" ?"<<endl;
 			///menuBibliotecario
-			VentanaParaBibliotecario *ventana = new VentanaParaBibliotecario(NULL);
+			VentanaParaBibliotecario *ventana = new VentanaParaBibliotecario(NULL,biblio);
 			ventana->Show();
 			this->Close();
 		}
@@ -45,7 +45,7 @@ void VentanaLogin::OnclikBienvenido_Iniciar( wxCommandEvent& event )  {
 			if(vectorAlumnos[PosAlumno].Existencia()){
 				alumn = ObjetoCorrespondienteAlumno(PosAlumno, vectorAlumnos); 
 				///MenuAlumno
-				VentanaParaAlumno *ventana = new VentanaParaAlumno(NULL);
+				VentanaParaAlumno *ventana = new VentanaParaAlumno(NULL,alumn);
 				ventana->Show();
 				this->Close();
 			}
