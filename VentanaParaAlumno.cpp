@@ -278,10 +278,24 @@ void VentanaParaAlumno::OnButtonClickPrestarLibro( wxCommandEvent& event )  {
 }
 
 void VentanaParaAlumno::OnButtonClickHistorialLibro( wxCommandEvent& event )  {
-	long id = m_list_InfoLibros->GetNextItem(-1,wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	
+	long id = m_list_InfoLibros->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 	if(id != -1){
-		if(id >= 0 and id <= vLibros.size()){
-			DialogoHistorial *nueva= new DialogoHistorial(this,vLibros[id]);
+		if(id >= 0 && id < vLibros.size()){
+			Historial h;
+			vector<Registro> ver_historial;
+			ver_historial = h.Mostrar_Historial(vLibros[id].VerID());
+			
+			//  que solo muestre el cartel y no todo el dialogo
+			if(ver_historial.size() == 0){
+				wxMessageBox("No ha tenido lecturas aun",
+							 "Historial",
+							 wxOK | wxICON_INFORMATION);
+				return;  // ?? NO se abre el diálogo
+			}
+			
+			//  si tiene historial se abre el dialogo
+			DialogoHistorial *nueva = new DialogoHistorial(this, vLibros[id]);
 			nueva->ShowModal();
 			nueva->Destroy();
 		}
@@ -289,10 +303,23 @@ void VentanaParaAlumno::OnButtonClickHistorialLibro( wxCommandEvent& event )  {
 }
 
 void VentanaParaAlumno::OnButtonClickHistorialAlumno( wxCommandEvent& event )  {
-	long id = m_list_Alumnos->GetNextItem(-1,wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	long id = m_list_Alumnos->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 	if(id != -1){
-		if(id >= 0 and id <= vAlumno.size()){
-			DialogoHistorial *nueva= new DialogoHistorial(this,vAlumno[id]);
+		if(id >= 0 && id < vAlumno.size()){
+			Historial h;
+			vector<Registro> ver_historial;
+			ver_historial = h.Mostrar_Historial(vAlumno[id].VerID());
+			
+			//  Verifico que solo muestre el cartel y no todo el dialogo
+			if(ver_historial.size() == 0){
+				wxMessageBox("No ha tenido lecturas aun",
+							 "Historial",
+							 wxOK | wxICON_INFORMATION);
+				return;  // ?? NO se abre el diálogo
+			}
+			
+			// ?? Solo si tiene historial se abre
+			DialogoHistorial *nueva = new DialogoHistorial(this, vAlumno[id]);
 			nueva->ShowModal();
 			nueva->Destroy();
 		}
@@ -327,9 +354,6 @@ void VentanaParaAlumno::Onclick_Boton_Buscar_Frase( wxCommandEvent& event )  {
 	this->Layout();
 }
 
-void VentanaParaAlumno::onclickbutton_eliminar( wxCommandEvent& event )  {
-	event.Skip();
-}
 
 void VentanaParaAlumno::OnButtonClickAgregar( wxCommandEvent& event )  {
 	int tipo=0;
@@ -443,9 +467,12 @@ void VentanaParaAlumno::MuestraListaResultadoBibliotecario(wxListCtrl* lista){
 	lista->DeleteAllItems();
 	lista->Freeze();
 	for(int i=0;i<vResultadoBibliotecario.size();i++) { 
+		
 		long index = lista->InsertItem(i, wxString::Format("%d",vResultadoBibliotecario[i].VerID()));
 		lista->SetItem(index, 1,vResultadoBibliotecario[i].VerNombre() );
-		lista->SetItem(index, 2, wxString::Format("%d", vResultadoBibliotecario[i].VerDNI()) );		
+		lista->SetItem(index, 2, wxString::Format("%d", vResultadoBibliotecario[i].VerDNI()) );	
+		lista->SetItem(index, 3, wxString::Format("%d", (int)vBibliotecario[i].Existencia()) );
+		
 	}
 	lista->Thaw();
 }
@@ -460,7 +487,16 @@ void VentanaParaAlumno::MuestraListaResultadoAlumno(wxListCtrl* lista){
 	for(int i=0;i<vResultadoAlumno.size();i++) { 
 		long index = lista->InsertItem(i, wxString::Format("%d",vResultadoAlumno[i].VerID()));
 		lista->SetItem(index, 1,vResultadoAlumno[i].VerNombre() );
-		lista->SetItem(index, 2, wxString::Format("%d", vResultadoAlumno[i].VerDNI()) );		
+		lista->SetItem(index, 2, wxString::Format("%d", vResultadoAlumno[i].VerDNI()) );
+		if(vResultadoAlumno[i].Existencia()){
+			if(vResultadoAlumno[i].VerEstadoDeSancion()){
+				lista->SetItem(index, 3, "Sancionado" );
+			}else{
+				lista->SetItem(index, 3, "No Sancionado" );
+			}
+		}else{
+			lista->SetItem(index, 3, "Borrado" );
+		}
 	}
 	lista->Thaw();	
 }
@@ -472,11 +508,24 @@ void VentanaParaAlumno::MuestraListaResultadoLibro(wxListCtrl* lista){
 	}
 	lista->DeleteAllItems();
 	lista->Freeze();
-	for(int i=0;i<vResultadoLibro.size();i++) { 
-		long index = lista->InsertItem(i, wxString::Format("%d",vResultadoLibro[i].VerID()));
-		lista->SetItem(index, 1,vResultadoLibro[i].VerNombre() );
-		lista->SetItem(index, 2, wxString::Format("%d", vResultadoLibro[i].EstadoDisponibilidad()) );		
-		lista->SetItem(index, 3, vResultadoLibro[i].VerAutores()) ;	
+	for(int i=0;i<vLibros.size();i++) { 
+		long index = lista->InsertItem(i, wxString::Format("%d", (int)vLibros[i].VerID()));
+		lista->SetItem(index, 1, vLibros[i].VerNombre() );
+		
+		if(vLibros[i].Existencia()){
+			if(vLibros[i].EstadoDisponibilidad()){
+				lista->SetItem(index, 2,"Disponible" );
+			}else{
+				lista->SetItem(index, 2,"No Disponible" );
+			}
+		}else{
+			lista->SetItem(index, 2,"Borrado" );
+		}
+		
+		lista->SetItem(index, 3, vLibros[i].VerDescripcion() );
+		lista->SetItem(index, 4, vLibros[i].VerAutores() );
 	}
+
+	
 	lista->Thaw();
 }

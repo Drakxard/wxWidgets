@@ -4,6 +4,7 @@
 #include <wx/msgdlg.h>
 #include "Dialogo_Eliminar.h"
 #include "Funcionalidades/bibliotecario/bibliotecario.h"
+#include <wx/utils.h>
 
 using namespace std;
 
@@ -33,8 +34,8 @@ VentanaParaBibliotecario::VentanaParaBibliotecario(wxWindow *parent) : MyFrameIn
 	m_list_libros->InsertColumn(2, "Estado", wxLIST_FORMAT_LEFT, 100);
 	m_list_libros->InsertColumn(3, "Autor", wxLIST_FORMAT_LEFT, 100);
 	
-	m_list_libros->SetSingleStyle(wxLC_HRULES); 
-	m_list_libros->SetSingleStyle(wxLC_VRULES); 
+//	m_list_libros->SetSingleStyle(wxLC_HRULES); 
+//	m_list_libros->SetSingleStyle(wxLC_VRULES); 
 }
 
 // Constructor recuperado del backup y adaptado a 4 columnas para alumnos
@@ -147,7 +148,7 @@ void VentanaParaBibliotecario::OnRadioButton_CambiaPestana(wxCommandEvent& event
 		m_Bibliotecario_frameActual->SetSelection(4);
 		CargarListaBibliotecario(m_list_Bibliotecarios);
 	}
-	this->Layout();
+//	this->Layout();
 }
 
 void VentanaParaBibliotecario::OnButtonClickPrestarLibro( wxCommandEvent& event )  {
@@ -161,27 +162,8 @@ void VentanaParaBibliotecario::OnButtonClickPrestarLibro( wxCommandEvent& event 
 	}
 }
 
-void VentanaParaBibliotecario::OnButtonClickHistorialLibro( wxCommandEvent& event )  {
-	long id = m_list_libros->GetNextItem(-1,wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
-	if(id != -1){
-		if(id >= 0 and id <= vLibro.size()){
-			DialogoHistorial *nueva= new DialogoHistorial(this,vLibro[id]);
-			nueva->ShowModal();
-			nueva->Destroy();
-		}
-	}
-}
 
-void VentanaParaBibliotecario::OnButtonClickHistorialAlumno( wxCommandEvent& event )  {
-	long id = m_list_Alumnos->GetNextItem(-1,wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
-	if(id != -1){
-		if(id >= 0 and id <= vAlumno.size()){
-			DialogoHistorial *nueva= new DialogoHistorial(this,vAlumno[id]);
-			nueva->ShowModal();
-			nueva->Destroy();
-		}
-	}
-}
+
 
 void VentanaParaBibliotecario::MuestraListaResultadoBibliotecario(wxListCtrl* lista){
 	if(vResultadoBibliotecario.size()==0){
@@ -209,6 +191,12 @@ void VentanaParaBibliotecario::MuestraListaResultadoAlumno(wxListCtrl* lista){
 		long index = lista->InsertItem(i, wxString::Format("%d",vResultadoAlumno[i].VerID()));
 		lista->SetItem(index, 1, vResultadoAlumno[i].VerNombre() );
 		lista->SetItem(index, 2, wxString::Format("%d", vResultadoAlumno[i].VerDNI()) );		
+		
+		if(vResultadoAlumno[i].VerEstadoDeSancion()==true){
+			lista->SetItem(index, 3,"Sancionado" );
+		}else{
+			lista->SetItem(index, 3,"No Sancionado" );
+		}
 	}
 	lista->Thaw();
 }
@@ -218,10 +206,11 @@ void VentanaParaBibliotecario::MuestraListaResultadoLibro(wxListCtrl* lista){
 		wxMessageBox("No hay ningun libro con ese nombre","Sin coincidencias",wxOK|wxICON_INFORMATION);
 		return;
 	}
-	lista->Freeze();
 	lista->DeleteAllItems();
+	lista->Freeze();
 	for(int i=0;i<vResultadoLibro.size();i++) { 
 		long index = lista->InsertItem(i, wxString::Format("%d",vResultadoLibro[i].VerID()));
+		
 		lista->SetItem(index, 1, vResultadoLibro[i].VerNombre() );
 		
 		if(vResultadoLibro[i].EstadoDisponibilidad() == true){
@@ -258,7 +247,7 @@ void VentanaParaBibliotecario::Onclick_Boton_Buscar_Frase( wxCommandEvent& event
 		vResultadoBibliotecario = navega.Relacionados<Bibliotecario>(palabra,vBibliotecario );
 		MuestraListaResultadoBibliotecario(m_list_Bibliotecarios);
 	}
-	this->Layout();
+
 }
 
 void VentanaParaBibliotecario::onclickbutton_eliminar( wxCommandEvent& event )  {

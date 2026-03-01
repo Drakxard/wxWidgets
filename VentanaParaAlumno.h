@@ -31,11 +31,10 @@ protected:
 	void OnLeftUpVerLibro( wxMouseEvent& event ) ;
 	void OnButtonClickAgregar( wxCommandEvent& event )  override;
 	void OnButtonClickEliminar( wxCommandEvent& event )  override;
-	void onclickbutton_eliminar( wxCommandEvent& event )  ;
 	void Onclick_Boton_Buscar_Frase( wxCommandEvent& event )  ;
 	void OnRadioButton_CambiaPestana( wxCommandEvent& event )  override;
 	void OnButtonClickPrestarLibro( wxCommandEvent& event )  override;
-	void OnButtonClickHistorialAlumno( wxCommandEvent& event )  override;
+	void OnButtonClickHistorialAlumno( wxCommandEvent& event )  ;
 	void OnButtonClickHistorialLibro( wxCommandEvent& event )  ;
 	
 	

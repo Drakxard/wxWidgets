@@ -36,7 +36,7 @@ vector<Registro>Historial:: Mostrar_Historial_libro(size_t id_libro, string nomb
 	return r;
 }
 // Cambia TODA la función Cargar_Historial por esta:
-void Historial::Cargar_Historial(size_t idLibro, size_t idAlumno, string nom_usu, string nom_lib, int dia_dev, int mes_dev, int anio_dev, int dia_pres, int mes_pres, int anio_pres, string nombreArchivo ){
+void Historial::Cargar_Historial(size_t idLibro, size_t idAlumno, string nom_usu, string nom_lib, int dia_dev, int mes_dev, int anio_dev, int dia_pres, int mes_pres, int anio_pres,int tipoEvento, string nombreArchivo ){
 	Registro a;
 	a.id_usuario=idAlumno; 
 	a.id_libro=idLibro;
@@ -53,6 +53,8 @@ void Historial::Cargar_Historial(size_t idLibro, size_t idAlumno, string nom_usu
 	a.dia_prestamo = dia_pres; 
 	a.mes_prestamo = mes_pres; 
 	a.anio_prestamo = anio_pres;
+	
+	a.tipo=tipoEvento;
 	
 	System sistema;
 	// CORRECCIÓN DEL BUG: Usamos AlUltimo para que no te borre el historial anterior

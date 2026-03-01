@@ -255,7 +255,8 @@ void DialogoPrestamo::OnConfirmarPrestamoClick(wxCommandEvent& event) {
 							   alumnoSeleccionado.VerNombre(), 
 							   libroAPrestar.VerNombre(),
 							   dia, mes, anio, // Fechas de Devolución
-							   fechaHoy.GetDay(), fechaHoy.GetMonth() + 1, fechaHoy.GetYear() // Fechas de Inicio
+							   fechaHoy.GetDay(), fechaHoy.GetMonth() + 1, fechaHoy.GetYear(), // Fechas de Inicio
+							   1
 							   );
 			
 			

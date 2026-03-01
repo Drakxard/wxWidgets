@@ -143,7 +143,8 @@ void DialogoDevolucion::OnConfirmarDevolucion(wxCommandEvent& event) {
 								   alumnoSeleccionado.VerNombre(),
 								   nombreLibro.ToStdString(),
 								   fechaHoy.GetDay(), fechaHoy.GetMonth() + 1, fechaHoy.GetYear(), // Día de devolución (HOY)
-								   prestamoQueSeDevuelve.dia_Prestamo, prestamoQueSeDevuelve.mes_Prestamo, prestamoQueSeDevuelve.anio_Prestamo // Día de inicio
+								   prestamoQueSeDevuelve.dia_Prestamo, prestamoQueSeDevuelve.mes_Prestamo, prestamoQueSeDevuelve.anio_Prestamo, // Día de inicio
+								   2
 								   );
 	}
 	

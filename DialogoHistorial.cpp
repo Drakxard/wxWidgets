@@ -43,49 +43,56 @@ DialogoHistorial::~DialogoHistorial() {
 }
 
 void DialogoHistorial::CargarListaLibro(wxListCtrl* lista){
-	lista->DeleteAllItems();
-	lista->Freeze();
 	
 	Historial h;
 	vector<Registro>Ver_historial;
 	Ver_historial = h.Mostrar_Historial_libro(libroSeleccionado.VerID());
-	if(Ver_historial.size()==0){
-		lista->Thaw();
-		wxMessageBox("No ha tenido lectores aun","Error",wxOK|wxICON_INFORMATION);
-		return;
-	}else{
-		for(size_t i = 0; i < Ver_historial.size(); i++){
-			long index = lista->InsertItem(i, wxString(std::to_string(Ver_historial[i].id_usuario)));
-			
-			lista->SetItem(index, 1,wxString(Ver_historial[i].nombre_usuario));
-			
-			lista->SetItem(index, 2,wxString::Format("%02d/%02d/%04d",Ver_historial[i].dia,Ver_historial[i].mes,Ver_historial[i].anio));
-			
-		}
+	
+	lista->Freeze();
+	lista->DeleteAllItems();
+	
+	for(size_t i = 0; i < Ver_historial.size(); i++){
+		long index = lista->InsertItem(i, wxString(std::to_string(Ver_historial[i].id_usuario)));
+		
+		lista->SetItem(index, 1,wxString(Ver_historial[i].nombre_usuario));
+		
+		wxString fecha = wxString::Format("%02d/%02d/%04d",Ver_historial[i].dia,Ver_historial[i].mes,Ver_historial[i].anio);
+		
+		if(Ver_historial[i].tipo == 1)
+			fecha += " - Prestamo";
+		else if(Ver_historial[i].tipo == 2)
+			fecha += " - Devolucion";
+		
+		lista->SetItem(index, 2, fecha);
+		
 	}
+	
 	lista->Thaw();
 }
 void DialogoHistorial::CargarListaUsuario(wxListCtrl* lista){
-	lista->DeleteAllItems();
-	lista->Freeze();
 	
 	Historial h;
 	vector<Registro>Ver_historial;
 	Ver_historial = h.Mostrar_Historial(alumnoSeleccionado.VerID());
 	
+	lista->Freeze();
+	lista->DeleteAllItems();
 	
-	if(Ver_historial.size()==0){
-		lista->Thaw();
-		wxMessageBox("No ha tenido lecturas aun","Error",wxOK|wxICON_INFORMATION);
-		return;
-	}else{
-		for(size_t i = 0; i < Ver_historial.size(); i++){
-			long index = lista->InsertItem(i, wxString(std::to_string(Ver_historial[i].id_libro)));
-			
-			lista->SetItem(index, 1,wxString(Ver_historial[i].nombre_libro));
-			lista->SetItem(index, 2,wxString::Format("%02d/%02d/%04d",Ver_historial[i].dia,Ver_historial[i].mes,Ver_historial[i].anio));
-		}
+	for(size_t i = 0; i < Ver_historial.size(); i++){
+		long index = lista->InsertItem(i, wxString(std::to_string(Ver_historial[i].id_libro)));
+		
+		lista->SetItem(index, 1,wxString(Ver_historial[i].nombre_libro));
+		
+		wxString fecha = wxString::Format("%02d/%02d/%04d",Ver_historial[i].dia,Ver_historial[i].mes,Ver_historial[i].anio);
+		
+		if(Ver_historial[i].tipo == 1)
+			fecha += " - Prestamo";
+		else if(Ver_historial[i].tipo == 2)
+			fecha += " - Devolucion";
+		
+		lista->SetItem(index, 2, fecha);
 	}
+	
 	lista->Thaw();
 }
 
