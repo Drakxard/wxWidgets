@@ -71,6 +71,7 @@ class MyFrameInicioCorrectoBibliotecario : public wxFrame
 		wxButton* m_button142;
 		wxButton* m_button15;
 		wxButton* m_button17;
+		wxButton* m_button18;
 		wxPanel* m_panel_Bibliotecarios;
 		wxListCtrl* m_list_Bibliotecarios;
 		wxButton* button_eliminar;
@@ -81,6 +82,7 @@ class MyFrameInicioCorrectoBibliotecario : public wxFrame
 		virtual void OnButtonClickPrestarLibro( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickHistorialAlumno( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonclick_Sancionar( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonclick_Sacar_Sancion( wxCommandEvent& event ) { event.Skip(); }
 		virtual void onclickbutton_eliminar( wxCommandEvent& event ) { event.Skip(); }
 
 

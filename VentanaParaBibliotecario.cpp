@@ -349,3 +349,21 @@ void VentanaParaBibliotecario::OnButtonclick_Sancionar( wxCommandEvent& event ) 
 	
 	CargarListaAlumnos(m_list_Alumnos);
 }
+void VentanaParaBibliotecario::OnButtonclick_Sacar_Sancion( wxCommandEvent& event )  {
+	long fila = m_list_Alumnos->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	
+	if(fila != -1){
+		
+		wxString idStr = m_list_Alumnos->GetItemText(fila, 0);
+		long idReal;
+		idStr.ToLong(&idReal);
+		
+		Bibliotecario admin(sistema);   // IMPORTANTE
+		
+		admin.Sancionar(idReal, false);
+		
+		wxMessageBox("Sancion Eliminada", "Ejecucion Realizada", wxOK|wxICON_INFORMATION);
+	}
+	
+	CargarListaAlumnos(m_list_Alumnos);
+}

@@ -203,6 +203,9 @@ MyFrameInicioCorrectoBibliotecario::MyFrameInicioCorrectoBibliotecario( wxWindow
 	m_button17 = new wxButton( m_panel_Alumnos, wxID_ANY, wxT("Sancionar"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer45->Add( m_button17, 0, wxALL, 5 );
 
+	m_button18 = new wxButton( m_panel_Alumnos, wxID_ANY, wxT("Sacar Sancion"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer45->Add( m_button18, 0, wxALL, 5 );
+
 
 	bSizerContenedorAlumnos->Add( bSizer45, 0, wxEXPAND, 5 );
 
@@ -263,6 +266,7 @@ MyFrameInicioCorrectoBibliotecario::MyFrameInicioCorrectoBibliotecario( wxWindow
 	m_button13->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrameInicioCorrectoBibliotecario::OnButtonClickPrestarLibro ), NULL, this );
 	m_button14->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrameInicioCorrectoBibliotecario::OnButtonClickHistorialAlumno ), NULL, this );
 	m_button17->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrameInicioCorrectoBibliotecario::OnButtonclick_Sancionar ), NULL, this );
+	m_button18->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrameInicioCorrectoBibliotecario::OnButtonclick_Sacar_Sancion ), NULL, this );
 	button_eliminar->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrameInicioCorrectoBibliotecario::onclickbutton_eliminar ), NULL, this );
 }
 
@@ -281,6 +285,7 @@ MyFrameInicioCorrectoBibliotecario::~MyFrameInicioCorrectoBibliotecario()
 	m_button13->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrameInicioCorrectoBibliotecario::OnButtonClickPrestarLibro ), NULL, this );
 	m_button14->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrameInicioCorrectoBibliotecario::OnButtonClickHistorialAlumno ), NULL, this );
 	m_button17->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrameInicioCorrectoBibliotecario::OnButtonclick_Sancionar ), NULL, this );
+	m_button18->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrameInicioCorrectoBibliotecario::OnButtonclick_Sacar_Sancion ), NULL, this );
 	button_eliminar->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrameInicioCorrectoBibliotecario::onclickbutton_eliminar ), NULL, this );
 
 }
