@@ -226,7 +226,7 @@ int System::Verificar_Existencia_Vector(int dni,vector<S>&v){
 }
 
 template< typename S>
-bool Verificar_Existencia_Binario(int Id,string nombreArchivo){
+bool System::Verificar_Existencia_Binario(int Id,string nombreArchivo){
 	//Buscar si Alumno/Bibliotecario/Libro por ID si existe
 	ifstream archi(nombreArchivo, ios::binary| ios::ate);
 	if(!archi)

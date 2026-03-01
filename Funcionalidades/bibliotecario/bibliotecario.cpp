@@ -2,6 +2,7 @@
 #include "../system/system.h"
 #include "../Historial/Historial.h"
 
+
 using namespace std;
 
 
@@ -168,29 +169,22 @@ int Bibliotecario::CalcularDiferenciaDias(int dia, int mes, int anio){
 }
 
 
-bool Bibliotecario::Sancionar(int IdAlumno, string nombreArchivo, bool decision)
+bool Bibliotecario::Sancionar(int IdAlumno, bool decision)
 {
-	string a= "ab";
-	int ultimoID = sistema->template VerUltimo<Alumno>(a);
-	if (IdAlumno > ultimoID){
-		cout << "DNI inexistente, Alumno no encontrado." << endl;
-		return false;
+	vector<Alumno> todos = sistema->VerContenido<Alumno>(sistema->alumnos(), true);
+	for (auto &a : todos) {
+		if (a.VerID() == IdAlumno) {
+			a.Sancionar(decision);
+			break;
+		}
 	}
-	else{
-		fstream archi(nombreArchivo, ios::binary|ios::out|ios::in);
-		if (!archi)
-			throw runtime_error("Error al Recuperar de " + nombreArchivo);
-		Alumno t;
-		archi.seekg((IdAlumno) * (sizeof(Alumno))); // vamos a la posicion
-		archi.read(reinterpret_cast<char *>(&t), sizeof(Alumno));
-		// cursor al final del alumno
-		// Debe volver asi escribir libro actualizado 
-		t.Sancionar(decision);//se cambia; bool  sancion = true, se sancionó
-		
-		archi.seekg((-1)*sizeof(Alumno));
-		archi.write(reinterpret_cast<const char*>(&t),sizeof(Alumno));
-		return true; //alumno sancionado
-	}
+	
+	// guardamos todo el vector actualizado
+	sistema->Guardar(sistema->alumnos(), todos, true);
+	
+	
+	
+	return true;
 }
 bool Bibliotecario::Actualizar_Disponibilidad( int idLibro, string nombreArchivo, bool decision){
 	string a = "ab";

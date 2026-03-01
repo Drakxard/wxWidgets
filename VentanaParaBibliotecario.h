@@ -27,6 +27,7 @@ protected:
 	void OnButtonClickPrestarLibro( wxCommandEvent& event )  override;
 	void OnButtonClickHistorialAlumno( wxCommandEvent& event )  override;
 	void OnButtonClickHistorialLibro( wxCommandEvent& event )  ;
+	void OnButtonclick_Sancionar( wxCommandEvent& event )  ;
 	
 	void OnRadioButton_CambiaPestana(wxCommandEvent& event);
 	

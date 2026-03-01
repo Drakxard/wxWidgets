@@ -153,7 +153,13 @@ void VentanaParaAlumno::CargarListaAlumnos(wxListCtrl* lista){
 		
 		///CargamosDni (Envuelto en wxString por seguridad)
 		lista->SetItem(index, 2, wxString(to_string(vAlumno[i].VerDNI())));
-		lista->SetItem(index, 3, wxString::Format("%d", (int)vAlumno[i].Existencia()) );				
+		
+		if(vAlumno[i].VerEstadoDeSancion()==true){
+			lista-> SetItem(index, 3,"Sancionado" );
+		}else{
+			lista-> SetItem(index, 3,"No Sancionado" );
+		}
+//		lista->SetItem(index, 3, wxString::Format("%d", (int)vAlumno[i].Existencia()) );				
 		
 	}
 	///Mostrar todo de golpe
@@ -193,7 +199,7 @@ void VentanaParaAlumno::CargarListaInfoLibros(wxListCtrl* lista){
 		///Llenamos con ID (Casteado a int)
 		long index = lista->InsertItem(i, wxString::Format("%d", (int)vLibros[i].VerID()));
 		
-		///CargarNombreDelAlumno
+		///CargarNombreDel Libro
 		lista->SetItem(index, 1, vLibros[i].VerNombre() );
 		
 		///Antes estadoDisponibibldad (Casteado a int)

@@ -4,6 +4,7 @@
 #include "../libro/libro.h"
 #include "../alumno/alumno.h"
 #include "../Persona/persona.h"
+#include "../system/system.h"
 
 using namespace std;
 class System;
@@ -12,6 +13,7 @@ class Bibliotecario: public Persona{
 	System* sistema; vector<int>Id_Prestamos;
 	
 public:
+	Bibliotecario(System* sis) : sistema(sis) {}
 	Bibliotecario(){}
 	Bibliotecario(size_t id, const char *nombre,size_t DNI):Persona(id,nombre,DNI){	existe = true;};
 	void Existe(){existe = true;}
@@ -34,7 +36,7 @@ public:
 	bool Devolucion_libro(size_t idlibro,vector<int>Id_Prestamos);
 	
 	//LibrosPrestado.bin -> idLibro y IdAlumno 
-	bool Sancionar(int idAlumno, string nombreArchivo, bool desicion);
+	bool Sancionar(int IdAlumno, bool decision);
 	bool Actualizar_Disponibilidad( int idLibro, string nombreArchivo, bool decision);
 	
 	template<typename T>

@@ -3,6 +3,7 @@
 #include "DialogoHistorial.h"
 #include <wx/msgdlg.h>
 #include "Dialogo_Eliminar.h"
+#include "Funcionalidades/bibliotecario/bibliotecario.h"
 
 
 
@@ -14,8 +15,9 @@ VentanaParaBibliotecario::VentanaParaBibliotecario(wxWindow *parent) : MyFrameIn
 	
 	///AlUMNO
 	m_list_Alumnos->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
-	m_list_Alumnos->InsertColumn(1, "Nombre", wxLIST_FORMAT_LEFT, 200);
+	m_list_Alumnos->InsertColumn(1, "Nombre", wxLIST_FORMAT_LEFT, 100);
 	m_list_Alumnos->InsertColumn(2, "DNI", wxLIST_FORMAT_LEFT, 100);
+	m_list_Alumnos->InsertColumn(3, "Estado de Sancion", wxLIST_FORMAT_LEFT, 100);
 	
 	m_list_Alumnos->SetSingleStyle(wxLC_HRULES); // Líneas horizontales
 	m_list_Alumnos->SetSingleStyle(wxLC_VRULES); // Líneas verticaless
@@ -56,6 +58,12 @@ void VentanaParaBibliotecario::CargarListaAlumnos(wxListCtrl* lista){
 		
 		///CargamosDni
 		lista-> SetItem(index,2, wxString::Format("%d", vAlumno[i].VerDNI()) );		
+		///estado de sancion
+		if(vAlumno[i].VerEstadoDeSancion()==true){
+			lista-> SetItem(index, 3,"Sancionado" );
+		}else{
+			lista-> SetItem(index, 3,"No Sancionado" );
+		}
 	}
 	///Mostrar todo de golpe
 	lista->Thaw();	
@@ -67,6 +75,7 @@ void VentanaParaBibliotecario::CargarListaLibros(wxListCtrl* lista){
 	//
 	lista->Freeze();
 	vLibro = sistema->VerContenido<Libro>(sistema->libros(),true);
+	
 	for(int i=0;i<vLibro.size();i++) { 
 		///Llenamos con ID
 		long index = lista -> InsertItem(i, wxString::Format("%d",vLibro[i].VerID()));
@@ -75,12 +84,17 @@ void VentanaParaBibliotecario::CargarListaLibros(wxListCtrl* lista){
 	
 		lista-> SetItem(index, 1, vLibro[i].VerNombre() );
 		
-		///Cargamos Autor
-		lista-> SetItem(index,2, wxString::Format("%d", vLibro[i].VerAutores()) );		
-		
 		///Cargamos disponibilidad
 		
-		lista-> SetItem(index,3, wxString::Format("%d", vLibro[i].EstadoDisponibilidad()) );		
+		if(vLibro[i].EstadoDisponibilidad()==true){
+			lista-> SetItem(index, 2,"Disponible" );
+		}else{
+			lista-> SetItem(index, 2,"No Disponible" );
+		}
+//		lista-> SetItem(index,2, wxString::Format("%d", vLibro[i].EstadoDisponibilidad()) );		
+		
+		///Cargamos Autor
+		lista-> SetItem(index,3, vLibro[i].VerAutores() );		
 	}
 	///Mostrar todo de golpe
 	lista->Thaw();	
@@ -123,11 +137,11 @@ void VentanaParaBibliotecario::OnRadioButton_CambiaPestana(wxCommandEvent& event
 	if(m_radio_Etiquetas->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(2);
 	}
-	else if(m_radio_Alumnos->GetValue()){
+	if(m_radio_Alumnos->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(3);
 		CargarListaAlumnos(m_list_Alumnos);
 	}				
-	else if(m_radio_Bibliotecarios->GetValue()){
+	if(m_radio_Bibliotecarios->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(4);
 		CargarListaBibliotecario(m_list_Bibliotecarios);
 	}
@@ -317,3 +331,21 @@ void VentanaParaBibliotecario::onclickbutton_eliminar( wxCommandEvent& event )  
 	this->Layout();
 }
 
+void VentanaParaBibliotecario::OnButtonclick_Sancionar( wxCommandEvent& event )  {
+	long fila = m_list_Alumnos->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	
+	if(fila != -1){
+		
+		wxString idStr = m_list_Alumnos->GetItemText(fila, 0);
+		long idReal;
+		idStr.ToLong(&idReal);
+		
+		Bibliotecario admin(sistema);   // IMPORTANTE
+		
+		admin.Sancionar(idReal, true);
+		
+		wxMessageBox("Sancionado", "Ejecucion Realizada", wxOK|wxICON_INFORMATION);
+	}
+	
+	CargarListaAlumnos(m_list_Alumnos);
+}
