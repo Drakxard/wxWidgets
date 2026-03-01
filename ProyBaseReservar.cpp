@@ -59,8 +59,16 @@ MyDialogReservar::MyDialogReservar( wxWindow* parent, wxWindowID id, const wxStr
 	bSizer46->Fit( this );
 
 	this->Centre( wxBOTH );
+
+	// Connect Events
+	m_button1->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyDialogReservar::OnBotonCancelarClick ), NULL, this );
+	m_button2->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyDialogReservar::OnBotonConfirmarClick ), NULL, this );
 }
 
 MyDialogReservar::~MyDialogReservar()
 {
+	// Disconnect Events
+	m_button1->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyDialogReservar::OnBotonCancelarClick ), NULL, this );
+	m_button2->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyDialogReservar::OnBotonConfirmarClick ), NULL, this );
+
 }

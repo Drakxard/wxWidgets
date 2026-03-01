@@ -1,4 +1,5 @@
 #include "DialogoVerLibro.h"
+#include "DialogoReservar.h"
 #include "Funcionalidades/system/system.h"
 #include "Reservas.h"
 DialogoVerLibro::DialogoVerLibro(wxWindow *parent, Libro& actual, Alumno & actualAlumno) : MyDialogVerLibro(parent) {
@@ -96,12 +97,8 @@ void DialogoVerLibro::OnclikButtonClickEdicion( wxCommandEvent& event )  {
 }
 
 void DialogoVerLibro::OnButtonClickReservar( wxCommandEvent& event )  {
-	System sistema;
-	size_t ultimo =sistema.VerUltimo<Reservas>(sistema.reservar()); 
-	size_t idLibro=actual.VerID();
-	size_t idUsuario=actualAlumno.VerID();
-
-	Reservas aux(ultimo+1,idLibro,idUsuario);
-	sistema.AlUltimo(sistema.reservar(),aux);
+	DialogoReservar *ventanaReserva = new DialogoReservar(this, actual, actualAlumno);
+	ventanaReserva->ShowModal();
+	ventanaReserva->Destroy();
 }
 
