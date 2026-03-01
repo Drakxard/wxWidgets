@@ -299,3 +299,8 @@ void VentanaParaBibliotecario::OnButtonclick_Sacar_Sancion( wxCommandEvent& even
 	}
 	CargarListaAlumnos(m_list_Alumnos);
 }
+
+void VentanaParaBibliotecario::OnButtonClickHistorialAlumno( wxCommandEvent& event )  {
+	event.Skip();
+}
+

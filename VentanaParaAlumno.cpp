@@ -34,7 +34,8 @@ VentanaParaAlumno::VentanaParaAlumno(wxWindow *parent, Alumno actualAlumno) : My
 	m_list_Reservas->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
 	m_list_Reservas->InsertColumn(1, "Nombre LIBRO", wxLIST_FORMAT_LEFT, 200);
 	m_list_Reservas->InsertColumn(2, "Nombre USUARIO", wxLIST_FORMAT_LEFT, 200);
-	m_list_Reservas->InsertColumn(3, "Estado", wxLIST_FORMAT_LEFT, 200);
+	m_list_Reservas->InsertColumn(3, "Fecha", wxLIST_FORMAT_LEFT, 100);    // <--- NUEVA COLUMNA
+	m_list_Reservas->InsertColumn(4, "Estado", wxLIST_FORMAT_LEFT, 100);   // <--- PASA A SER LA 4
 	m_list_Reservas->SetSingleStyle(wxLC_HRULES | wxLC_VRULES);
 	
 	m_list_Etiquetas->DeleteAllColumns();
@@ -218,10 +219,18 @@ void VentanaParaAlumno::CargarListaReservar(wxListCtrl* lista){
 	vector<Libro> ReservasLibro = sistema->LeerDelBin<Libro>(RLibros, sistema->libros());
 	
 	for(int i=0;i<vReservas.size();i++) { 
-		long index = lista->InsertItem(i, wxString::Format("%d", (size_t)vReservas[i].VerID()));
+		// CORRECCIÓN AQUÍ: Se cambió (size_t) por (int) para que coincida con el %d
+		long index = lista->InsertItem(i, wxString::Format("%d", (int)vReservas[i].VerID()));
 		lista->SetItem(index, 1, ReservasLibro[i].VerNombre());
 		lista->SetItem(index, 2, ReservasAlumno[i].VerNombre());
-		lista->SetItem(index, 3, wxString::Format("%d", (bool)vReservas[i].Existencia()) );				
+		
+		// Formateamos la fecha recuperada del archivo binario
+		wxString fechaStr = wxString::Format("%02d/%02d/%04d", vReservas[i].VerDia(), vReservas[i].VerMes(), vReservas[i].VerAnio());
+		lista->SetItem(index, 3, fechaStr);
+		
+		// Mostramos el estado en la columna 4
+		wxString estado = vReservas[i].Existencia() ? "Activa" : "Inactiva/Borrada";
+		lista->SetItem(index, 4, estado);				
 	}
 	lista->Thaw();
 }

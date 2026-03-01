@@ -2,6 +2,7 @@
 #include "DialogoReservar.h"
 #include "Funcionalidades/system/system.h"
 #include "Reservas.h"
+#include <wx/msgdlg.h> // <--- NUEVO: Para mostrar el cartel de error
 DialogoVerLibro::DialogoVerLibro(wxWindow *parent, Libro& actual, Alumno & actualAlumno) : MyDialogVerLibro(parent) {
 	this->actual = actual;
 	this->actualAlumno =  actualAlumno;
@@ -97,6 +98,14 @@ void DialogoVerLibro::OnclikButtonClickEdicion( wxCommandEvent& event )  {
 }
 
 void DialogoVerLibro::OnButtonClickReservar( wxCommandEvent& event )  {
+	// 1. Verificamos si el alumno actual está sancionado
+	if (actualAlumno.VerEstadoDeSancion()) {
+		// Mostramos cartel de error y usamos "return" para cortar la función aquí mismo
+		wxMessageBox("No puedes reservar libros en este momento porque te encuentras sancionado.", "Operacion Denegada", wxOK | wxICON_ERROR, this);
+		return; 
+	}
+	
+	// 2. Si no está sancionado, el código sigue normalmente y abre la ventana
 	DialogoReservar *ventanaReserva = new DialogoReservar(this, actual, actualAlumno);
 	ventanaReserva->ShowModal();
 	ventanaReserva->Destroy();

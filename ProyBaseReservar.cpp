@@ -56,11 +56,12 @@ MyDialogReservar::MyDialogReservar( wxWindow* parent, wxWindowID id, const wxStr
 
 	this->SetSizer( bSizer46 );
 	this->Layout();
-	bSizer46->Fit( this );
 
 	this->Centre( wxBOTH );
 
 	// Connect Events
+	m_calendar1->Connect( wxEVT_CALENDAR_PAGE_CHANGED, wxCalendarEventHandler( MyDialogReservar::OnCalendarCambioMes ), NULL, this );
+	m_calendar1->Connect( wxEVT_CALENDAR_SEL_CHANGED, wxCalendarEventHandler( MyDialogReservar::OnCalendarSeleccion ), NULL, this );
 	m_button1->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyDialogReservar::OnBotonCancelarClick ), NULL, this );
 	m_button2->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyDialogReservar::OnBotonConfirmarClick ), NULL, this );
 }
@@ -68,6 +69,8 @@ MyDialogReservar::MyDialogReservar( wxWindow* parent, wxWindowID id, const wxStr
 MyDialogReservar::~MyDialogReservar()
 {
 	// Disconnect Events
+	m_calendar1->Disconnect( wxEVT_CALENDAR_PAGE_CHANGED, wxCalendarEventHandler( MyDialogReservar::OnCalendarCambioMes ), NULL, this );
+	m_calendar1->Disconnect( wxEVT_CALENDAR_SEL_CHANGED, wxCalendarEventHandler( MyDialogReservar::OnCalendarSeleccion ), NULL, this );
 	m_button1->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyDialogReservar::OnBotonCancelarClick ), NULL, this );
 	m_button2->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyDialogReservar::OnBotonConfirmarClick ), NULL, this );
 

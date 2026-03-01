@@ -24,6 +24,7 @@ private:
 	vector<Libro>vResultadoLibro;
 	
 protected:
+	void OnButtonClickHistorialAlumno( wxCommandEvent& event )  override;
 	// Mantenidos los override de sanciones y eliminadas las declaraciones duplicadas sin override
 	void OnButtonclick_Sancionar( wxCommandEvent& event ) override;
 	void OnButtonclick_Sacar_Sancion( wxCommandEvent& event ) override;

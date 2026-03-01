@@ -50,7 +50,7 @@
       <property name="minimum_size"></property>
       <property name="name">MyDialogReservar</property>
       <property name="pos"></property>
-      <property name="size">-1,-1</property>
+      <property name="size">304,300</property>
       <property name="style">wxDEFAULT_DIALOG_STYLE</property>
       <property name="subclass">; ; forward_declare</property>
       <property name="title">RESERVAR</property>
@@ -269,6 +269,8 @@
                 <property name="window_extra_style"></property>
                 <property name="window_name"></property>
                 <property name="window_style"></property>
+                <event name="OnCalendarPageChanged">OnCalendarCambioMes</event>
+                <event name="OnCalendarSelChanged">OnCalendarSeleccion</event>
               </object>
             </object>
           </object>
