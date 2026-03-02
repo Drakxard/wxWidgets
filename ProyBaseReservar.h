@@ -42,6 +42,8 @@ class MyDialogReservar : public wxDialog
 		// Virtual event handlers, override them in your derived class
 		virtual void OnCalendarCambioMes( wxCalendarEvent& event ) { event.Skip(); }
 		virtual void OnCalendarSeleccion( wxCalendarEvent& event ) { event.Skip(); }
+		virtual void OnBotonCancelarClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnBotonConfirmarClick( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:

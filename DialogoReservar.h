@@ -23,8 +23,8 @@ protected:
 	void OnCalendarSeleccion(wxCalendarEvent& event) override;
 	void OnCalendarCambioMes(wxCalendarEvent& event) override;
 	
-	void OnBotonConfirmarClick( wxCommandEvent& event ) override;
-	void OnBotonCancelarClick( wxCommandEvent& event ) override;
+	void OnBotonConfirmarClick( wxCommandEvent& event ) ;
+	void OnBotonCancelarClick( wxCommandEvent& event ) ;
 	
 public:
 	// Constructor que recibe el libro y el alumno
