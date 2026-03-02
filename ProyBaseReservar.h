@@ -39,6 +39,11 @@ class MyDialogReservar : public wxDialog
 		wxButton* m_button1;
 		wxButton* m_button2;
 
+		// Virtual event handlers, override them in your derived class
+		virtual void OnCalendarCambioMes( wxCalendarEvent& event ) { event.Skip(); }
+		virtual void OnCalendarSeleccion( wxCalendarEvent& event ) { event.Skip(); }
+
+
 	public:
 
 		MyDialogReservar( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("RESERVAR"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_DIALOG_STYLE );

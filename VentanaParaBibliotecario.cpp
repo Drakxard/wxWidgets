@@ -34,8 +34,8 @@ VentanaParaBibliotecario::VentanaParaBibliotecario(wxWindow *parent) : MyFrameIn
 	m_list_libros->InsertColumn(2, "Estado", wxLIST_FORMAT_LEFT, 100);
 	m_list_libros->InsertColumn(3, "Autor", wxLIST_FORMAT_LEFT, 100);
 	
-//	m_list_libros->SetSingleStyle(wxLC_HRULES); 
-//	m_list_libros->SetSingleStyle(wxLC_VRULES); 
+	//	m_list_libros->SetSingleStyle(wxLC_HRULES); 
+	//	m_list_libros->SetSingleStyle(wxLC_VRULES); 
 }
 
 // Constructor recuperado del backup y adaptado a 4 columnas para alumnos
@@ -148,7 +148,7 @@ void VentanaParaBibliotecario::OnRadioButton_CambiaPestana(wxCommandEvent& event
 		m_Bibliotecario_frameActual->SetSelection(4);
 		CargarListaBibliotecario(m_list_Bibliotecarios);
 	}
-//	this->Layout();
+	//	this->Layout();
 }
 
 void VentanaParaBibliotecario::OnButtonClickPrestarLibro( wxCommandEvent& event )  {
@@ -247,7 +247,7 @@ void VentanaParaBibliotecario::Onclick_Boton_Buscar_Frase( wxCommandEvent& event
 		vResultadoBibliotecario = navega.Relacionados<Bibliotecario>(palabra,vBibliotecario );
 		MuestraListaResultadoBibliotecario(m_list_Bibliotecarios);
 	}
-
+	
 }
 
 void VentanaParaBibliotecario::onclickbutton_eliminar( wxCommandEvent& event )  {
@@ -270,17 +270,36 @@ void VentanaParaBibliotecario::onclickbutton_eliminar( wxCommandEvent& event )  
 	this->Layout();
 }
 
+void VentanaParaBibliotecario::OnButtonclick_Sancionar( wxCommandEvent& event )  {
+	long fila = m_list_Alumnos->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	
+	if(fila != -1){
+		wxString idStr = m_list_Alumnos->GetItemText(fila, 0);
+		long idReal;
+		idStr.ToLong(&idReal);
+		
+		Bibliotecario admin(sistema);
+		admin.Sancionar(idReal, true);
+		wxMessageBox("Sancionado", "Ejecucion Realizada", wxOK|wxICON_INFORMATION);
+	}
+	CargarListaAlumnos(m_list_Alumnos);
+}
 
+void VentanaParaBibliotecario::OnButtonclick_Sacar_Sancion( wxCommandEvent& event )  {
+	long fila = m_list_Alumnos->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	
+	if(fila != -1){
+		wxString idStr = m_list_Alumnos->GetItemText(fila, 0);
+		long idReal;
+		idStr.ToLong(&idReal);
+		
+		Bibliotecario admin(sistema);
+		admin.Sancionar(idReal, false);
+		wxMessageBox("Sancion Eliminada", "Ejecucion Realizada", wxOK|wxICON_INFORMATION);
+	}
+	CargarListaAlumnos(m_list_Alumnos);
+}
 
 void VentanaParaBibliotecario::OnButtonClickHistorialAlumno( wxCommandEvent& event )  {
 	event.Skip();
 }
-
-void VentanaParaBibliotecario::OnButtonclick_Sancionar( wxCommandEvent& event )  {
-	event.Skip();
-}
-
-void VentanaParaBibliotecario::OnButtonclick_Sacar_Sancion( wxCommandEvent& event )  {
-	event.Skip();
-}
-

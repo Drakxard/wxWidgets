@@ -11,6 +11,10 @@ class System;
 class Bibliotecario: public Persona{
 	bool existe;
 	System* sistema; vector<int>Id_Prestamos;
+
+	
+protected:
+	void OnButtonClickHistorialAlumno( wxCommandEvent& event )  override;
 	
 public:
 	Bibliotecario(System* sis) : sistema(sis) {}

@@ -59,8 +59,16 @@ MyDialogReservar::MyDialogReservar( wxWindow* parent, wxWindowID id, const wxStr
 	bSizer46->Fit( this );
 
 	this->Centre( wxBOTH );
+
+	// Connect Events
+	m_calendar1->Connect( wxEVT_CALENDAR_PAGE_CHANGED, wxCalendarEventHandler( MyDialogReservar::OnCalendarCambioMes ), NULL, this );
+	m_calendar1->Connect( wxEVT_CALENDAR_SEL_CHANGED, wxCalendarEventHandler( MyDialogReservar::OnCalendarSeleccion ), NULL, this );
 }
 
 MyDialogReservar::~MyDialogReservar()
 {
+	// Disconnect Events
+	m_calendar1->Disconnect( wxEVT_CALENDAR_PAGE_CHANGED, wxCalendarEventHandler( MyDialogReservar::OnCalendarCambioMes ), NULL, this );
+	m_calendar1->Disconnect( wxEVT_CALENDAR_SEL_CHANGED, wxCalendarEventHandler( MyDialogReservar::OnCalendarSeleccion ), NULL, this );
+
 }
