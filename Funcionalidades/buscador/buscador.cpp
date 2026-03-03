@@ -103,26 +103,23 @@ vector<size_t> Buscador::OrdenarAscendente(vector<size_t>v){
 	sort(v.begin(),v.end());
 	return v;
 	
-}
-template <typename T>
-vector<T>Buscador:: Relacionados(string palabraBuscada, vector<T>&v){
-	vector<T> aux;
+}	
+vector<Libro>Buscador:: Busqueda_Autor(string autorBuscado, vector<Libro>&v){
+	vector<Libro> aux;
 	auto encontrado = v.begin();
 	size_t pos=0;
 	while(encontrado!=v.end()){
-		encontrado = find_if(v.begin()+pos,v.end(),[palabraBuscada](const T& a){
-			
-			return a.VerNombre() == palabraBuscada;
+		
+		encontrado = find_if(v.begin()+pos,v.end(),[autorBuscado](const Libro& a){
+			return a.VerAutores() == autorBuscado;
 		});
 		if(encontrado== v.end()){break;}
 		
-		aux.push_back(*encontrado);//Devuelve posiciones
+		aux.push_back(*encontrado);
 		pos=(encontrado-v.begin())+1;
 	}
 	return aux;
-}
-	
-	
+}	
 
 	vector<size_t> Buscador:: ResultadoBusqueda(vector<size_t>&All_IDs){
 		vector<size_t> resultado;
@@ -162,9 +159,130 @@ vector<T>Buscador:: Relacionados(string palabraBuscada, vector<T>&v){
 		return resultado;
 }	
 	
-template vector<Alumno>Buscador:: Relacionados(string palabraBuscada, vector<Alumno>&v);
-template vector<Libro>Buscador:: Relacionados(string palabraBuscada, vector<Libro>&v);
-template vector<Bibliotecario>Buscador:: Relacionados(string palabraBuscada, vector<Bibliotecario>&v);
+vector<Bibliotecario>Buscador:: Busqueda_Bibliotecario(int columna, string Buscar, vector<Bibliotecario>&v){
+	vector<Bibliotecario> aux;
+	auto encontrado = v.begin();
+	size_t pos=0;
+	while(encontrado!=v.end()){
+		switch(columna){
+			
+		case 1:	{//buscar por DNI de los bibliotecarios
+			size_t numero_dni = static_cast<size_t>(std::stoul(Buscar));
+			encontrado = find_if(v.begin()+pos,v.end(),[numero_dni](const Bibliotecario& a){
+				return a.VerDNI() == numero_dni;
+			});
+			
+			break;
+		}
+		case 2:{//buscar por nombre de los bibliotecarios
+			encontrado = find_if(v.begin()+pos,v.end(),[Buscar](const Bibliotecario& a){
+				return a.VerNombre() == Buscar;
+			});
+			break;
+		}
+			
+		case 3:{ //buscar por ID
+				size_t numero_ID = static_cast<size_t>(std::stoul(Buscar));
+				encontrado = find_if(v.begin()+pos,v.end(),[numero_ID](const Bibliotecario& a){
+					return a.VerID() == numero_ID;
+				});
+				break;
+			}
+		}
+		if(encontrado== v.end())
+			   break;
+		aux.push_back(*encontrado);
+		pos=(encontrado-v.begin())+1;
+	}
+	return aux;
+}
+vector<Alumno> Buscador::Busqueda_Alumno(int columna, string Buscar, vector<Alumno>& v) {
+	vector<Alumno> aux;
+	auto encontrado = v.begin();
+	size_t pos = 0;
+	while (encontrado != v.end()) {
+		switch (columna) {
+		case 1: { 
+			size_t numero_dni = static_cast<size_t>(std::stoul(Buscar));
+			encontrado = find_if(v.begin() + pos, v.end(), [numero_dni](const Alumno& a) {
+				return a.VerDNI() == numero_dni;
+			});
+			break;
+		} 
+		
+		case 2: {
+			encontrado = find_if(v.begin() + pos, v.end(), [Buscar](const Alumno& a) {
+				return a.VerNombre() == Buscar;
+			});
+			break;
+		}
+		
+		case 3: {
+			size_t numero_ID = static_cast<size_t>(std::stoul(Buscar));
+			encontrado = find_if(v.begin() + pos, v.end(), [numero_ID](const Alumno& a) {
+				return a.VerID() == numero_ID;
+			});
+			break;
+		}
+		
+		case 4: {
+			bool estado = (Buscar == "1" || Buscar == "true");
+			encontrado = find_if(v.begin() + pos, v.end(), [estado](Alumno& a) {
+				return a.VerEstadoDeSancion() == estado;
+			});
+			break;
+		}
+		}
+		if (encontrado == v.end()) break;
+		
+		aux.push_back(*encontrado);
+		pos = (encontrado - v.begin()) + 1;
+	}
+	return aux;
+}
+vector<Libro>Buscador:: Busqueda_Libro(int columna, string Buscar, vector<Libro>&v){
+	vector<Libro> aux;
+	auto encontrado = v.begin();
+	size_t pos=0;
+	while(encontrado!=v.end()){
+		switch(columna){
+			
+		case 1:	{//buscar por autor
+			encontrado = find_if(v.begin()+pos,v.end(),[Buscar](const Libro& a){
+				return a.VerAutores() == Buscar;
+			});
+			break;
+		}
+		case 2:{//buscar por nombre
+			encontrado = find_if(v.begin()+pos,v.end(),[Buscar](const Libro& a){
+				return a.VerNombre() == Buscar;
+			});
+			break;
+		}
+			
+		case 3: {//buscar por disponibilidad
+			bool estado = (Buscar == "1" || Buscar == "true");
+			encontrado = find_if(v.begin()+pos,v.end(),[estado](const Libro& a){
+				return a.EstadoDisponibilidad() ==estado;
+			});
+			break;
+			}
+			
+		case 4:{//buscar por id
+			size_t numero = static_cast<size_t>(std::stoul(Buscar));
+			encontrado = find_if(v.begin()+pos,v.end(),[numero](const Libro& a){
+				return a.VerID() == numero;
+			});
+			break;
+		}
+		}
+		if(encontrado== v.end())
+			   break;
+		aux.push_back(*encontrado);
+		pos=(encontrado-v.begin())+1;
+	}
+	return aux;
+}
 		
 	
 	

@@ -4,6 +4,8 @@
 #include <vector>
 #include "../libro/libro.h"
 #include "../Bloques/Bloques.h"
+#include "../alumno/alumno.h"
+#include "../bibliotecario/bibliotecario.h"
 
 using namespace std;
 
@@ -28,5 +30,38 @@ public:
 	template <typename T>
 	vector<T> Relacionados(string palabraBuscada, vector<T>&v);
 	vector<size_t> ResultadoBusqueda(vector<size_t>&All_IDs);
+	vector<Libro> Busqueda_Autor(string autorBuscado, vector<Libro>&v);
+	
+	vector<Libro> Busqueda_Libro(int columna, string Buscar, vector<Libro>&v);
+	
+	vector<Alumno> Busqueda_Alumno(int columna, string Buscar, vector<Alumno>&v);
+	
+	vector<Bibliotecario> Busqueda_Bibliotecario(int columna, string Buscar, vector<Bibliotecario>&v);
 };
+template <typename T>
+vector<T>Buscador:: Relacionados(string palabraBuscada, vector<T>&v){
+	vector<T> aux;
+	auto encontrado = v.begin();
+	size_t pos=0;
+	while(encontrado!=v.end()){
+		encontrado = find_if(v.begin()+pos,v.end(),[palabraBuscada](const T& a){
+			
+			return a.VerNombre() == palabraBuscada;
+		});
+		if(encontrado== v.end()){break;}
+		
+		aux.push_back(*encontrado);//Devuelve posiciones
+		pos=(encontrado-v.begin())+1;
+	}
+	return aux;
+}
+
+
+
+
+
+
+
+
+
 #endif
