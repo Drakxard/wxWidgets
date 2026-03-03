@@ -22,9 +22,9 @@ private:
 	vector<size_t> idTags;
 	vector<Alumno> vAlumno; vector<Alumno>vResultadoAlumno;
 	vector<Bibliotecario> vBibliotecario;vector<Bibliotecario>vResultadoBibliotecario;
-	vector<Libro>vLibros;  
+	vector<Libro>vLibros;  vector<Libro>vResultadoLibro;
 	vector<Reservas>vReservas;
-
+	
 protected:
 	void OnButtonClickDevolucion( wxCommandEvent& event )  override;
 	void MostrarLibros(vector<Libro>vLibros);
@@ -46,12 +46,12 @@ protected:
 	void CargarListaAlumnos(wxListCtrl* lista);
 	void CargarListaBibliotecario(wxListCtrl* lista);
 	void CargarListaSancionados(wxListCtrl* lista);
-	void CargarListaSancionadosMultas(wxListCtrl* lista);
 	
 	void MuestraListaResultadoBibliotecario(wxListCtrl* lista);
 	void MuestraListaResultadoAlumno(wxListCtrl* lista);
-	void MuestraListaResultadoLibro(wxListCtrl* lista,string palabra, vector<Libro>vResultadoLibro);
-	void MuestraListaResultado_Autor(wxListCtrl* lista,string palabra, vector<Libro>vResultadoLibro);
+	void MuestraListaResultadoLibro(wxListCtrl* lista);
+	void MuestraListaResultado_Autor(wxListCtrl* lista,string palabra);
+	void MuestraListaResultadoLibro_Disponibilidad(wxListCtrl* lista, bool disponible);
 	
 public:
 	VentanaParaAlumno(wxWindow *parent,Alumno actualAlumno);
