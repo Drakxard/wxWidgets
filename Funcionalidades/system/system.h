@@ -91,6 +91,7 @@ bool System::Guardar(string nombreArhivo, vector<T> &A_Guardar, bool sobreEscrib
 	}else{
 		archi.open(nombreArhivo, ios::binary|ios::app);
 	}
+	
 	if (!archi){
 		cerr<<"Error al guardar en " + nombreArhivo;
 		return false;
@@ -102,6 +103,8 @@ bool System::Guardar(string nombreArhivo, vector<T> &A_Guardar, bool sobreEscrib
 	archi.close();
 	return true;
 }
+
+
 
 template <typename T>
 bool System::Eliminar(size_t id, vector<T>&v){

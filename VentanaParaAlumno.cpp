@@ -368,8 +368,8 @@ void VentanaParaAlumno::Onclick_Boton_Buscar_Frase( wxCommandEvent& event )  {
 	if(m_radio_Libros->GetValue()){
 		palabra=mtext_Buscador_frase->GetValue().ToStdString();
 		Buscador navega;
-		vector<size_t> resultadoBusqueda = navega.BusquedaAmpliada(fraseBusqueda);
-		vLibros = sistema.LeerDelBin<Libro>(resultadoBusqueda,sistema.libros());
+		vector<size_t> resultadoBusqueda = navega.BusquedaAmpliada(palabra);
+		vLibros = sistema->LeerDelBin<Libro>(resultadoBusqueda,sistema->libros());
 		MostrarLibros(vLibros);
 	}
 	

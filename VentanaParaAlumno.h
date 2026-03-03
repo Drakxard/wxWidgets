@@ -27,7 +27,7 @@ private:
 	
 protected:
 	void OnButtonClickDevolucion( wxCommandEvent& event )  override;
-	void MostrarLibros();
+	void MostrarLibros(vector<Libro>vLibros);
 	void OnLeftUpVerLibro( wxMouseEvent& event ) ;
 	void OnButtonClickAgregar( wxCommandEvent& event )  override;
 	void OnButtonClickEliminar( wxCommandEvent& event )  override;

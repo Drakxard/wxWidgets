@@ -7,7 +7,7 @@
 using namespace std;
 struct Tags{
 	size_t IdTag;
-	size_t VerID(){return IdTag;}
+	size_t VerID()const{return IdTag;}
 	char NombreTag[50];
 	size_t InicioBloque;
 	bool existe;

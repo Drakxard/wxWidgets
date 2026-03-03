@@ -26,7 +26,7 @@ Bloques::~Bloques(){
 
 Tags Bloques::AgregarNuevoTag(string nombreTag){
 	modificacion = true;
-	
+	System sistema;
 	
 	Tags nuevoTag;
 	nuevoTag.IdTag = CantidadTags;
@@ -44,7 +44,7 @@ Tags Bloques::AgregarNuevoTag(string nombreTag){
 	bloqueNuevo.CantidadElementos=0;
 	bloqueNuevo.SiguienteBloque=0;
 	cout<<endl<<"Tam asignado: "<<sizeof(bloqueNuevo)<<endl;
-	sistema->Guardar(allTags_data,bloqueNuevo,nuevoTag.IdTag);
+	sistema.Guardar(allTags_data,bloqueNuevo,nuevoTag.IdTag);
 	return nuevoTag;
 	
 	
@@ -64,15 +64,15 @@ size_t Bloques::AgregarNuevoBloque(){
 
 bool Bloques::AgregarNuevoElemento(size_t IdTag, size_t idLibro){
 	modificacion = true;
-	
-	Bloque aux = sistema->VerContenido(allTags_data,IdTag);
+	System sistema;
+	Bloque aux = sistema.VerContenido(allTags_data,IdTag);
 	
 
 	aux.Elementos[aux.CantidadElementos]=idLibro;
 	++aux.CantidadElementos;
 	cout<<endl<<"Nueva cantidad de elementos: "<<aux.CantidadElementos;
 	
-	sistema->Guardar(allTags_data,aux,IdTag);
+	sistema.Guardar(allTags_data,aux,IdTag);
 	
 	return true;
 }
