@@ -79,7 +79,7 @@ void DialogoReservar::OnCalendarCambioMes(wxCalendarEvent& event) {
 	event.Skip();
 }
 
-void DialogoReservar::OnCalendarSeleccion(wxCalendarEvent& event) {
+
 	void DialogoReservar::OnCalendarSeleccion(wxCalendarEvent& event) {
 		// === NUEVA LÓGICA DE SANCIÓN ===
 		if (alumnoReserva.VerEstadoDeSancion()) {
@@ -184,4 +184,8 @@ void DialogoReservar::OnBotonConfirmarClick( wxCommandEvent& event ) {
 	
 	wxMessageBox("El rango de fechas ha sido reservado con exito.", "Reserva Confirmada", wxOK | wxICON_INFORMATION, this);
 	EndModal(wxID_OK);
+}
+void DialogoReservar::OnBotonCancelarClick( wxCommandEvent& event ) {
+	// Cierra el diálogo y devuelve un código de cancelación
+	EndModal(wxID_CANCEL); 
 }

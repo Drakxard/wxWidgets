@@ -2,13 +2,11 @@
 #define DIALOGOAGREGAREDITAR_H
 #include "ProyBaseAgregarEditarLibro.h"
 #include "Funcionalidades/libro/libro.h"
-#include "Funcionalidades/buscador/buscador.h"
 
 class DialogoAgregarEditar : public MyDialogAgregarEditarLibro {
 	
 private:
 	Libro actual;
-	Buscador navega;
 protected:
 	void OnclikButtonClickEdicion( wxCommandEvent& event )  override;
 	

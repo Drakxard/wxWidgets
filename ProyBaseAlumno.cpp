@@ -23,7 +23,7 @@ MyFrameInicioCorrectoAlumno::MyFrameInicioCorrectoAlumno( wxWindow* parent, wxWi
 	bSizer9 = new wxBoxSizer( wxHORIZONTAL );
 
 	mtext_Buscador_frase = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer9->Add( mtext_Buscador_frase, 1, wxALL, 5 );
+	bSizer9->Add( mtext_Buscador_frase, 1, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 
 	Boton_Buscar_Frase = new wxButton( this, wxID_ANY, wxT("Buscar"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer9->Add( Boton_Buscar_Frase, 0, wxALL, 5 );
@@ -122,7 +122,7 @@ MyFrameInicioCorrectoAlumno::MyFrameInicioCorrectoAlumno( wxWindow* parent, wxWi
 	bSizer301->Add( m_calendar1, 0, wxALL, 5 );
 
 
-	bSizerContenedorAlumnos111->Add( bSizer301, 0, 0, 5 );
+	bSizerContenedorAlumnos111->Add( bSizer301, 0, wxALIGN_CENTER_HORIZONTAL, 5 );
 
 	wxBoxSizer* bSizer31;
 	bSizer31 = new wxBoxSizer( wxHORIZONTAL );

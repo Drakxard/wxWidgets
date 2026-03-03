@@ -1,12 +1,7 @@
 #include "DialogoEditarLibro.h"
 
-<<<<<<< Updated upstream
-
-
-=======
 // 1. ¡AQUÍ ESTÁ EL CAMBIO IMPORTANTE! 
 // Cambiar : MyDialogEditarLibro(parent) por : MyDialogAgregarEditarLibro(parent)
->>>>>>> Stashed changes
 DialogoEditarLibro::DialogoEditarLibro(wxWindow *parent) : MyDialogAgregarEditarLibro(parent) {
 	
 }
@@ -19,11 +14,3 @@ void DialogoEditarLibro::OnclikButtonClickEdicion( wxCommandEvent& event ) {
 DialogoEditarLibro::~DialogoEditarLibro() {
 	
 }
-<<<<<<< Updated upstream
-
-void DialogoEditarLibro::OnclikButtonClickEdicion( wxCommandEvent& event )  {
-	event.Skip();
-}
-
-=======
->>>>>>> Stashed changes

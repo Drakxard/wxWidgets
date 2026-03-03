@@ -215,7 +215,7 @@ void DialogoPrestamo::ValidarPrestamo() {
 	}
 }
 
-void DialogoPrestamo::OnConfirmarPrestamoClick(wxCommandEvent& event) {
+
 	void DialogoPrestamo::OnConfirmarPrestamoClick(wxCommandEvent& event) {
 		// === NUEVA LÓGICA DE SANCIÓN ===
 		if (alumnoSeleccionado.VerEstadoDeSancion()) {
