@@ -627,15 +627,5 @@ void VentanaParaAlumno::OnButtonclick_Sacar_Sancion( wxCommandEvent& event )  {
 	CargarListaAlumnos(m_list_Alumnos);
 }
 
-void VentanaParaAlumno::Onclick_Boton_Buscar_Autor( wxCommandEvent& event )  {
-	if(m_radio_InfoLibros->GetValue()){
-		string palabra=mtext_Buscador_Autor->GetValue().ToStdString();
-		vector<Libro>vResultadoLibro;
-		vResultadoLibro.clear();
-		vResultadoLibro = navega.Busqueda_Autor(palabra,vLibros );
-		MuestraListaResultado_Autor(m_list_InfoLibros, palabra,vResultadoLibro);
-	}
-	
-	this->Layout();
-}
+
 

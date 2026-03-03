@@ -26,7 +26,6 @@ private:
 	vector<Reservas>vReservas;
 	
 protected:
-	void Onclick_Boton_Buscar_Autor( wxCommandEvent& event )  ;
 	void OnButtonClickDevolucion( wxCommandEvent& event )  override;
 	void MostrarLibros();
 	void OnLeftUpVerLibro( wxMouseEvent& event ) ;

@@ -40,8 +40,6 @@ class MyFrameInicioCorrectoAlumno : public wxFrame
 	protected:
 		wxTextCtrl* mtext_Buscador_frase;
 		wxButton* Boton_Buscar_Frase;
-		wxTextCtrl* mtext_Buscador_Autor;
-		wxButton* Boton_Buscar_Autor;
 		wxRadioButton* m_radio_Libros;
 		wxRadioButton* m_radio_InfoLibros;
 		wxRadioButton* m_radio_Reservar;
@@ -84,7 +82,6 @@ class MyFrameInicioCorrectoAlumno : public wxFrame
 
 		// Virtual event handlers, override them in your derived class
 		virtual void Onclick_Boton_Buscar_Frase( wxCommandEvent& event ) { event.Skip(); }
-		virtual void Onclick_Boton_Buscar_Autor( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRadioButton_CambiaPestana( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickAgregar( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickHistorialLibro( wxCommandEvent& event ) { event.Skip(); }
