@@ -20,13 +20,19 @@ MyFrameInicioCorrectoAlumno::MyFrameInicioCorrectoAlumno( wxWindow* parent, wxWi
 	bSizerBuscador = new wxBoxSizer( wxVERTICAL );
 
 	wxBoxSizer* bSizer9;
-	bSizer9 = new wxBoxSizer( wxHORIZONTAL );
+	bSizer9 = new wxBoxSizer( wxVERTICAL );
 
 	mtext_Buscador_frase = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer9->Add( mtext_Buscador_frase, 1, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	bSizer9->Add( mtext_Buscador_frase, 0, wxALL|wxALIGN_CENTER_VERTICAL|wxEXPAND, 5 );
 
 	Boton_Buscar_Frase = new wxButton( this, wxID_ANY, wxT("Buscar"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer9->Add( Boton_Buscar_Frase, 0, wxALL, 5 );
+	bSizer9->Add( Boton_Buscar_Frase, 1, wxALL|wxALIGN_RIGHT, 5 );
+
+	mtext_Buscador_Autor = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer9->Add( mtext_Buscador_Autor, 1, wxALL|wxEXPAND, 5 );
+
+	Boton_Buscar_Autor = new wxButton( this, wxID_ANY, wxT("Buscar Autor"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer9->Add( Boton_Buscar_Autor, 0, wxALL|wxALIGN_RIGHT, 5 );
 
 
 	bSizerBuscador->Add( bSizer9, 0, wxEXPAND, 5 );
@@ -285,6 +291,7 @@ MyFrameInicioCorrectoAlumno::MyFrameInicioCorrectoAlumno( wxWindow* parent, wxWi
 
 	// Connect Events
 	Boton_Buscar_Frase->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrameInicioCorrectoAlumno::Onclick_Boton_Buscar_Frase ), NULL, this );
+	Boton_Buscar_Autor->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrameInicioCorrectoAlumno::Onclick_Boton_Buscar_Autor ), NULL, this );
 	m_radio_Libros->Connect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( MyFrameInicioCorrectoAlumno::OnRadioButton_CambiaPestana ), NULL, this );
 	m_radio_InfoLibros->Connect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( MyFrameInicioCorrectoAlumno::OnRadioButton_CambiaPestana ), NULL, this );
 	m_radio_Reservar->Connect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( MyFrameInicioCorrectoAlumno::OnRadioButton_CambiaPestana ), NULL, this );
@@ -313,6 +320,7 @@ MyFrameInicioCorrectoAlumno::~MyFrameInicioCorrectoAlumno()
 {
 	// Disconnect Events
 	Boton_Buscar_Frase->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrameInicioCorrectoAlumno::Onclick_Boton_Buscar_Frase ), NULL, this );
+	Boton_Buscar_Autor->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrameInicioCorrectoAlumno::Onclick_Boton_Buscar_Autor ), NULL, this );
 	m_radio_Libros->Disconnect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( MyFrameInicioCorrectoAlumno::OnRadioButton_CambiaPestana ), NULL, this );
 	m_radio_InfoLibros->Disconnect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( MyFrameInicioCorrectoAlumno::OnRadioButton_CambiaPestana ), NULL, this );
 	m_radio_Reservar->Disconnect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( MyFrameInicioCorrectoAlumno::OnRadioButton_CambiaPestana ), NULL, this );

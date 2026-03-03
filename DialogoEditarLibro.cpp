@@ -1,6 +1,8 @@
 #include "DialogoEditarLibro.h"
 
-DialogoEditarLibro::DialogoEditarLibro(wxWindow *parent) : MyDialogEditarLibro(parent) {
+
+
+DialogoEditarLibro::DialogoEditarLibro(wxWindow *parent) : MyDialogAgregarEditarLibro(parent) {
 	
 }
 
@@ -14,5 +16,9 @@ void DialogoEditarLibro::OnButtonClickCerrar( wxCommandEvent& event )  {
 
 DialogoEditarLibro::~DialogoEditarLibro() {
 	
+}
+
+void DialogoEditarLibro::OnclikButtonClickEdicion( wxCommandEvent& event )  {
+	event.Skip();
 }
 

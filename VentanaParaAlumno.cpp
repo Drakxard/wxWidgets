@@ -274,6 +274,7 @@ void VentanaParaAlumno::OnRadioButton_CambiaPestana(wxCommandEvent& event){
 	}
 	else if(m_radio_InfoLibros->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(1);
+		
 		CargarListaInfoLibros(m_list_InfoLibros);
 	}
 	else if(m_radio_Reservar->GetValue()){
@@ -363,8 +364,10 @@ void VentanaParaAlumno::Onclick_Boton_Buscar_Frase( wxCommandEvent& event )  {
 	string palabra;
 	if(m_radio_InfoLibros->GetValue()){
 		palabra=mtext_Buscador_frase->GetValue().ToStdString();
+		vector<Libro>vResultadoLibro;
+		vResultadoLibro.clear();
 		vResultadoLibro = navega.Relacionados<Libro>(palabra,vLibros );
-		MuestraListaResultadoLibro(m_list_InfoLibros);
+		MuestraListaResultadoLibro(m_list_InfoLibros, palabra,vResultadoLibro);
 	}
 	if(m_radio_Reservar->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(2);
@@ -534,19 +537,20 @@ void VentanaParaAlumno::MuestraListaResultadoAlumno(wxListCtrl* lista){
 	lista->Thaw();	
 }
 
-void VentanaParaAlumno::MuestraListaResultadoLibro(wxListCtrl* lista){
+void VentanaParaAlumno::MuestraListaResultadoLibro(wxListCtrl* lista,string palabra, vector<Libro>vResultadoLibro){
+	
 	if(vResultadoLibro.size()==0){
 		wxMessageBox("No hay ningun libro con ese nombre","Sin coincidencias",wxOK|wxICON_INFORMATION);
 		return;
 	}
 	lista->DeleteAllItems();
 	lista->Freeze();
-	for(int i=0;i<vLibros.size();i++) { 
-		long index = lista->InsertItem(i, wxString::Format("%d", (int)vLibros[i].VerID()));
-		lista->SetItem(index, 1, vLibros[i].VerNombre() );
+	for(int i=0;i<vResultadoLibro.size();i++) { 
+		long index = lista->InsertItem(i, wxString::Format("%d", (int)vResultadoLibro[i].VerID()));
+		lista->SetItem(index, 1, vResultadoLibro[i].VerNombre() );
 		
-		if(vLibros[i].Existencia()){
-			if(vLibros[i].EstadoDisponibilidad()){
+		if(vResultadoLibro[i].Existencia()){
+			if(vResultadoLibro[i].EstadoDisponibilidad()){
 				lista->SetItem(index, 2,"Disponible" );
 			}else{
 				lista->SetItem(index, 2,"No Disponible" );
@@ -555,8 +559,37 @@ void VentanaParaAlumno::MuestraListaResultadoLibro(wxListCtrl* lista){
 			lista->SetItem(index, 2,"Borrado" );
 		}
 		
-		lista->SetItem(index, 3, vLibros[i].VerDescripcion() );
-		lista->SetItem(index, 4, vLibros[i].VerAutores() );
+		lista->SetItem(index, 3,vResultadoLibro[i].VerDescripcion() );
+		lista->SetItem(index, 4, vResultadoLibro[i].VerAutores() );
+	}
+
+	
+	lista->Thaw();
+	
+}
+void VentanaParaAlumno::MuestraListaResultado_Autor(wxListCtrl* lista,string palabra, vector<Libro>vResultadoLibro){
+	if(vResultadoLibro.size()==0){
+		wxMessageBox("No hay ningun autor con ese nombre","Sin coincidencias",wxOK|wxICON_INFORMATION);
+		return;
+	}
+	lista->DeleteAllItems();
+	lista->Freeze();
+	for(int i=0;i<vResultadoLibro.size();i++) { 
+		long index = lista->InsertItem(i, wxString::Format("%d", (int)vResultadoLibro[i].VerID()));
+		lista->SetItem(index, 1, vResultadoLibro[i].VerNombre() );
+		
+		if(vResultadoLibro[i].Existencia()){
+			if(vResultadoLibro[i].EstadoDisponibilidad()){
+				lista->SetItem(index, 2,"Disponible" );
+			}else{
+				lista->SetItem(index, 2,"No Disponible" );
+			}
+		}else{
+			lista->SetItem(index, 2,"Borrado" );
+		}
+		
+		lista->SetItem(index, 3, vResultadoLibro[i].VerDescripcion() );
+		lista->SetItem(index, 4, vResultadoLibro[i].VerAutores() );
 	}
 
 	
@@ -593,3 +626,16 @@ void VentanaParaAlumno::OnButtonclick_Sacar_Sancion( wxCommandEvent& event )  {
 	}
 	CargarListaAlumnos(m_list_Alumnos);
 }
+
+void VentanaParaAlumno::Onclick_Boton_Buscar_Autor( wxCommandEvent& event )  {
+	if(m_radio_InfoLibros->GetValue()){
+		string palabra=mtext_Buscador_Autor->GetValue().ToStdString();
+		vector<Libro>vResultadoLibro;
+		vResultadoLibro.clear();
+		vResultadoLibro = navega.Busqueda_Autor(palabra,vLibros );
+		MuestraListaResultado_Autor(m_list_InfoLibros, palabra,vResultadoLibro);
+	}
+	
+	this->Layout();
+}
+

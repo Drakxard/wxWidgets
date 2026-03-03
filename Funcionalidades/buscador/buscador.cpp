@@ -66,6 +66,24 @@ vector<size_t> Buscador::OrdenarAscendente(vector<size_t>v){
 	
 }
 
+vector<Libro>Buscador:: Busqueda_Autor(string autorBuscado, vector<Libro>&v){
+	vector<Libro> aux;
+	auto encontrado = v.begin();
+	size_t pos=0;
+	cout<<endl<<"Autor buscado: "<<autorBuscado<<endl;
+	while(encontrado!=v.end()){
+
+		encontrado = find_if(v.begin()+pos,v.end(),[autorBuscado](const Libro& a){
+			cout<<endl<<"Autores de libro : "<< a.VerAutores()<<endl;
+			return a.VerAutores() == autorBuscado;
+		});
+		if(encontrado== v.end()){break;}
+		
+		aux.push_back(*encontrado);
+		pos=(encontrado-v.begin())+1;
+	}
+	return aux;
+}
 	
 	
 

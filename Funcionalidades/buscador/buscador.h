@@ -25,6 +25,7 @@ public:
 	vector<size_t> OrdenarAscendente(vector<size_t>v);
 	template <typename T>
 	vector<T> Relacionados(string palabraBuscada, vector<T>&v);
+	vector<Libro> Busqueda_Autor(string autorBuscado, vector<Libro>&v);
 	vector<size_t> ResultadoBusqueda(vector<size_t>&All_IDs);
 };
 template <typename T>
