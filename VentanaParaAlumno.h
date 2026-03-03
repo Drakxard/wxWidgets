@@ -24,7 +24,7 @@ private:
 	vector<Bibliotecario> vBibliotecario;vector<Bibliotecario>vResultadoBibliotecario;
 	vector<Libro>vLibros;  
 	vector<Reservas>vReservas;
-	
+
 protected:
 	void OnButtonClickDevolucion( wxCommandEvent& event )  override;
 	void MostrarLibros(vector<Libro>vLibros);
@@ -46,6 +46,7 @@ protected:
 	void CargarListaAlumnos(wxListCtrl* lista);
 	void CargarListaBibliotecario(wxListCtrl* lista);
 	void CargarListaSancionados(wxListCtrl* lista);
+	void CargarListaSancionadosMultas(wxListCtrl* lista);
 	
 	void MuestraListaResultadoBibliotecario(wxListCtrl* lista);
 	void MuestraListaResultadoAlumno(wxListCtrl* lista);

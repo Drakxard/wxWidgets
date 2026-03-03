@@ -12,6 +12,7 @@
 #include <wx/wrapsizer.h>
 #include "DialogoAgregarEditar.h"
 #include <wx/msgdlg.h>
+#include "multa.h"
 
 using namespace std;
 
@@ -56,6 +57,9 @@ VentanaParaAlumno::VentanaParaAlumno(wxWindow *parent, Alumno actualAlumno) : My
 	m_list_Sancionados->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
 	m_list_Sancionados->InsertColumn(1, "Nombre", wxLIST_FORMAT_LEFT, 200);
 	m_list_Sancionados->InsertColumn(2, "Dni", wxLIST_FORMAT_LEFT, 100);
+	m_list_Sancionados->InsertColumn(3, "Valor de Multa", wxLIST_FORMAT_LEFT, 100);
+	m_list_Sancionados->InsertColumn(4, "Incremento Diario", wxLIST_FORMAT_LEFT, 100);
+	
 	m_list_Sancionados->SetSingleStyle(wxLC_HRULES | wxLC_VRULES); 
 	
 	m_list_Bibliotecarios->DeleteAllColumns();
@@ -183,7 +187,25 @@ void VentanaParaAlumno::CargarListaSancionados(wxListCtrl* lista){
 				lista->SetItem(index, 2, wxString(to_string(sancionados[i].VerDNI())));
 			}
 		}
-	lista->Thaw();	
+	lista->Thaw();
+}
+
+void VentanaParaAlumno::CargarListaSancionadosMultas(wxListCtrl* lista){
+	lista->DeleteAllItems();
+	lista->Freeze();
+	vector<multa>multados=sistema->VerContenido<multa>(sistema->multas(),true);
+	
+	for(int i=0;i<multados.size();i++) { 		
+		long index = lista->InsertItem(i, wxString::Format("%d", (int)multados[i].VerID()));
+		lista->SetItem(index, 1, multados[i].VerNombre() );
+		lista->SetItem(index, 2, wxString(to_string(multados[i].VerDNI())));
+		cout<<"Dni: "<<multados[i].VerDNI()<<endl;
+		lista->SetItem(index, 3, wxString(to_string(multados[i].VerMultaActual())));
+		lista->SetItem(index, 4, wxString(to_string(multados[i].VerIncrementoActual())));
+		
+	}
+	
+	lista->Thaw();
 }
 
 void VentanaParaAlumno::CargarListaBibliotecario(wxListCtrl* lista){
@@ -297,7 +319,7 @@ void VentanaParaAlumno::OnRadioButton_CambiaPestana(wxCommandEvent& event){
 	}
 	else if(m_radio_Sancionados->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(6);
-		CargarListaSancionados(m_list_Sancionados);
+		CargarListaSancionadosMultas(m_list_Sancionados);
 	}
 	this->Layout();
 }
@@ -371,8 +393,8 @@ void VentanaParaAlumno::Onclick_Boton_Buscar_Frase( wxCommandEvent& event )  {
 		vector<size_t> resultadoBusqueda = navega.BusquedaAmpliada(palabra);
 		vLibros = sistema->LeerDelBin<Libro>(resultadoBusqueda,sistema->libros());
 		MostrarLibros(vLibros);
-	}
-	
+		}
+
 	if(m_radio_InfoLibros->GetValue()){
 		palabra=mtext_Buscador_frase->GetValue().ToStdString();
 		vector<Libro>vResultadoLibro;
@@ -615,9 +637,17 @@ void VentanaParaAlumno::OnButtonclick_Sancionar( wxCommandEvent& event )  {
 		wxString idStr = m_list_Alumnos->GetItemText(fila, 0);
 		long idReal;
 		idStr.ToLong(&idReal);
-		
 		Bibliotecario admin(sistema);
 		admin.Sancionar(idReal, true);
+		int ultimo = sistema->VerUltimo<multa>(sistema->multas());
+		
+		size_t valor, incremento;
+		valor = 2000;
+		incremento = 1500;
+		
+		multa Nueva(ultimo+1,vAlumno[idReal].VerDNI(),vAlumno[idReal].VerNombre(),valor,incremento);
+		sistema->AlUltimo<multa>(sistema->multas(),Nueva);
+		
 		wxMessageBox("Sancionado", "Ejecucion Realizada", wxOK|wxICON_INFORMATION);
 	}
 	CargarListaAlumnos(m_list_Alumnos);

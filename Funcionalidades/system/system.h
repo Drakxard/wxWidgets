@@ -34,8 +34,9 @@ class System{
 	string pathbibliotecarios = "Recursos/Binarios/bibliotecarios.bin";
 	string pathetiquetas = "Recursos/Binarios/Tags/Tags.bin";
 	string pathHistorial= "Recursos/Binarios/Historial.bin";
-	
 	string pathLibroNotFount ="Recursos/img/not_found.jpg";
+	string pathMultados = "Recursos/Binarios/multados.bin";
+	
 public:
 	System(){};
 	
@@ -65,7 +66,7 @@ public:
 	string bibliotecarios(){return pathbibliotecarios;}
 	string etiquetas(){return pathetiquetas;}
 	string historial(){return pathHistorial;}
-	
+	string multas(){return pathMultados;}
 	template<typename S>
 		int Verificar_Existencia_Vector(int dni, vector<S>&v);
 	template<typename S>

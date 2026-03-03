@@ -5,6 +5,7 @@
 #include "VentanaParaBibliotecario.h"
 #include "VentanaCrearCuenta.h"
 #include "VentanaParaAlumno.h"
+#include "DialogoMulta.h"
 
 using namespace std;
 
@@ -43,11 +44,17 @@ void VentanaLogin::OnclikBienvenido_Iniciar( wxCommandEvent& event )  {
 		int PosAlumno = BuscarDniEnAlumnos(dni,vectorAlumnos);
 		if(PosAlumno!= -1){
 			if(vectorAlumnos[PosAlumno].Existencia()){
-				alumn = ObjetoCorrespondienteAlumno(PosAlumno, vectorAlumnos); 
-				///MenuAlumno
-				VentanaParaAlumno *ventana = new VentanaParaAlumno(NULL,alumn);
-				ventana->Show();
-				this->Close();
+				if(vectorAlumnos[PosAlumno].VerEstadoDeSancion()){
+					DialogoMulta *ventana = new DialogoMulta(NULL,alumn.VerDNI());
+					ventana->Show();
+					this->Hide();
+				}else{
+					alumn = ObjetoCorrespondienteAlumno(PosAlumno, vectorAlumnos); 
+					///MenuAlumno
+					VentanaParaAlumno *ventana = new VentanaParaAlumno(NULL,alumn);
+					ventana->Show();
+					this->Close();
+				}
 			}
 		}else{
 			///cout<<"No est?s en el sistema... Registrandote"<<endl;
