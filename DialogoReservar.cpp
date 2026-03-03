@@ -80,13 +80,22 @@ void DialogoReservar::OnCalendarCambioMes(wxCalendarEvent& event) {
 }
 
 void DialogoReservar::OnCalendarSeleccion(wxCalendarEvent& event) {
-	wxDateTime fechaSeleccionada = event.GetDate();
-	
-	// No permitir elegir fines de semana o días ocupados
-	if (fechaSeleccionada.GetWeekDay() == wxDateTime::Sat || fechaSeleccionada.GetWeekDay() == wxDateTime::Sun) {
-		wxMessageBox("No se pueden seleccionar los fines de semana.", "Aviso", wxOK | wxICON_WARNING, this);
-		return;
-	}
+	void DialogoReservar::OnCalendarSeleccion(wxCalendarEvent& event) {
+		// === NUEVA LÓGICA DE SANCIÓN ===
+		if (alumnoReserva.VerEstadoDeSancion()) {
+			wxMessageBox("No puedes elegir fechas porque te encuentras sancionado.", "Alumno Sancionado", wxOK | wxICON_ERROR, this);
+			return;
+		}
+		// ===============================
+		
+		wxDateTime fechaSeleccionada = event.GetDate();
+		
+		// No permitir elegir fines de semana o días ocupados
+		if (fechaSeleccionada.GetWeekDay() == wxDateTime::Sat || fechaSeleccionada.GetWeekDay() == wxDateTime::Sun) {
+			wxMessageBox("No se pueden seleccionar los fines de semana.", "Aviso", wxOK | wxICON_WARNING, this);
+			return;
+		}
+		// ... (el resto del código de la función se mantiene igual)
 	if (EsFechaReservada(fechaSeleccionada)) {
 		wxMessageBox("Este dia ya se encuentra reservado.", "Aviso", wxOK | wxICON_WARNING, this);
 		return;
@@ -137,6 +146,13 @@ void DialogoReservar::OnCalendarSeleccion(wxCalendarEvent& event) {
 
 // === BOTONES ===
 void DialogoReservar::OnBotonConfirmarClick( wxCommandEvent& event ) {
+	// === NUEVA LÓGICA DE SANCIÓN ===
+	if (alumnoReserva.VerEstadoDeSancion()) {
+		wxMessageBox("No puedes reservar libros porque te encuentras sancionado. Comunicate con un bibliotecario.", "Alumno Sancionado", wxOK | wxICON_ERROR, this);
+		return;
+	}
+	// ===============================
+	
 	if (estadoSeleccion == 0) {
 		wxMessageBox("Haga clic en una fecha de inicio y una fecha de fin en el calendario.", "Error", wxOK | wxICON_ERROR, this);
 		return;
@@ -152,7 +168,6 @@ void DialogoReservar::OnBotonConfirmarClick( wxCommandEvent& event ) {
 	wxDateTime iterador = fechaInicio;
 	
 	// Bucle para guardar CADA DÍA del rango seleccionado en el archivo binario
-	// CORRECCIÓN: iterador <= fechaFin
 	while (iterador.IsEarlierThan(fechaFin) || iterador.IsSameDate(fechaFin)) {
 		// Por seguridad, evitamos guardar los fines de semana si quedaron en el medio
 		if (iterador.GetWeekDay() != wxDateTime::Sat && iterador.GetWeekDay() != wxDateTime::Sun) {
@@ -169,8 +184,4 @@ void DialogoReservar::OnBotonConfirmarClick( wxCommandEvent& event ) {
 	
 	wxMessageBox("El rango de fechas ha sido reservado con exito.", "Reserva Confirmada", wxOK | wxICON_INFORMATION, this);
 	EndModal(wxID_OK);
-}
-
-void DialogoReservar::OnBotonCancelarClick( wxCommandEvent& event ) {
-	EndModal(wxID_CANCEL);
 }

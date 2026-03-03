@@ -1,24 +1,29 @@
 #include "DialogoEditarLibro.h"
 
+<<<<<<< Updated upstream
 
 
+=======
+// 1. ¡AQUÍ ESTÁ EL CAMBIO IMPORTANTE! 
+// Cambiar : MyDialogEditarLibro(parent) por : MyDialogAgregarEditarLibro(parent)
+>>>>>>> Stashed changes
 DialogoEditarLibro::DialogoEditarLibro(wxWindow *parent) : MyDialogAgregarEditarLibro(parent) {
 	
 }
 
-void DialogoEditarLibro::m_button_NuevoElemento_cancelar( wxCommandEvent& event )  {
-	event.Skip();
-}
-
-void DialogoEditarLibro::OnButtonClickCerrar( wxCommandEvent& event )  {
+// 2. Implementar el evento que sí existe
+void DialogoEditarLibro::OnclikButtonClickEdicion( wxCommandEvent& event ) {
 	event.Skip();
 }
 
 DialogoEditarLibro::~DialogoEditarLibro() {
 	
 }
+<<<<<<< Updated upstream
 
 void DialogoEditarLibro::OnclikButtonClickEdicion( wxCommandEvent& event )  {
 	event.Skip();
 }
 
+=======
+>>>>>>> Stashed changes

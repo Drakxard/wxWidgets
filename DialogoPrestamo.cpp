@@ -216,7 +216,15 @@ void DialogoPrestamo::ValidarPrestamo() {
 }
 
 void DialogoPrestamo::OnConfirmarPrestamoClick(wxCommandEvent& event) {
-	int seleccionIndex = m_listaResultadosLibros->GetSelectedRow();
+	void DialogoPrestamo::OnConfirmarPrestamoClick(wxCommandEvent& event) {
+		// === NUEVA LÓGICA DE SANCIÓN ===
+		if (alumnoSeleccionado.VerEstadoDeSancion()) {
+			wxMessageBox("El alumno se encuentra sancionado y no puede pedir libros en prestamo.", "Alumno Sancionado", wxOK | wxICON_ERROR, this);
+			return;
+		}
+		// ===============================
+		
+		int seleccionIndex = m_listaResultadosLibros->GetSelectedRow();
 //	
 	if (seleccionIndex == wxNOT_FOUND) {
 		wxMessageBox("Selecciona un libro.", "Error");

@@ -133,6 +133,7 @@ void DialogoDevolucion::OnConfirmarDevolucion(wxCommandEvent& event) {
 	sistema.Guardar("Recursos/Binarios/LibrosPrestamosActivos.bin", activosActualizados, true);
 	
 	// 4. Guardar en el Historial definitivo
+	// 4. Guardar en el Historial definitivo y Verificar Sanción
 	if (encontrado) {
 		Historial historial;
 		wxDateTime fechaHoy = wxDateTime::Today(); // Fecha en que realmente devolvió el libro
@@ -146,6 +147,31 @@ void DialogoDevolucion::OnConfirmarDevolucion(wxCommandEvent& event) {
 								   prestamoQueSeDevuelve.dia_Prestamo, prestamoQueSeDevuelve.mes_Prestamo, prestamoQueSeDevuelve.anio_Prestamo, // Día de inicio
 								   2
 								   );
+		
+		// === LÓGICA DE SANCIÓN POR RETRASO ===
+		// Armamos la fecha límite (restamos 1 al mes porque wxDateTime va de 0 a 11)
+		wxDateTime fechaLimite(prestamoQueSeDevuelve.dia_Devolucion, 
+							   (wxDateTime::Month)(prestamoQueSeDevuelve.mes_Devolucion - 1), 
+								prestamoQueSeDevuelve.anio_Devolucion);
+		
+		if (fechaHoy.IsLaterThan(fechaLimite)) {
+			// Sancionamos en la variable actual
+			alumnoSeleccionado.Sancionar(true); 
+			
+			// Guardamos la sanción en el archivo binario de alumnos
+			std::vector<Alumno> listaAlumnos = sistema.VerContenido<Alumno>(sistema.alumnos(), true);
+			for (auto& alu : listaAlumnos) {
+				if (alu.VerID() == alumnoSeleccionado.VerID()) {
+					alu.Sancionar(true); // Aplicamos la sanción al alumno en la lista
+					break;
+				}
+			}
+			// Sobreescribimos el archivo alumnos.bin con el vector actualizado
+			sistema.Guardar(sistema.alumnos(), listaAlumnos, true);
+			
+			wxMessageBox("El libro fue devuelto fuera de la fecha limite. El alumno ha sido sancionado.", "Aviso de Sancion", wxOK | wxICON_WARNING, this);
+		}
+		// =====================================
 	}
 	
 	wxMessageBox("¡El libro ha sido devuelto exitosamente!\nYa se encuentra disponible en la biblioteca.", "Devolución Exitosa", wxICON_INFORMATION);
