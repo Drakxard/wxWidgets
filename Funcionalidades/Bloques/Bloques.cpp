@@ -24,58 +24,29 @@ Bloques::~Bloques(){
 	}}
 
 
-	Bloque Bloques::VerContenido(string nombreArchivo,size_t NroBloque){
-		ifstream archi(nombreArchivo,ios::binary);
-		if(!archi)
-			throw runtime_error("Error al Recuperar de " + nombreArchivo);
-		
-		Bloque aux;
-		archi.seekg(sizeof(Bloque)*NroBloque);
-		archi.read(reinterpret_cast<char*>(&(aux)),sizeof(aux));
-		archi.close();
-		return aux;
-	}
-	bool Bloques::Guardar(string nombreArhivo, Bloque &A_Guardar, size_t Pos)
-	{
-		fstream archi(nombreArhivo, ios::binary | ios::in | ios::out);
-		
-		if (!archi) {
-			ofstream crear(nombreArhivo, ios::binary);
-			/*crear.close();*/
-			archi.open(nombreArhivo, ios::binary | ios::in | ios::out);
-			
-		}
-		
-		if (!archi){
-			cerr<<"Error al guardar en " + nombreArhivo;
-			return false;
-		}
-		archi.seekp(sizeof(Bloque) * Pos);
-		archi.write(reinterpret_cast<const char *>(&(A_Guardar)), sizeof(Bloque));
-		archi.close();
-		return true;
-	}
-	
-	
-Tags Bloques::AgregarNuevoTag(string Nombre){
+Tags Bloques::AgregarNuevoTag(string nombreTag){
 	modificacion = true;
 	
 	
 	Tags nuevoTag;
 	nuevoTag.IdTag = CantidadTags;
 	++CantidadTags;
-//	nuevoTag.existe=true;
+
 	
-	strncpy(nuevoTag.NombreTag, Nombre.c_str(), 49);
+	strncpy(nuevoTag.NombreTag, nombreTag.c_str(), 49);
 	nuevoTag.NombreTag[49] = '\0';
-	//nuevoTag.InicioBloque = UltimaDireccion;
+	nuevoTag.InicioBloque = UltimaDireccion;
+	cout<<"Bloque Inicia en:"<<nuevoTag.InicioBloque<<endl;
 	UltimaDireccion += TamBloque;
+	cout<<"Bloque Finaliza en:"<<UltimaDireccion-1<<endl;
 	///Asignar Bloque
 	Bloque bloqueNuevo;
 	bloqueNuevo.CantidadElementos=0;
 	bloqueNuevo.SiguienteBloque=0;
-	Guardar(allTags_data,bloqueNuevo,nuevoTag.IdTag);
+	cout<<endl<<"Tam asignado: "<<sizeof(bloqueNuevo)<<endl;
+	sistema->Guardar(allTags_data,bloqueNuevo,nuevoTag.IdTag);
 	return nuevoTag;
+	
 	
 }
 
@@ -94,19 +65,19 @@ size_t Bloques::AgregarNuevoBloque(){
 bool Bloques::AgregarNuevoElemento(size_t IdTag, size_t idLibro){
 	modificacion = true;
 	
-	Bloque aux = VerContenido(allTags_data,IdTag);
+	Bloque aux = sistema->VerContenido(allTags_data,IdTag);
 	
 
 	aux.Elementos[aux.CantidadElementos]=idLibro;
 	++aux.CantidadElementos;
 	cout<<endl<<"Nueva cantidad de elementos: "<<aux.CantidadElementos;
 	
-	Guardar(allTags_data,aux,IdTag);
+	sistema->Guardar(allTags_data,aux,IdTag);
 	
 	return true;
 }
 vector<size_t> Bloques::LeerTodosLosElementos(size_t IdTag){
-	Bloque aux = VerContenido(allTags_data,IdTag);
+	Bloque aux = sistema->VerContenido(allTags_data,IdTag);
 	vector<size_t> resultado;
 	bool parar = false;
 	while(!parar){
@@ -116,7 +87,7 @@ vector<size_t> Bloques::LeerTodosLosElementos(size_t IdTag){
 		}
 		
 		if(aux.SiguienteBloque!= 0){
-			aux = VerContenido(allTags_data,aux.SiguienteBloque);
+			aux = sistema->VerContenido(allTags_data,aux.SiguienteBloque);
 		}else{parar = true;}
 	}
 	return resultado;

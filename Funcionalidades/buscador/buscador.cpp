@@ -4,20 +4,56 @@
 #include <algorithm>
 #include "../Bloques/Bloques.h"
 #include "../bibliotecario/bibliotecario.h"
-#include "../alumno/alumno.h"
+#include <cctype>
 using namespace std;
+///FALTA VISUALIZAR Y TESTEAR QUE ANDE ESTO
+void Buscador::GenerarDiccionarioGlobal(){
+	sistema = new System();
+	vector<Libro>DicLibros = sistema->VerContenido<Libro>(sistema->libros(),true);
+	
+	vector<Tags>DicTags = sistema->VerContenido<Tags>(sistema->etiquetas(),true);;
+	vector<string>PalabrasParciales;
+	vector<string>PalabrasExtraidas;
+	for(size_t i = 0; i<DicLibros.size();++i){
+		///Descomponer NOMBRE
+		PalabrasParciales = ExtraerPalabras(DicLibros[i].VerNombre());
+		PalabrasExtraidas.insert(PalabrasExtraidas.end(), PalabrasParciales.begin(), PalabrasParciales.end());
+		///Descomponer Autores
+		
+		//PalabrasParciales = ExtraerPalabras(DicLibros[i].VerAutores(),true);
+		//PalabrasExtraidas.insert(PalabrasExtraidas.end(), PalabrasParciales.begin(), PalabrasParciales.end());
+	}
+
+	///Y deben ser char, de una tama�o fijo para guardar, 30
+	
+	Tags aux;
+	Bloques allTags;
+	int ultimo = sistema->VerUltimo<Tags>(sistema->etiquetas());
+	string path = sistema->etiquetas();
+	for(string& palabra: PalabrasExtraidas){
+		aux = allTags.AgregarNuevoTag(palabra);
+		sistema->AlUltimo<Tags>(path,aux);
+	}
+}
+
+Buscador::~Buscador(){
+	delete sistema;
+}
+
+
 vector<size_t> Buscador::BusquedaSimple(string nombreBuscado)
 {
-	
 	string nombreArchivo = diccionario.VerPathEtiquetas();
-	cout<<endl<<"Archivo a abrir: "<<nombreArchivo<<endl;
-
-
 
 	vector<Tags> contenedor;
 	contenedor = sistema->VerContenido<Tags>(nombreArchivo,true);
 	vector<Tags>::iterator buscado = find_if(contenedor.begin(),contenedor.end(),[nombreBuscado](const Tags& a){
-		return a.NombreTag == nombreBuscado;
+		string r= a.NombreTag;
+		for(char &letra : r){
+			letra =tolower(letra);
+		}
+		
+		return r == nombreBuscado;
 	});
 	///Para la comparaciï¿½n, si no es la palabra exacta falla
 	///estaria bueno hacer por prefijo, truncar diccionario
@@ -36,7 +72,8 @@ vector<size_t> Buscador::BusquedaAmpliada(string nombreBuscado){
 	vector<size_t> resultadoParcial;
 	vector<size_t>resultado;
 	for(size_t i = 0; i<palabras.size();++i){
-		resultadoParcial = BusquedaSimple(nombreBuscado);
+
+		resultadoParcial = BusquedaSimple(palabras[i]);
 		resultado.insert(resultado.end(), resultadoParcial.begin(), resultadoParcial.end());
 	}
 	
@@ -45,17 +82,30 @@ vector<size_t> Buscador::BusquedaAmpliada(string nombreBuscado){
 	return resultado;
 }
 
-vector<string> Buscador::ExtraerPalabras(string nombreBuscado){
+vector<string> Buscador::ExtraerPalabras(string nombreBuscado, bool coma){
 	vector<string> resultado;
 	string palabra;
+	char condicional;
+	if(coma){
+		condicional = ',';
+	}else{
+		condicional = ' ';
+	}
 	cout<<endl<<nombreBuscado.length()<<endl;
 	for(size_t i= 0; i< nombreBuscado.length(); ++i){
-		if(nombreBuscado[i]!=' '){
+		if(nombreBuscado[i]!=condicional){
 			palabra += nombreBuscado[i];
 		}else{
+			for(char &letra : palabra){
+				letra =tolower(letra);
+			}
 			resultado.push_back(palabra);
+			
 			palabra="";
 		}
+	}
+	for(char &letra : palabra){
+		letra =tolower(letra);
 	}
 	resultado.push_back(palabra);
 	return resultado;
@@ -65,21 +115,19 @@ vector<size_t> Buscador::OrdenarAscendente(vector<size_t>v){
 	return v;
 	
 }
-
-vector<Libro>Buscador:: Busqueda_Autor(string autorBuscado, vector<Libro>&v){
-	vector<Libro> aux;
+template <typename T>
+vector<T>Buscador:: Relacionados(string palabraBuscada, vector<T>&v){
+	vector<T> aux;
 	auto encontrado = v.begin();
 	size_t pos=0;
-	cout<<endl<<"Autor buscado: "<<autorBuscado<<endl;
 	while(encontrado!=v.end()){
-
-		encontrado = find_if(v.begin()+pos,v.end(),[autorBuscado](const Libro& a){
-			cout<<endl<<"Autores de libro : "<< a.VerAutores()<<endl;
-			return a.VerAutores() == autorBuscado;
+		encontrado = find_if(v.begin()+pos,v.end(),[palabraBuscada](const T& a){
+			
+			return a.VerNombre() == palabraBuscada;
 		});
 		if(encontrado== v.end()){break;}
 		
-		aux.push_back(*encontrado);
+		aux.push_back(*encontrado);//Devuelve posiciones
 		pos=(encontrado-v.begin())+1;
 	}
 	return aux;
@@ -125,9 +173,9 @@ vector<Libro>Buscador:: Busqueda_Autor(string autorBuscado, vector<Libro>&v){
 		return resultado;
 }	
 	
-
-
-	
-	
+template vector<Alumno>Buscador:: Relacionados(string palabraBuscada, vector<Alumno>&v);
+template vector<Libro>Buscador:: Relacionados(string palabraBuscada, vector<Libro>&v);
+template vector<Bibliotecario>Buscador:: Relacionados(string palabraBuscada, vector<Bibliotecario>&v);
+		
 	
 	

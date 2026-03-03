@@ -72,7 +72,8 @@ VentanaParaAlumno::VentanaParaAlumno(wxWindow *parent, Alumno actualAlumno) : My
 			m_panel_Bibliotecario_Libros->SetVirtualSize(m_panel_Bibliotecario_Libros->GetSizer()->CalcMin());
 		}
 	});
-	MostrarLibros();
+	vLibros = sistema->VerContenido<Libro>(sistema->libros(), true);
+	MostrarLibros(vLibros);
 }
 
 VentanaParaAlumno::~VentanaParaAlumno() {	
@@ -82,17 +83,16 @@ VentanaParaAlumno::~VentanaParaAlumno() {
 	}
 }
 
-void VentanaParaAlumno::MostrarLibros(){
+void VentanaParaAlumno::MostrarLibros(vector<Libro>aMostrar){
 	m_panel_Bibliotecario_Libros->DestroyChildren(); 
 	
-	vLibros = sistema->VerContenido<Libro>(sistema->libros(), true);
 	wxWrapSizer* sizerGrilla = new wxWrapSizer(wxHORIZONTAL);
 	
-	for (size_t i = 0; i < vLibros.size(); i++) {
+	for (size_t i = 0; i < aMostrar.size(); i++) {
 		wxBoxSizer* sizerLibroIndividual = new wxBoxSizer(wxVERTICAL);
 		
-		wxString nombreStr = wxString::FromUTF8(vLibros[i].VerNombre());
-		wxString rutaStr = wxString::FromUTF8(vLibros[i].VerPath());
+		wxString nombreStr = wxString::FromUTF8(aMostrar[i].VerNombre());
+		wxString rutaStr = wxString::FromUTF8(aMostrar[i].VerPath());
 		
 		wxStaticText* textoTitulo = new wxStaticText(m_panel_Bibliotecario_Libros, wxID_ANY, nombreStr);
 		wxFont fuenteTitulo = textoTitulo->GetFont();
@@ -145,7 +145,8 @@ void VentanaParaAlumno::OnLeftUpVerLibro(wxMouseEvent& event) {
 	if (indiceVector >= 0 && indiceVector < vLibros.size()) {
 		DialogoVerLibro *nueva = new DialogoVerLibro(this, vLibros[indiceVector], actualAlumno);
 		if (nueva->ShowModal() == wxID_OK){
-			MostrarLibros();
+			vLibros = sistema->VerContenido<Libro>(sistema->libros(), true);
+			MostrarLibros(vLibros);
 		}
 		nueva->Destroy();
 	}
@@ -269,7 +270,8 @@ void VentanaParaAlumno::CargarListaEtiquetas(wxListCtrl* lista){
 
 void VentanaParaAlumno::OnRadioButton_CambiaPestana(wxCommandEvent& event){
 	if(m_radio_Libros->GetValue()){
-		MostrarLibros();
+		vLibros = sistema->VerContenido<Libro>(sistema->libros(), true);
+		MostrarLibros(vLibros);
 		m_Bibliotecario_frameActual->SetSelection(0);
 	}
 	else if(m_radio_InfoLibros->GetValue()){
@@ -362,6 +364,15 @@ void VentanaParaAlumno::OnButtonClickHistorialAlumno( wxCommandEvent& event )  {
 
 void VentanaParaAlumno::Onclick_Boton_Buscar_Frase( wxCommandEvent& event )  {
 	string palabra;
+	
+	if(m_radio_Libros->GetValue()){
+		palabra=mtext_Buscador_frase->GetValue().ToStdString();
+		Buscador navega;
+		vector<size_t> resultadoBusqueda = navega.BusquedaAmpliada(fraseBusqueda);
+		vLibros = sistema.LeerDelBin<Libro>(resultadoBusqueda,sistema.libros());
+		MostrarLibros(vLibros);
+	}
+	
 	if(m_radio_InfoLibros->GetValue()){
 		palabra=mtext_Buscador_frase->GetValue().ToStdString();
 		vector<Libro>vResultadoLibro;
