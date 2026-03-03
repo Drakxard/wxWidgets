@@ -3,6 +3,7 @@
 #include "ProyBaseAgregar.h"
 #include <string>
 #include "Funcionalidades/Bloques/Bloques.h"
+#include "Funcionalidades/buscador/buscador.h"
 
 using namespace std;
 class Bibliotecario;
@@ -18,7 +19,7 @@ private:
 	Tags auxTags;
 	Bloques allTags;
 	
-	
+	Buscador navega;
 protected:
 	void onTextEnter_Bienvenido_Confirmar( wxCommandEvent& event )  override;
 	void OnButtonClickCerrar( wxCommandEvent& event )  override;

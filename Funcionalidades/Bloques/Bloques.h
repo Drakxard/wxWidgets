@@ -38,7 +38,7 @@ class Bloques {
 public:
 	Bloques();
 	~Bloques();
-	Tags AgregarNuevoTag(string nombreTag);
+	Tags AgregarNuevoTag(string nombreTag,size_t idLibro);
 	size_t AgregarNuevoBloque();
 	vector<size_t>LeerTodosLosElementos(size_t IdTag);
 	bool AgregarNuevoElemento(size_t IdTag, size_t idLibro);

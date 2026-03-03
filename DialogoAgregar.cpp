@@ -27,6 +27,7 @@ void DialogoAgregar::OnclikNuevoElemento( wxCommandEvent& event )  {
 		Libro aux(sistema->VerUltimo<Libro>(path)+1,nombre.c_str());
 		///agregar path de imagen
 		aux.CambiarPath(sistema->noLibroImg().c_str());
+		navega.GenerarDiccionarioGlobal(aux);
 		sistema->AlUltimo<Libro>(sistema->libros(),aux);
 		
 	}

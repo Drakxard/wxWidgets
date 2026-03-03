@@ -15,7 +15,6 @@ tab_use_spaces=0
 explorer_path=.
 inspection_improving_template=wxString|>printf "%ls",${EXP}.m_impl._M_data()
 inherits_from=
-current_source=Funcionalidades\system\system.h
 path_char=\
 [source]
 path=Application.cpp
@@ -36,13 +35,13 @@ path=Funcionalidades\libro\libro.cpp
 cursor=8:0
 [source]
 path=Funcionalidades\buscador\buscador.cpp
-cursor=34:1
+cursor=4:27
 [source]
 path=Funcionalidades\Persona\persona.cpp
 cursor=15:1
 [source]
 path=Funcionalidades\Bloques\Bloques.cpp
-cursor=43:21
+cursor=1:4
 [source]
 path=Funcionalidades\bibliotecario\bibliotecario.cpp
 cursor=82:2
@@ -54,7 +53,7 @@ path=Funcionalidades\login\login.cpp
 cursor=0:0
 [source]
 path=Funcionalidades\system\system.cpp
-cursor=0:0
+cursor=1:0
 [source]
 path=Funcionalidades\alumno\alumno.cpp
 cursor=0:0
@@ -75,7 +74,7 @@ path=VentanaLogin.cpp
 cursor=49:1
 [source]
 path=VentanaParaAlumno.cpp
-cursor=367:2
+cursor=370:0
 [source]
 path=VentanaPrincipal.cpp
 cursor=0:0
@@ -93,7 +92,7 @@ path=ProyCrearBaseCuenta.cpp
 cursor=7:0
 [source]
 path=DialogoAgregar.cpp
-cursor=39:2
+cursor=6:14
 [source]
 path=DialogoAgregarPersona.cpp
 cursor=46:0
@@ -132,7 +131,7 @@ path=ProyBaseAgregarEditarLibro.cpp
 cursor=0:0
 [source]
 path=DialogoAgregarEditar.cpp
-cursor=46:12
+cursor=28:5
 [source]
 path=DialogoDevolucion.cpp
 cursor=76:26
@@ -158,13 +157,13 @@ path=Funcionalidades\libro\libro.h
 cursor=29:7
 [header]
 path=Funcionalidades\buscador\buscador.h
-cursor=10:4
+cursor=21:30
 [header]
 path=Funcionalidades\Persona\persona.h
 cursor=24:2
 [header]
 path=Funcionalidades\Bloques\Bloques.h
-cursor=7:0
+cursor=40:46
 [header]
 path=Funcionalidades\bibliotecario\bibliotecario.h
 cursor=30:17
@@ -176,8 +175,7 @@ path=Funcionalidades\login\login.h
 cursor=0:0
 [header]
 path=Funcionalidades\system\system.h
-cursor=168:0
-open=true
+cursor=224:17
 [header]
 path=Funcionalidades\alumno\alumno.h
 cursor=8:7
@@ -198,7 +196,7 @@ path=VentanaLogin.h
 cursor=10:10
 [header]
 path=VentanaParaAlumno.h
-cursor=27:10
+cursor=29:33
 [header]
 path=VentanaPrincipal.h
 cursor=0:0
@@ -216,7 +214,7 @@ path=ProyCrearBaseCuenta.h
 cursor=0:0
 [header]
 path=DialogoAgregar.h
-cursor=2:28
+cursor=14:0
 [header]
 path=DialogoAgregarPersona.h
 cursor=2:35
@@ -255,7 +253,7 @@ path=ProyBaseAgregarEditarLibro.h
 cursor=0:0
 [header]
 path=DialogoAgregarEditar.h
-cursor=8:5
+cursor=10:7
 [header]
 path=DialogoDevolucion.h
 cursor=22:2

@@ -19,7 +19,7 @@ class Buscador{
 public:
 	Buscador(){}
 	~Buscador();
-	void GenerarDiccionarioGlobal();
+	void GenerarDiccionarioGlobal(Libro actual);
 	vector<size_t> BusquedaSimple(string nombreBuscado);
 	vector<size_t> BusquedaAmpliada(string nombreBuscado);
 	vector<string> ExtraerPalabras(string nombreBuscado, bool coma=false);

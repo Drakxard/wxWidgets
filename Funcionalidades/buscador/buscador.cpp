@@ -7,33 +7,22 @@
 #include <cctype>
 using namespace std;
 ///FALTA VISUALIZAR Y TESTEAR QUE ANDE ESTO
-void Buscador::GenerarDiccionarioGlobal(){
+void Buscador::GenerarDiccionarioGlobal(Libro actual){
 	sistema = new System();
-	vector<Libro>DicLibros = sistema->VerContenido<Libro>(sistema->libros(),true);
-	
-	vector<Tags>DicTags = sistema->VerContenido<Tags>(sistema->etiquetas(),true);;
+	Bloques allTags;
+	string path = sistema->etiquetas();
 	vector<string>PalabrasParciales;
-	vector<string>PalabrasExtraidas;
-	for(size_t i = 0; i<DicLibros.size();++i){
-		///Descomponer NOMBRE
-		PalabrasParciales = ExtraerPalabras(DicLibros[i].VerNombre());
-		PalabrasExtraidas.insert(PalabrasExtraidas.end(), PalabrasParciales.begin(), PalabrasParciales.end());
-		///Descomponer Autores
+	Tags aux;
+		PalabrasParciales = ExtraerPalabras(actual.VerNombre());
+		
+		for(string& palabra: PalabrasParciales){
+			aux = allTags.AgregarNuevoTag(palabra,actual.VerID());
+			sistema->AlUltimo<Tags>(path,aux);
+		}	
 		
 		//PalabrasParciales = ExtraerPalabras(DicLibros[i].VerAutores(),true);
 		//PalabrasExtraidas.insert(PalabrasExtraidas.end(), PalabrasParciales.begin(), PalabrasParciales.end());
-	}
-
-	///Y deben ser char, de una tamaño fijo para guardar, 30
 	
-	Tags aux;
-	Bloques allTags;
-	int ultimo = sistema->VerUltimo<Tags>(sistema->etiquetas());
-	string path = sistema->etiquetas();
-	for(string& palabra: PalabrasExtraidas){
-		aux = allTags.AgregarNuevoTag(palabra);
-		sistema->AlUltimo<Tags>(path,aux);
-	}
 }
 
 Buscador::~Buscador(){

@@ -48,6 +48,8 @@ void DialogoAgregarEditar::OnclikButtonClickEdicion( wxCommandEvent& event )  {
 		Nuevo.CambiarDescripcion(m_textCtrlEdicionDescipcion->GetValue().utf8_str());
 		Nuevo.CambiarAutores(m_textCtrlEdicionAutor->GetValue().utf8_str());
 		
+		navega.GenerarDiccionarioGlobal(Nuevo);
+		
 		sistema.AlUltimo<Libro>(sistema.libros(),Nuevo);
 		EndModal(wxID_OK);
 	
