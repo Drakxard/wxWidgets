@@ -15,17 +15,18 @@
 #include <wx/font.h>
 #include <wx/colour.h>
 #include <wx/settings.h>
+#include <wx/combobox.h>
 #include <wx/button.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/icon.h>
 #include <wx/sizer.h>
 #include <wx/radiobut.h>
+#include <wx/panel.h>
+#include <wx/simplebook.h>
 #include <wx/scrolwin.h>
 #include <wx/listctrl.h>
-#include <wx/panel.h>
 #include <wx/calctrl.h>
-#include <wx/simplebook.h>
 #include <wx/frame.h>
 
 ///////////////////////////////////////////////////////////////////////////
@@ -39,6 +40,7 @@ class MyFrameInicioCorrectoAlumno : public wxFrame
 
 	protected:
 		wxTextCtrl* mtext_Buscador_frase;
+		wxComboBox* m_comboBox1;
 		wxButton* Boton_Buscar_Frase;
 		wxButton* m_button18;
 		wxRadioButton* m_radio_Libros;
@@ -48,6 +50,23 @@ class MyFrameInicioCorrectoAlumno : public wxFrame
 		wxRadioButton* m_radio_Alumnos;
 		wxRadioButton* m_radio_Bibliotecarios;
 		wxRadioButton* m_radio_Sancionados;
+		wxSimplebook* m_panel_botones_internos;
+		wxPanel* m_panel7;
+		wxPanel* m_panel_info_Libros;
+		wxRadioButton* m_radio_nombreLibros;
+		wxRadioButton* m_radio_Autores;
+		wxRadioButton* m_radio_Etiquetas_Libros;
+		wxPanel* m_panel_Reservas;
+		wxRadioButton* m_radio_nombreLibros_Reservas;
+		wxRadioButton* m_radio_Nombre_Usuario_Reservas;
+		wxRadioButton* m_radio_Estadode_Reserva;
+		wxPanel* m_panel__Info_Alumnos;
+		wxRadioButton* m_radio_Nombre_Alumno;
+		wxRadioButton* m_radio_Dni_Alumno;
+		wxRadioButton* m_radio_Estado_Alumno;
+		wxPanel* m_panel__Info_Bibliotecarios;
+		wxRadioButton* m_radio_Nombre_Bibliotecario;
+		wxRadioButton* m_radio_Dni_Bibliotecario;
 		wxSimplebook* m_Bibliotecario_frameActual;
 		wxScrolledWindow* m_panel_Bibliotecario_Libros;
 		wxBoxSizer* bSizerLibro;

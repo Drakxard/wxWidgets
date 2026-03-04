@@ -22,7 +22,7 @@ private:
 	vector<size_t> idTags;
 	vector<Alumno> vAlumno; vector<Alumno>vResultadoAlumno;
 	vector<Bibliotecario> vBibliotecario;vector<Bibliotecario>vResultadoBibliotecario;
-	vector<Libro>vLibros;  
+	vector<Libro>vLibros;   vector<Libro>vResultadoLibro;
 	vector<Reservas>vReservas;
 
 protected:
@@ -51,8 +51,9 @@ protected:
 	
 	void MuestraListaResultadoBibliotecario(wxListCtrl* lista);
 	void MuestraListaResultadoAlumno(wxListCtrl* lista);
-	void MuestraListaResultadoLibro(wxListCtrl* lista,string palabra, vector<Libro>vResultadoLibro);
-	void MuestraListaResultado_Autor(wxListCtrl* lista,string palabra, vector<Libro>vResultadoLibro);
+	void MuestraListaResultadoLibro(wxListCtrl* lista);
+	void MuestraListaResultado_Autor(wxListCtrl* lista,string palabra);
+	void MuestraListaResultadoLibro_Disponibilidad(wxListCtrl* lista, bool disponible);
 	
 public:
 	VentanaParaAlumno(wxWindow *parent,Alumno actualAlumno);
