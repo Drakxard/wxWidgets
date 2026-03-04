@@ -1,5 +1,0 @@
-#ifndef VARIABLESNECESARIAS_H
-#define VARIABLESNECESARIAS_H
-
-
-#endif
