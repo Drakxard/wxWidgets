@@ -12,7 +12,7 @@
 #include <wx/wrapsizer.h>
 #include "DialogoAgregarEditar.h"
 #include <wx/msgdlg.h>
-#include <wx/event.h>
+#include "multa.h"
 
 using namespace std;
 
@@ -23,47 +23,47 @@ VentanaParaAlumno::VentanaParaAlumno(wxWindow *parent, Alumno actualAlumno) : My
 	
 	// Limpiamos las columnas del diseñador para forzar nuestras configuraciones sin crasheos
 	m_list_InfoLibros->DeleteAllColumns();
-	m_list_InfoLibros->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
-	m_list_InfoLibros->InsertColumn(1, "Nombre", wxLIST_FORMAT_LEFT, 200);
-	m_list_InfoLibros->InsertColumn(2, "Estado", wxLIST_FORMAT_LEFT, 100);
+	m_list_InfoLibros->InsertColumn(0, "ID",          wxLIST_FORMAT_LEFT, 50);
+	m_list_InfoLibros->InsertColumn(1, "Nombre",      wxLIST_FORMAT_LEFT, 200);
+	m_list_InfoLibros->InsertColumn(2, "Estado",      wxLIST_FORMAT_LEFT, 100);
 	m_list_InfoLibros->InsertColumn(3, "Descripcion", wxLIST_FORMAT_LEFT, 100);
-	m_list_InfoLibros->InsertColumn(4, "Autores", wxLIST_FORMAT_LEFT, 100);
-	m_list_InfoLibros->InsertColumn(5, "Etiquetas", wxLIST_FORMAT_LEFT, 100);
+	m_list_InfoLibros->InsertColumn(4, "Autores",     wxLIST_FORMAT_LEFT, 100);
+	m_list_InfoLibros->InsertColumn(5, "Etiquetas",   wxLIST_FORMAT_LEFT, 100);
 	m_list_InfoLibros->SetSingleStyle(wxLC_HRULES | wxLC_VRULES); 
 	
 	m_list_Reservas->DeleteAllColumns();
-	m_list_Reservas->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
-	m_list_Reservas->InsertColumn(1, "Nombre LIBRO", wxLIST_FORMAT_LEFT, 200);
+	m_list_Reservas->InsertColumn(0, "ID",             wxLIST_FORMAT_LEFT, 50);
+	m_list_Reservas->InsertColumn(1, "Nombre LIBRO",   wxLIST_FORMAT_LEFT, 200);
 	m_list_Reservas->InsertColumn(2, "Nombre USUARIO", wxLIST_FORMAT_LEFT, 200);
-	m_list_Reservas->InsertColumn(3, "Fecha", wxLIST_FORMAT_LEFT, 100);    // <--- NUEVA COLUMNA
-	m_list_Reservas->InsertColumn(4, "Estado", wxLIST_FORMAT_LEFT, 100);
+	m_list_Reservas->InsertColumn(3, "Fecha",          wxLIST_FORMAT_LEFT, 100);    // <--- NUEVA COLUMNA
+	m_list_Reservas->InsertColumn(4, "Estado",         wxLIST_FORMAT_LEFT, 100);
 	m_list_Reservas->SetSingleStyle(wxLC_HRULES | wxLC_VRULES);
 	
 	m_list_Etiquetas->DeleteAllColumns();
-	m_list_Etiquetas->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
+	m_list_Etiquetas->InsertColumn(0, "ID",     wxLIST_FORMAT_LEFT, 50);
 	m_list_Etiquetas->InsertColumn(1, "Nombre", wxLIST_FORMAT_LEFT, 200);
 	m_list_Etiquetas->InsertColumn(2, "Estado", wxLIST_FORMAT_LEFT, 200);
 	m_list_Etiquetas->SetSingleStyle(wxLC_HRULES | wxLC_VRULES); 
 	
 	m_list_Alumnos->DeleteAllColumns();
-	m_list_Alumnos->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
+	m_list_Alumnos->InsertColumn(0, "ID",     wxLIST_FORMAT_LEFT, 50);
 	m_list_Alumnos->InsertColumn(1, "Nombre", wxLIST_FORMAT_LEFT, 200);
-	m_list_Alumnos->InsertColumn(2, "Dni", wxLIST_FORMAT_LEFT, 100);
+	m_list_Alumnos->InsertColumn(2, "Dni",    wxLIST_FORMAT_LEFT, 100);
 	m_list_Alumnos->InsertColumn(3, "Estado", wxLIST_FORMAT_LEFT, 100);
 	m_list_Alumnos->SetSingleStyle(wxLC_HRULES | wxLC_VRULES); 
 	
-	
 	m_list_Sancionados->DeleteAllColumns();
-	m_list_Sancionados->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
-	m_list_Sancionados->InsertColumn(1, "Nombre", wxLIST_FORMAT_LEFT, 200);
-	m_list_Sancionados->InsertColumn(2, "Dni", wxLIST_FORMAT_LEFT, 100);
+	m_list_Sancionados->InsertColumn(0, "ID",                wxLIST_FORMAT_LEFT, 50);
+	m_list_Sancionados->InsertColumn(1, "Nombre",            wxLIST_FORMAT_LEFT, 200);
+	m_list_Sancionados->InsertColumn(2, "Dni",               wxLIST_FORMAT_LEFT, 100);
+	m_list_Sancionados->InsertColumn(3, "Valor de Multa",    wxLIST_FORMAT_LEFT, 100);
+	m_list_Sancionados->InsertColumn(4, "Incremento Diario", wxLIST_FORMAT_LEFT, 100);
 	m_list_Sancionados->SetSingleStyle(wxLC_HRULES | wxLC_VRULES); 
 	
 	m_list_Bibliotecarios->DeleteAllColumns();
-	m_list_Bibliotecarios->InsertColumn(0, "ID", wxLIST_FORMAT_LEFT, 50);
+	m_list_Bibliotecarios->InsertColumn(0, "ID",     wxLIST_FORMAT_LEFT, 50);
 	m_list_Bibliotecarios->InsertColumn(1, "Nombre", wxLIST_FORMAT_LEFT, 200);
-	m_list_Bibliotecarios->InsertColumn(2, "Dni", wxLIST_FORMAT_LEFT, 100);
-	
+	m_list_Bibliotecarios->InsertColumn(2, "Dni",    wxLIST_FORMAT_LEFT, 100);
 	m_list_Bibliotecarios->SetSingleStyle(wxLC_HRULES | wxLC_VRULES); 
 	
 	m_panel_Bibliotecario_Libros->Bind(wxEVT_SIZE, [this](wxSizeEvent& evento) {
@@ -73,65 +73,62 @@ VentanaParaAlumno::VentanaParaAlumno(wxWindow *parent, Alumno actualAlumno) : My
 			m_panel_Bibliotecario_Libros->SetVirtualSize(m_panel_Bibliotecario_Libros->GetSizer()->CalcMin());
 		}
 	});
+	
 	vLibros = sistema->VerContenido<Libro>(sistema->libros(), true);
 	MostrarLibros(vLibros);
 }
 
-VentanaParaAlumno::~VentanaParaAlumno() {	
-	if (sistema) {
-		delete sistema;
-		sistema = nullptr;
-	}
-}
 
-void VentanaParaAlumno::MostrarLibros(vector<Libro>aMostrar){
+void VentanaParaAlumno::MostrarLibros(vector<Libro> aMostrar) {
 	m_panel_Bibliotecario_Libros->DestroyChildren(); 
 	
 	wxWrapSizer* sizerGrilla = new wxWrapSizer(wxHORIZONTAL);
 	
 	for (size_t i = 0; i < aMostrar.size(); i++) {
-		wxBoxSizer* sizerLibroIndividual = new wxBoxSizer(wxVERTICAL);
-		
-		wxString nombreStr = wxString::FromUTF8(aMostrar[i].VerNombre());
-		wxString rutaStr = wxString::FromUTF8(aMostrar[i].VerPath());
-		
-		wxStaticText* textoTitulo = new wxStaticText(m_panel_Bibliotecario_Libros, wxID_ANY, nombreStr);
-		wxFont fuenteTitulo = textoTitulo->GetFont();
-		fuenteTitulo.SetWeight(wxFONTWEIGHT_BOLD);
-		textoTitulo->SetFont(fuenteTitulo);
-		
-		wxBitmap bitmapPortada;
-		wxImage image;
-		
-		if (!wxFileName::Exists(rutaStr)) {
-			rutaStr = wxString::FromUTF8(sistema->noLibroImg().c_str());
+		if (aMostrar[i].Existencia()) {
+			wxBoxSizer* sizerLibroIndividual = new wxBoxSizer(wxVERTICAL);
+			
+			wxString nombreStr = wxString::FromUTF8(aMostrar[i].VerNombre());
+			wxString rutaStr = wxString::FromUTF8(aMostrar[i].VerPath());
+			
+			wxStaticText* textoTitulo = new wxStaticText(m_panel_Bibliotecario_Libros, wxID_ANY, nombreStr);
+			wxFont fuenteTitulo = textoTitulo->GetFont();
+			fuenteTitulo.SetWeight(wxFONTWEIGHT_BOLD);
+			textoTitulo->SetFont(fuenteTitulo);
+			
+			wxBitmap bitmapPortada;
+			wxImage image;
+			
+			if (!wxFileName::Exists(rutaStr)) {
+				rutaStr = wxString::FromUTF8(sistema->noLibroImg().c_str());
+			}
+			
+			if (image.LoadFile(rutaStr, wxBITMAP_TYPE_ANY)) {
+				int anchoDeseado = 150;
+				int altoCalculado = image.GetHeight() * anchoDeseado / image.GetWidth();
+				image.Rescale(anchoDeseado, altoCalculado, wxIMAGE_QUALITY_HIGH);
+				bitmapPortada = wxBitmap(image);
+			} else {
+				bitmapPortada.Create(150, 200);
+				wxMemoryDC dc(bitmapPortada);
+				dc.SetBackground(*wxWHITE_BRUSH);
+				dc.Clear();
+				dc.SetTextForeground(*wxRED);
+				dc.DrawText("Sin Portada", 40, 90);
+				dc.SelectObject(wxNullBitmap);
+			}
+			
+			int idImagen = 2000 + i;
+			wxStaticBitmap* imagenPortada = new wxStaticBitmap(m_panel_Bibliotecario_Libros, idImagen, bitmapPortada);
+			
+			imagenPortada->SetCursor(wxCursor(wxCURSOR_HAND));
+			imagenPortada->Bind(wxEVT_LEFT_DOWN, &VentanaParaAlumno::OnLeftUpVerLibro, this);
+			
+			sizerLibroIndividual->Add(textoTitulo, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, 5);
+			sizerLibroIndividual->Add(imagenPortada, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, 5);
+			
+			sizerGrilla->Add(sizerLibroIndividual, 0, wxALL, 15);
 		}
-		
-		if (image.LoadFile(rutaStr, wxBITMAP_TYPE_ANY)) {
-			int anchoDeseado = 150;
-			int altoCalculado = image.GetHeight() * anchoDeseado / image.GetWidth();
-			image.Rescale(anchoDeseado, altoCalculado, wxIMAGE_QUALITY_HIGH);
-			bitmapPortada = wxBitmap(image);
-		} else {
-			bitmapPortada.Create(150, 200);
-			wxMemoryDC dc(bitmapPortada);
-			dc.SetBackground(*wxWHITE_BRUSH);
-			dc.Clear();
-			dc.SetTextForeground(*wxRED);
-			dc.DrawText("Sin Portada", 40, 90);
-			dc.SelectObject(wxNullBitmap);
-		}
-		
-		int idImagen = 2000 + i;
-		wxStaticBitmap* imagenPortada = new wxStaticBitmap(m_panel_Bibliotecario_Libros, idImagen, bitmapPortada);
-		
-		imagenPortada->SetCursor(wxCursor(wxCURSOR_HAND));
-		imagenPortada->Bind(wxEVT_LEFT_DOWN, &VentanaParaAlumno::OnLeftUpVerLibro, this);
-		
-		sizerLibroIndividual->Add(textoTitulo, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, 5);
-		sizerLibroIndividual->Add(imagenPortada, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, 5);
-		
-		sizerGrilla->Add(sizerLibroIndividual, 0, wxALL, 15);
 	}
 	
 	m_panel_Bibliotecario_Libros->SetSizer(sizerGrilla);
@@ -141,13 +138,20 @@ void VentanaParaAlumno::MostrarLibros(vector<Libro>aMostrar){
 	m_panel_Bibliotecario_Libros->SetVirtualSize(sizerGrilla->CalcMin());
 }
 
+VentanaParaAlumno::~VentanaParaAlumno() {	
+	if (sistema) {
+		delete sistema;
+		sistema = nullptr;
+	}
+}
+
+
 void VentanaParaAlumno::OnLeftUpVerLibro(wxMouseEvent& event) {
 	int indiceVector = event.GetId() - 2000; 
 	if (indiceVector >= 0 && indiceVector < vLibros.size()) {
 		DialogoVerLibro *nueva = new DialogoVerLibro(this, vLibros[indiceVector], actualAlumno);
 		if (nueva->ShowModal() == wxID_OK){
 			vLibros = sistema->VerContenido<Libro>(sistema->libros(), true);
-			MostrarLibros(vLibros);
 		}
 		nueva->Destroy();
 	}
@@ -184,7 +188,25 @@ void VentanaParaAlumno::CargarListaSancionados(wxListCtrl* lista){
 				lista->SetItem(index, 2, wxString(to_string(sancionados[i].VerDNI())));
 			}
 		}
-	lista->Thaw();	
+	lista->Thaw();
+}
+
+void VentanaParaAlumno::CargarListaSancionadosMultas(wxListCtrl* lista){
+	lista->DeleteAllItems();
+	lista->Freeze();
+	vector<multa>multados=sistema->VerContenido<multa>(sistema->multas(),true);
+	
+	for(int i=0;i<multados.size();i++) { 		
+		long index = lista->InsertItem(i, wxString::Format("%d", (int)multados[i].VerID()));
+		lista->SetItem(index, 1, multados[i].VerNombre() );
+		lista->SetItem(index, 2, wxString(to_string(multados[i].VerDNI())));
+		cout<<"Dni: "<<multados[i].VerDNI()<<endl;
+		lista->SetItem(index, 3, wxString(to_string(multados[i].VerMultaActual())));
+		lista->SetItem(index, 4, wxString(to_string(multados[i].VerIncrementoActual())));
+		
+	}
+	
+	lista->Thaw();
 }
 
 void VentanaParaAlumno::CargarListaBibliotecario(wxListCtrl* lista){
@@ -277,13 +299,12 @@ void VentanaParaAlumno::OnRadioButton_CambiaPestana(wxCommandEvent& event){
 	}
 	else if(m_radio_InfoLibros->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(1);
+		
 		CargarListaInfoLibros(m_list_InfoLibros);
-		m_panel_botones_internos->SetSelection(1);
 	}
 	else if(m_radio_Reservar->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(2);
 		CargarListaReservar(m_list_Reservas);
-		m_panel_botones_internos->SetSelection(2);
 	}
 	else if(m_radio_Etiquetas->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(3);
@@ -292,7 +313,6 @@ void VentanaParaAlumno::OnRadioButton_CambiaPestana(wxCommandEvent& event){
 	else if(m_radio_Alumnos->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(4);
 		CargarListaAlumnos(m_list_Alumnos);
-		m_panel_botones_internos->SetSelection(3);
 	}				
 	else if(m_radio_Bibliotecarios->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(5);
@@ -300,8 +320,7 @@ void VentanaParaAlumno::OnRadioButton_CambiaPestana(wxCommandEvent& event){
 	}
 	else if(m_radio_Sancionados->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(6);
-		
-		CargarListaSancionados(m_list_Sancionados);
+		CargarListaSancionadosMultas(m_list_Sancionados);
 	}
 	this->Layout();
 }
@@ -375,86 +394,32 @@ void VentanaParaAlumno::Onclick_Boton_Buscar_Frase( wxCommandEvent& event )  {
 		vector<size_t> resultadoBusqueda = navega.BusquedaAmpliada(palabra);
 		vLibros = sistema->LeerDelBin<Libro>(resultadoBusqueda,sistema->libros());
 		MostrarLibros(vLibros);
-		
-	}else if(m_radio_InfoLibros->GetValue()){
+		}
+
+	if(m_radio_InfoLibros->GetValue()){
 		palabra=mtext_Buscador_frase->GetValue().ToStdString();
-		
+		vector<Libro>vResultadoLibro;
 		vResultadoLibro.clear();
 		vResultadoLibro = navega.Relacionados<Libro>(palabra,vLibros );
-		MuestraListaResultadoLibro(m_list_InfoLibros);
-		
-		if(m_radio_nombreLibros->GetValue()){
-			
-			vResultadoLibro.clear();
-			vResultadoLibro = navega.Busqueda_Libro(2,palabra,vLibros );
-			MuestraListaResultadoLibro(m_list_InfoLibros);
-			
-		}else if(m_radio_Autores->GetValue()){
-			vResultadoLibro.clear();
-			vResultadoLibro = navega.Busqueda_Libro(1,palabra,vLibros );
-			MuestraListaResultadoLibro(m_list_InfoLibros);
-		}else if(m_radio_Etiquetas_Libros->GetValue()){
-			//-----------
-		}
-		
-	}else if(m_radio_Reservar->GetValue()){
+		MuestraListaResultadoLibro(m_list_InfoLibros, palabra,vResultadoLibro);
+	}
+	if(m_radio_Reservar->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(2);
 		CargarListaReservar(m_list_Reservas);
-		if(m_radio_nombreLibros_Reservas->GetValue()){
-			vResultadoLibro.clear();
-			vResultadoLibro = navega.Busqueda_Libro(2,palabra,vLibros );
-			MuestraListaResultadoLibro(m_list_Reservas);
-		}else if(m_radio_Nombre_Usuario_Reservas->GetValue()){
-			vResultadoAlumno.clear();
-			vResultadoAlumno = navega.Busqueda_Alumno(2,palabra,vAlumno );
-			MuestraListaResultadoAlumno(m_list_Alumnos);
-		}else if(m_radio_Estadode_Reserva){
-			vResultadoLibro.clear();
-			vResultadoLibro = navega.Busqueda_Libro(3,palabra,vLibros );
-			MuestraListaResultadoLibro(m_list_Reservas);
-		}
-	
-	}else if(m_radio_Etiquetas->GetValue()){
+	}
+	if(m_radio_Etiquetas->GetValue()){
 		m_Bibliotecario_frameActual->SetSelection(3);
 		CargarListaEtiquetas(m_list_Etiquetas);
 	}
 	else if(m_radio_Alumnos->GetValue()){
 		palabra=mtext_Buscador_frase->GetValue().ToStdString();
-		vResultadoAlumno.clear();
 		vResultadoAlumno = navega.Relacionados<Alumno>(palabra,vAlumno );
 		MuestraListaResultadoAlumno(m_list_Alumnos);
-		
-		if(m_radio_Nombre_Alumno->GetValue()){
-			vResultadoAlumno.clear();
-			palabra=mtext_Buscador_frase->GetValue().ToStdString();
-			vResultadoAlumno = navega.Busqueda_Alumno(2,palabra,vAlumno );
-			MuestraListaResultadoAlumno(m_list_Alumnos);
-		}else if(m_radio_Dni_Alumno->GetValue()){
-			vResultadoAlumno.clear();
-			palabra=mtext_Buscador_frase->GetValue().ToStdString();
-			vResultadoAlumno = navega.Busqueda_Alumno(1,palabra,vAlumno );
-			MuestraListaResultadoAlumno(m_list_Alumnos);
-		}else if(m_radio_Estado_Alumno->GetValue()){
-			vResultadoAlumno.clear();
-			palabra=mtext_Buscador_frase->GetValue().ToStdString();
-			vResultadoAlumno = navega.Relacionados<Alumno>(palabra,vAlumno );
-			CargarListaSancionados(m_list_Alumnos);
-		}
 	}				
 	else if(m_radio_Bibliotecarios->GetValue()){
 		palabra=mtext_Buscador_frase->GetValue().ToStdString();
 		vResultadoBibliotecario = navega.Relacionados<Bibliotecario>(palabra,vBibliotecario );
 		MuestraListaResultadoBibliotecario(m_list_Bibliotecarios);
-		
-		if(m_radio_Nombre_Bibliotecario->GetValue()){
-			palabra=mtext_Buscador_frase->GetValue().ToStdString();
-			vResultadoBibliotecario = navega.Busqueda_Bibliotecario(2,palabra,vBibliotecario );
-			MuestraListaResultadoBibliotecario(m_list_Bibliotecarios);
-		}else if(m_radio_Dni_Bibliotecario->GetValue()){
-			palabra=mtext_Buscador_frase->GetValue().ToStdString();
-			vResultadoBibliotecario = navega.Busqueda_Bibliotecario(1,palabra,vBibliotecario );
-			MuestraListaResultadoBibliotecario(m_list_Bibliotecarios);
-		}
 	}
 	this->Layout();
 }
@@ -606,7 +571,7 @@ void VentanaParaAlumno::MuestraListaResultadoAlumno(wxListCtrl* lista){
 	lista->Thaw();	
 }
 
-void VentanaParaAlumno::MuestraListaResultadoLibro(wxListCtrl* lista){
+void VentanaParaAlumno::MuestraListaResultadoLibro(wxListCtrl* lista,string palabra, vector<Libro>vResultadoLibro){
 	
 	if(vResultadoLibro.size()==0){
 		wxMessageBox("No hay ningun libro con ese nombre","Sin coincidencias",wxOK|wxICON_INFORMATION);
@@ -636,7 +601,7 @@ void VentanaParaAlumno::MuestraListaResultadoLibro(wxListCtrl* lista){
 	lista->Thaw();
 	
 }
-void VentanaParaAlumno::MuestraListaResultado_Autor(wxListCtrl* lista,string palabra){
+void VentanaParaAlumno::MuestraListaResultado_Autor(wxListCtrl* lista,string palabra, vector<Libro>vResultadoLibro){
 	if(vResultadoLibro.size()==0){
 		wxMessageBox("No hay ningun autor con ese nombre","Sin coincidencias",wxOK|wxICON_INFORMATION);
 		return;
@@ -673,9 +638,17 @@ void VentanaParaAlumno::OnButtonclick_Sancionar( wxCommandEvent& event )  {
 		wxString idStr = m_list_Alumnos->GetItemText(fila, 0);
 		long idReal;
 		idStr.ToLong(&idReal);
-		
 		Bibliotecario admin(sistema);
 		admin.Sancionar(idReal, true);
+		int ultimo = sistema->VerUltimo<multa>(sistema->multas());
+		
+		size_t valor, incremento;
+		valor = 2000;
+		incremento = 1500;
+		
+		multa Nueva(ultimo+1,vAlumno[idReal].VerDNI(),vAlumno[idReal].VerNombre(),valor,incremento);
+		sistema->AlUltimo<multa>(sistema->multas(),Nueva);
+		
 		wxMessageBox("Sancionado", "Ejecucion Realizada", wxOK|wxICON_INFORMATION);
 	}
 	CargarListaAlumnos(m_list_Alumnos);
@@ -698,32 +671,19 @@ void VentanaParaAlumno::OnButtonclick_Sacar_Sancion( wxCommandEvent& event )  {
 
 
 
-void VentanaParaAlumno::MuestraListaResultadoLibro_Disponibilidad(wxListCtrl* lista,bool disponible){
-	if(vResultadoLibro.size()==0){
-		wxMessageBox("No hay ningun libro con ese nombre","Sin coincidencias",wxOK|wxICON_INFORMATION);
-		return;
-	}
-	lista->DeleteAllItems();
-	lista->Freeze();
+void VentanaParaAlumno::OnClickButtonClickTest( wxCommandEvent& event )  {
+	string indexCabeceras="./Recursos/libros_index.txt";
 	
-	for(int i=0;i<vResultadoLibro.size();i++) { 
-		if(vResultadoLibro[i].Existencia()==disponible){
-			long index = lista->InsertItem(i, wxString::Format("%d", (int)vResultadoLibro[i].VerID()));
-			lista->SetItem(index, 1, vResultadoLibro[i].VerNombre() );
-			
-			
-			lista->SetItem(index, 3,vResultadoLibro[i].VerDescripcion() );
-			lista->SetItem(index, 4, vResultadoLibro[i].VerAutores() );
-		}else{
-			long index = lista->InsertItem(i, wxString::Format("%d", (int)vResultadoLibro[i].VerID()));
-			lista->SetItem(index, 1, vResultadoLibro[i].VerNombre() );
-			
-			
-			lista->SetItem(index, 3,vResultadoLibro[i].VerDescripcion() );
-			lista->SetItem(index, 4, vResultadoLibro[i].VerAutores() );
-		}
+	vector<Cabecera> resultado = sistema->CargarDesdeTxt(indexCabeceras);
+	int ultimo = sistema->VerUltimo<Libro>(sistema->libros());
+	string path = sistema->libros();
+	for(Cabecera& x: resultado){
+		++ultimo;
+		Libro aux(ultimo,x.nombre);
+		aux.CambiarPath(x.path);
+		navega.GenerarDiccionarioGlobal(aux);
+		sistema->AlUltimo<Libro>(path, aux);
 	}
-	
-	lista->Thaw();
 	
 }
+

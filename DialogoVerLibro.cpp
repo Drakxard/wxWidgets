@@ -12,9 +12,15 @@ DialogoVerLibro::DialogoVerLibro(wxWindow *parent, Libro& actual, Alumno & actua
 	m_staticText_DescripcionValor->SetLabel(actual.VerDescripcion());
 	m_staticAutorValor->SetLabel(actual.VerAutores());
 	
-	/// 2. Asignar imagen
+	/// 2. Asignar imagen con validación por defecto
+	wxString rutaImagen = wxString::FromUTF8(actual.VerPath());
 	wxImage img;
-	if (img.LoadFile(actual.VerPath(), wxBITMAP_TYPE_ANY)) {
+	
+	if (!wxFileExists(rutaImagen) || !img.LoadFile(rutaImagen, wxBITMAP_TYPE_ANY)) {
+		img.LoadFile("Recursos/img/not_found.jpg", wxBITMAP_TYPE_ANY);
+	}
+	
+	if (img.IsOk()) {
 		m_bitmapCabeceraLbro->SetBitmap(wxBitmap(img));
 	}
 	
@@ -25,7 +31,7 @@ DialogoVerLibro::DialogoVerLibro(wxWindow *parent, Libro& actual, Alumno & actua
 	int cantTags = 3;
 	
 	for (int i = 0; i < cantTags; i++) {
-		wxButton* btnTag = new wxButton(this, wxID_ANY, std::to_string(tags[i]));
+		wxButton* btnTag = new wxButton(this, wxID_ANY, std::to_string(tags[i].etiqueta[i]));
 		bSizerContendorTags->Add(btnTag, 0, wxALL, 5); /// bSizer28 es donde van los tags según tu imagen
 		
 		/// Vincular al evento común
@@ -34,7 +40,6 @@ DialogoVerLibro::DialogoVerLibro(wxWindow *parent, Libro& actual, Alumno & actua
 	
 	this->Layout(); 
 }
-
 /// 4. Implementación del evento común (declarar en el .h)
 void DialogoVerLibro::OnTagClick(wxCommandEvent& event) {
 	wxButton* btn = dynamic_cast<wxButton*>(event.GetEventObject());

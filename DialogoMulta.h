@@ -11,9 +11,8 @@ private:
 protected:
 	
 public:
-	void EncontrarMulta(size_t Dnimultado);
 	void CargarLibrosPrestados();
-	DialogoMulta(wxWindow *parent, size_t Dnimultado);
+	DialogoMulta(wxWindow *parent, multa multado);
 	~DialogoMulta();
 };
 

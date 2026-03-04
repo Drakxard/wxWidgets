@@ -12,12 +12,22 @@ void Buscador::GenerarDiccionarioGlobal(Libro actual){
 	Bloques allTags;
 	string path = sistema->etiquetas();
 	vector<string>PalabrasParciales;
+	vector<Tags>diccionarioActual = sistema->VerContenido<Tags>(sistema->etiquetas(),true);
 	Tags aux;
+	bool Esta=false;
 		PalabrasParciales = ExtraerPalabras(actual.VerNombre());
 		
 		for(string& palabra: PalabrasParciales){
-			aux = allTags.AgregarNuevoTag(palabra,actual.VerID());
-			sistema->AlUltimo<Tags>(path,aux);
+			for(Tags& x: diccionarioActual){
+				if(palabra == x.NombreTag){
+					Esta = true;
+					allTags.AgregarNuevoElemento(x.VerID(),actual.VerID());
+				}
+			}
+			if(!Esta){
+				aux = allTags.AgregarNuevoTag(palabra,actual.VerID());
+				sistema->AlUltimo<Tags>(path,aux);
+			}
 		}	
 		
 		//PalabrasParciales = ExtraerPalabras(DicLibros[i].VerAutores(),true);

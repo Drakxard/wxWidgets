@@ -45,9 +45,16 @@ void VentanaLogin::OnclikBienvenido_Iniciar( wxCommandEvent& event )  {
 		if(PosAlumno!= -1){
 			if(vectorAlumnos[PosAlumno].Existencia()){
 				if(vectorAlumnos[PosAlumno].VerEstadoDeSancion()){
-					DialogoMulta *ventana = new DialogoMulta(NULL,alumn.VerDNI());
-					ventana->Show();
-					this->Hide();
+					vector<multa>r= sistema.VerContenido<multa>(sistema.multas(),true);
+					size_t dni = vectorAlumnos[PosAlumno].VerDNI();
+					for(multa x:r){
+						if(x.VerDNI()==dni){
+							DialogoMulta *ventana = new DialogoMulta(NULL,x);
+							ventana->Show();
+							this->Hide();	
+						}
+					}
+					
 				}else{
 					alumn = ObjetoCorrespondienteAlumno(PosAlumno, vectorAlumnos); 
 					///MenuAlumno
