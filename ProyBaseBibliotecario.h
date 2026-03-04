@@ -21,11 +21,11 @@
 #include <wx/icon.h>
 #include <wx/sizer.h>
 #include <wx/radiobut.h>
-#include <wx/stattext.h>
-#include <wx/statbmp.h>
 #include <wx/panel.h>
-#include <wx/listctrl.h>
 #include <wx/simplebook.h>
+#include <wx/scrolwin.h>
+#include <wx/listctrl.h>
+#include <wx/calctrl.h>
 #include <wx/frame.h>
 
 ///////////////////////////////////////////////////////////////////////////
@@ -42,53 +42,77 @@ class MyFrameInicioCorrectoBibliotecario : public wxFrame
 		wxButton* Boton_Buscar_Frase;
 		wxRadioButton* m_radio_Libros;
 		wxRadioButton* m_radio_InfoLibros;
+		wxRadioButton* m_radio_Reservar;
 		wxRadioButton* m_radio_Etiquetas;
 		wxRadioButton* m_radio_Alumnos;
 		wxRadioButton* m_radio_Bibliotecarios;
+		wxRadioButton* m_radio_Sancionados;
+		wxSimplebook* m_panel_botones_internos;
+		wxPanel* m_panel7;
+		wxPanel* m_panel_info_Libros;
+		wxRadioButton* m_radio_nombreLibros;
+		wxRadioButton* m_radio_Autores;
+		wxRadioButton* m_radio_Etiquetas_Libros;
+		wxPanel* m_panel_Reservas;
+		wxRadioButton* m_radio_nombreLibros_Reservas;
+		wxRadioButton* m_radio_Nombre_Usuario_Reservas;
+		wxRadioButton* m_radio_Estadode_Reserva;
+		wxPanel* m_panel__Info_Alumnos;
+		wxRadioButton* m_radio_Nombre_Alumno;
+		wxRadioButton* m_radio_Dni_Alumno;
+		wxRadioButton* m_radio_Estado_Alumno;
+		wxPanel* m_panel__Info_Bibliotecarios;
+		wxRadioButton* m_radio_Nombre_Bibliotecario;
+		wxRadioButton* m_radio_Dni_Bibliotecario;
 		wxSimplebook* m_Bibliotecario_frameActual;
-		wxPanel* m_panel_Bibliotecario_Libros;
-		wxStaticText* m_staticText4;
-		wxStaticBitmap* m_bitmap2;
-		wxButton* m_button19;
-		wxStaticText* m_staticText18;
-		wxButton* m_button20;
+		wxScrolledWindow* m_panel_Bibliotecario_Libros;
+		wxBoxSizer* bSizerLibro;
 		wxPanel* m_panel_DetallesLibros;
-		wxListCtrl* m_list_libros;
+		wxListCtrl* m_list_InfoLibros;
 		wxButton* m_button131;
 		wxButton* m_button21;
 		wxButton* m_button201;
-		wxButton* m_button16;
 		wxButton* m_button141;
+		wxPanel* m_panel_Reservar;
+		wxCalendarCtrl* m_calendar1;
+		wxListCtrl* m_list_Reservas;
+		wxButton* m_button14111;
 		wxPanel* m_panel_DetallesEtiquetas;
-		wxListCtrl* m_list_Alumnos11;
+		wxListCtrl* m_list_Etiquetas;
 		wxButton* m_button1311;
-		wxButton* m_button22;
 		wxButton* m_button1411;
 		wxPanel* m_panel_Alumnos;
 		wxListCtrl* m_list_Alumnos;
 		wxButton* m_button13;
-		wxButton* m_button14;
-		wxButton* m_button142;
-		wxButton* m_button15;
 		wxButton* m_button17;
-		wxButton* m_button18;
+		wxButton* m_button142;
+		wxButton* m_button170;
+		wxButton* m_button171;
+		wxButton* m_button14;
+		wxButton* m_button15;
 		wxPanel* m_panel_Bibliotecarios;
 		wxListCtrl* m_list_Bibliotecarios;
+		wxButton* m_button132;
 		wxButton* button_eliminar;
+		wxPanel* m_panel_Sancionados;
+		wxListCtrl* m_list_Sancionados;
 
 		// Virtual event handlers, override them in your derived class
 		virtual void Onclick_Boton_Buscar_Frase( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRadioButton_CambiaPestana( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonClickAgregar( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonClickHistorialLibro( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonClickEliminar( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickPrestarLibro( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnButtonClickHistorialAlumno( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonClickDevolucion( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonclick_Sancionar( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonclick_Sacar_Sancion( wxCommandEvent& event ) { event.Skip(); }
-		virtual void onclickbutton_eliminar( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonClickHistorialAlumno( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:
 
-		MyFrameInicioCorrectoBibliotecario( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("BIBLIOTECARIO"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 514,420 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		MyFrameInicioCorrectoBibliotecario( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("BIBLIOTECARIO"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~MyFrameInicioCorrectoBibliotecario();
 

@@ -35,6 +35,40 @@ DialogoVerLibro::DialogoVerLibro(wxWindow *parent, Libro& actual, Alumno & actua
 	this->Layout(); 
 }
 
+DialogoVerLibro::DialogoVerLibro(wxWindow *parent, Libro& actual, Bibliotecario & actualBibliotecario) : MyDialogVerLibro(parent) {
+	this->actual = actual;
+	this->actualBibliotecario =  actualBibliotecario;
+	
+	/// 1. Asignar textos (ajusta los métodos Get a los de tu clase)
+	m_staticNombreLibro->SetLabel(actual.VerNombre());
+	m_staticText_DescripcionValor->SetLabel(actual.VerDescripcion());
+	m_staticAutorValor->SetLabel(actual.VerAutores());
+	
+	/// 2. Asignar imagen
+	wxImage img;
+	if (img.LoadFile(actual.VerPath(), wxBITMAP_TYPE_ANY)) {
+		m_bitmapCabeceraLbro->SetBitmap(wxBitmap(img));
+	}
+	
+	/// 3. Crear botones dinámicos de tags (máximo 3)
+	/// Asegúrate de borrar los botones "Tags1" y "Tag2" de prueba en wxFormBuilder
+	/*int a = 2;
+	int *tags = &a; 
+	int cantTags = 3;
+	
+	for (int i = 0; i < cantTags; i++) {
+		wxButton* btnTag = new wxButton(this, wxID_ANY, std::to_string(tags[i]));
+		bSizerContendorTags->Add(btnTag, 0, wxALL, 5); /// bSizer28 es donde van los tags según tu imagen
+		
+		/// Vincular al evento común
+		btnTag->Bind(wxEVT_BUTTON, &DialogoVerLibro::OnTagClick, this);
+	}
+	*/
+	this->Layout(); 
+}
+
+
+
 /// 4. Implementación del evento común (declarar en el .h)
 void DialogoVerLibro::OnTagClick(wxCommandEvent& event) {
 	wxButton* btn = dynamic_cast<wxButton*>(event.GetEventObject());

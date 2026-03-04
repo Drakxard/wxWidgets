@@ -2,52 +2,61 @@
 #define VENTANAPARABIBLIOTECARIO_H
 #include "wxfb_project.h"
 #include "Funcionalidades/alumno/alumno.h"
-#include "Funcionalidades/system/system.h"
-#include "Funcionalidades/bibliotecario/bibliotecario.h"
-#include "Funcionalidades/buscador/buscador.h"
-#include <vector>
+#include "Reservas.h"
+#include "Funcionalidades/Bloques/Bloques.h"
 #include "ProyBaseBibliotecario.h"
-using namespace std;
+#include "DialogoDevolucion.h"
+#include "Funcionalidades/buscador/buscador.h"
+class System;
+class Bibliotecario;
 
 class VentanaParaBibliotecario : public MyFrameInicioCorrectoBibliotecario {
 	
 private:
-	System *sistema; 
-	Buscador navega;
-	vector<Alumno> vAlumno; 
-	vector<Bibliotecario> vBibliotecario;
-	vector<Libro> vLibro;
-	Bibliotecario biblio; // <-- Recuperado del backup
-	
-	vector<Bibliotecario>vResultadoBibliotecario;
-	vector<Alumno>vResultadoAlumno;
-	vector<Libro>vResultadoLibro;
+	int dni;
+	System *sistema; Buscador navega;
+	Bibliotecario *admin;
+	Bibliotecario actualBibliotecario;
+	Bloques allTags;
+	vector<Tags> tagsActuales;
+	vector<size_t> idTags;
+	vector<Alumno> vAlumno; vector<Alumno>vResultadoAlumno;
+	vector<Bibliotecario> vBibliotecario;vector<Bibliotecario>vResultadoBibliotecario;
+	vector<Libro>vLibros;  vector<Libro>vResultadoLibro;
+	vector<Reservas>vReservas;
 	
 protected:
-	void OnButtonclick_Sancionar( wxCommandEvent& event )  override;
-	void OnButtonclick_Sacar_Sancion( wxCommandEvent& event )  override;
-	void OnButtonClickHistorialAlumno( wxCommandEvent& event )  override;
-	// Mantenidos los override de sanciones y eliminadas las declaraciones duplicadas sin override
+	void OnButtonClickDevolucion( wxCommandEvent& event )  override;
+	void MostrarLibros(vector<Libro>vLibros);
+	void OnLeftUpVerLibro( wxMouseEvent& event ) ;
+	void OnButtonClickAgregar( wxCommandEvent& event )  override;
+	void OnButtonClickEliminar( wxCommandEvent& event )  override;
+	void Onclick_Boton_Buscar_Frase( wxCommandEvent& event )  ;
+	void OnRadioButton_CambiaPestana( wxCommandEvent& event )  override;
+	void OnButtonClickPrestarLibro( wxCommandEvent& event )  override;
+	void OnButtonClickHistorialAlumno( wxCommandEvent& event )  ;
+	void OnButtonClickHistorialLibro( wxCommandEvent& event )  ;
 	
-	void onclickbutton_eliminar( wxCommandEvent& event ) override;
-	void Onclick_Boton_Buscar_Frase( wxCommandEvent& event ) override;
-	void OnButtonClickPrestarLibro( wxCommandEvent& event ) override;
+	void OnButtonclick_Sancionar( wxCommandEvent& event ) ;
+	void OnButtonclick_Sacar_Sancion( wxCommandEvent& event ) ;
 	
-	
-	void OnRadioButton_CambiaPestana(wxCommandEvent& event);
-	
+	void CargarListaInfoLibros(wxListCtrl* lista);
+	void CargarListaReservar(wxListCtrl* lista);
+	void CargarListaEtiquetas(wxListCtrl* lista);
 	void CargarListaAlumnos(wxListCtrl* lista);
 	void CargarListaBibliotecario(wxListCtrl* lista);
-	void CargarListaLibros(wxListCtrl* lista);
+	void CargarListaSancionados(wxListCtrl* lista);
 	
 	void MuestraListaResultadoBibliotecario(wxListCtrl* lista);
 	void MuestraListaResultadoAlumno(wxListCtrl* lista);
 	void MuestraListaResultadoLibro(wxListCtrl* lista);
-public:
-	VentanaParaBibliotecario(wxWindow *parent=NULL);
-	VentanaParaBibliotecario(wxWindow *parent, Bibliotecario biblio); // <-- Recuperado del backup
-	~VentanaParaBibliotecario();
+	void MuestraListaResultado_Autor(wxListCtrl* lista,string palabra);
+	void MuestraListaResultadoLibro_Disponibilidad(wxListCtrl* lista, bool disponible);
 	
+public:
+	VentanaParaBibliotecario(wxWindow *parent,Bibliotecario actualBibliotecario);
+	~VentanaParaBibliotecario();
 };
 
 #endif
+

@@ -26,32 +26,14 @@ private:
 	vector<Reservas>vReservas;
 	
 protected:
-	void OnButtonClickDevolucion( wxCommandEvent& event )  override;
 	void MostrarLibros(vector<Libro>vLibros);
 	void OnLeftUpVerLibro( wxMouseEvent& event ) ;
-	void OnButtonClickAgregar( wxCommandEvent& event )  override;
-	void OnButtonClickEliminar( wxCommandEvent& event )  override;
 	void Onclick_Boton_Buscar_Frase( wxCommandEvent& event )  ;
 	void OnRadioButton_CambiaPestana( wxCommandEvent& event )  override;
-	void OnButtonClickPrestarLibro( wxCommandEvent& event )  override;
-	void OnButtonClickHistorialAlumno( wxCommandEvent& event )  ;
-	void OnButtonClickHistorialLibro( wxCommandEvent& event )  ;
-	
-	void OnButtonclick_Sancionar( wxCommandEvent& event ) ;
-	void OnButtonclick_Sacar_Sancion( wxCommandEvent& event ) ;
-	
-	void CargarListaInfoLibros(wxListCtrl* lista);
+
 	void CargarListaReservar(wxListCtrl* lista);
-	void CargarListaEtiquetas(wxListCtrl* lista);
-	void CargarListaAlumnos(wxListCtrl* lista);
-	void CargarListaBibliotecario(wxListCtrl* lista);
-	void CargarListaSancionados(wxListCtrl* lista);
 	
-	void MuestraListaResultadoBibliotecario(wxListCtrl* lista);
 	void MuestraListaResultadoAlumno(wxListCtrl* lista);
-	void MuestraListaResultadoLibro(wxListCtrl* lista);
-	void MuestraListaResultado_Autor(wxListCtrl* lista,string palabra);
-	void MuestraListaResultadoLibro_Disponibilidad(wxListCtrl* lista, bool disponible);
 	
 public:
 	VentanaParaAlumno(wxWindow *parent,Alumno actualAlumno);
